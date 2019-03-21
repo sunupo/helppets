@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_release_dynamic"
+        android:title="@string/menu_release_dynamic"
+        android:icon="@mipmap/ic_launcher_release_round"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+
+
+</menu>

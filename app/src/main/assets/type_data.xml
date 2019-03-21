@@ -1,0 +1,25 @@
+<root>
+  <province name="哺乳类">
+    <city name="猫">
+      <district name="加菲猫"/>
+      <district name="山猫猫"/>
+      <district name="野猫猫"/>
+      <district name="起步猫"/>
+    </city>
+    <city name="狗">
+      <district name="哮天犬"/>
+      <district name="哈士奇"/>
+      <district name="来福"/>
+    </city>
+  </province>
+  <province name="节肢类">
+    <city name="蜘蛛">
+      <district name="黑寡妇"/>
+      <district name="杀人蛛"/>
+    </city>
+    <city name="昆虫">
+      <district name="甲壳虫"/>
+      <district name="蜈蚣"/>
+    </city>
+  </province>
+</root>
