@@ -4,7 +4,10 @@ buildscript {
     
     repositories {
         google()
-        jcenter()
+//        jcenter()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+//        jcenter { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        jcenter(){url "http://jcenter.bintray.com/"}
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
@@ -15,12 +18,30 @@ buildscript {
     }
 }
 
+//allprojects {
+//    repositories {
+//        google()
+//        jcenter()
+//    }
+//}
 allprojects {
     repositories {
-        google()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        // 此句maven是为因为项目中使用了jitpack上的开源项目PhotoView
+        maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/albertlii/android-maven/" }
         jcenter()
+        mavenCentral()
+        jcenter()
+        mavenLocal()
+        google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

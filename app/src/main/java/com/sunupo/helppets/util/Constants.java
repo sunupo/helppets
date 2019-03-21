@@ -15,4 +15,9 @@ public class Constants
 	public static final String LoginInfo="LoginInfo";
 	public static final String COLOR_DARK="#FF5C5C";
 	public static final String COLOR_LIGHT="#aaaaaa";
+
+	public static final String APP_KEY="mgb7ka1nmd87g";
+	public static final String APP_SECRET="a6ro0cyYDJeZo";
+	public static final String zhangsanToken="Sj2hNeLvrRUvFhqGmzBimuoSw0INgwM5mk/dXz49nWrz8AUbSzBeTEu50jptoDf7iW5IvnCbgI2hgqEXOGkSeQ==";
+
 }

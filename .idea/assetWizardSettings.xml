@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="fc0f43" />
+                                                <entry key="color" value="8ec8fc" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/D:/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/places/ic_spa_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/D:/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_message_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,16 +45,55 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="11a66c" />
+                                      <entry key="backgroundColor" value="5fa671" />
+                                      <entry key="backgroundImage" value="D:\Android\AndroidStudio\plugins\android\lib\templates\gradle-projects\NewAndroidModule\root\res\ic_launcher-web.png" />
                                       <entry key="backgroundLayerName" value="ic_launcher_background" />
                                       <entry key="foregroundAssetType" value="CLIP_ART" />
                                       <entry key="foregroundLayerName" value="ic_launcher_foreground" />
-                                      <entry key="outputName" value="ic_launcher_square" />
+                                      <entry key="outputName" value="ic_launcher_message" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                      </PersistentState>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState>
+              <option name="children">
+                <map>
+                  <entry key="vectorAssetStep">
+                    <value>
+                      <PersistentState>
+                        <option name="children">
+                          <map>
+                            <entry key="clipartAsset">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="url" value="jar:file:/D:/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/social/ic_people_black_24dp.xml" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="color" value="3c9ba6" />
+                            <entry key="outputName" value="ic_people_follow" />
+                            <entry key="sourceFile" value="C:\Users\孙敬钦" />
                           </map>
                         </option>
                       </PersistentState>

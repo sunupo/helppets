@@ -1,10 +1,13 @@
 package com.sunupo.helppets.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,10 +22,15 @@ import com.sunupo.helppets.Mine.MineFragment;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.ReleaseDynamic.GetLocalPhotoActivity;
 import com.sunupo.helppets.bean.UserInfo;
+import com.sunupo.helppets.conversation.IMUtils;
+import com.sunupo.helppets.conversation.SubConversationListActivtiy;
+import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.home.HomeFragment;
 import com.sunupo.helppets.test.ImageDownloadActivity;
 import com.sunupo.helppets.util.Constants;
+import com.sunupo.helppets.util.GetToken;
 import com.sunupo.helppets.util.MyApplication;
+import com.sunupo.helppets.util.TokenReturnBean;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,14 +40,20 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.sunupo.helppets.util.GetToken.getUserToken;
 import static com.sunupo.helppets.util.MyApplication.loginUserInfo;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,7 +63,15 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationPageAdapter pageAdapter;
     private MenuItem menuItem;
 
-//    private Handler handler;
+    private final Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    connect(((TokenReturnBean)msg.obj).getToken());
+            }
+        }
+    };
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -162,16 +184,24 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         switch (id){
             case R.id.menu_search:
                 Log.d(TAG, "onOptionsItemSelected:menu_search ");
-                // TODO: 3/16/2019 发布一条消息测试
-                Intent intenta=new Intent(this,ImageDownloadActivity.class);
-                startActivity(intenta);
-                   break;
+//                // TODO: 3/16/2019 发布一条消息测试
+//                Intent intenta=new Intent(this,ImageDownloadActivity.class);
+//                startActivity(intenta);
+                connect(Constants.zhangsanToken);
+//                RongIM.getInstance().startSubConversationList(MainActivity.this,Conversation.ConversationType.PRIVATE);
+                Map<String, Boolean> supportedConversation=new HashMap<>();
+                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
+                RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+
+//                GetToken.getUserToken("2","zhangsan","",handler);
+                break;
             case R.id.menu_release:
                 Log.d(TAG, "onOptionsItemSelected:menu_release ");
                 Intent intent=new Intent(this,GetLocalPhotoActivity.class);
@@ -280,4 +310,78 @@ public class MainActivity extends AppCompatActivity {
         }
         return null;
     }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    private void connect(String token) {
+
+        Log.d(TAG, "connect: ");
+        Log.d(TAG, "connect: "+getApplicationInfo().packageName.equals(MyApplication.getProcessName()));
+//
+        if (getApplicationInfo().packageName.equals(MyApplication.getProcessName())) {
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查
+                 * 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 *  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    Log.d(TAG, "onTokenIncorrect: ");
+                }
+
+                /**
+                 * 连接融云成功
+                 *  @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.d(TAG, "--onSuccess" + userid);
+                    startActivity(new Intent(MainActivity.this, io.rong.imkit.MainActivity.class));
+                    finish();
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                    Log.d(TAG, "onError: "+errorCode);
+                }
+            });
+        }
+    }
+    /**
+     * <p>启动会话界面。</p>
+     * <p>使用时，可以传入多种会话类型 {@link io.rong.imlib.model.Conversation.ConversationType} 对应不同的会话类型，开启不同的会话界面。
+     * 如果传入的是 {@link io.rong.imlib.model.Conversation.ConversationType#CHATROOM}，sdk 会默认调用
+     * {@link RongIMClient#joinChatRoom(String, int, RongIMClient.OperationCallback)} 加入聊天室。
+     * 如果你的逻辑是，只允许加入已存在的聊天室，请使用接口 {@link #startChatRoomChat(Context, String, boolean)} 并且第三个参数为 true</p>
+     *
+     * @param context          应用上下文。
+     * @param conversationType 会话类型。
+     * @param targetId         根据不同的 conversationType，可能是用户 Id、群组 Id 或聊天室 Id。
+     * @param title            聊天的标题，开发者可以在聊天界面通过 intent.getData().getQueryParameter("title") 获取该值, 再手动设置为标题。
+     */
+//    public void startConversation(Context context, Conversation.ConversationType conversationType, String targetId, String title)
+
+    /**
+     * 启动会话列表界面。
+     *
+     * @param context               应用上下文。
+     * @param supportedConversation 定义会话列表支持显示的会话类型，及对应的会话类型是否聚合显示。
+     *                              例如：supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false) 非聚合式显示 private 类型的会话。
+     */
+//    public void startConversationList(Context context, Map<String, Boolean> supportedConversation)
+
+    /**
+     * 启动聚合后的某类型的会话列表。<br> 例如：如果设置了单聊会话为聚合，则通过该方法可以打开包含所有的单聊会话的列表。
+     *
+     * @param context          应用上下文。
+     * @param conversationType 会话类型。
+     */
+//    public void startSubConversationList(Context context, Conversation.ConversationType conversationType)
 }

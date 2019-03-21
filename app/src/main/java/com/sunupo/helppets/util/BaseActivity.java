@@ -19,4 +19,5 @@ public class BaseActivity extends AppCompatActivity {
         ActivityCollector.removeActivity(this);
     }
 
+
 }
