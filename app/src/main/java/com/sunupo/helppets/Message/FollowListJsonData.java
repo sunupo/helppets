@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by moos on 2018/4/20.
+ * Created by sunupo
+ *
+ */
+
+/**
+ * 这个是MessageFragment缝纫数据，需要判断是否为空，不然会报异常
  */
 
 public class FollowListJsonData {

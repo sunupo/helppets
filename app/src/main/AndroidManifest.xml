@@ -9,8 +9,7 @@
     <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <!-- 获取网络状态的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -65,6 +64,7 @@
             android:value="mgb7ka1nmd87g"/>
 
         <activity
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Login.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
@@ -85,15 +85,15 @@
         <activity android:name=".test.ImageDownloadActivity"/>
 
         <!--android:authorities="您的 ApplicationId.FileProvider"-->
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.sunupo.helppets.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path" />
-        </provider>
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.sunupo.helppets.FileProvider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/rc_file_path" />-->
+        <!--</provider>-->
         <activity
             android:name=".conversation.ConversationListActivity"
             android:screenOrientation="portrait"

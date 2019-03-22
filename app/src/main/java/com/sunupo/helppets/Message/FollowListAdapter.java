@@ -59,7 +59,8 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 UserInfo userInfo=userInfoArrayList.get(position);
-                RongIM.getInstance().startConversation(view.getContext(),Conversation.ConversationType.PRIVATE,userInfo.getUserId()+"","CONVERSATION_TITLE");
+                RongIM.getInstance().startPrivateChat(v.getContext(), "4", "标题");
+//                RongIM.getInstance().startConversation(view.getContext(),Conversation.ConversationType.PRIVATE,userInfo.getUserId()+"","CONVERSATION_TITLE");
 //                RongIM.getInstance().startSubConversationList(view.getContext(),Conversation.ConversationType.PRIVATE);
 //                Map<String, Boolean> supportedConversation=new HashMap<>();
 //                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);

@@ -299,7 +299,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         viewHolder.displayCity.setText(dynamicBean.getCity());
         viewHolder.usernameName.setText(dynamicBean.getLoginName());
         viewHolder.contentText.setText(dynamicBean.getContent());
-//        viewHolder.logo.setImageResource();
+        new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
         new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
         viewHolder.userId=dynamicBean.getUserId();
         viewHolder.dynamicId=dynamicBean.getDynamicId();

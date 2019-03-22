@@ -2,6 +2,7 @@ package com.sunupo.helppets.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import com.sunupo.helppets.Mine.MineFragment;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.ReleaseDynamic.GetLocalPhotoActivity;
 import com.sunupo.helppets.bean.UserInfo;
+import com.sunupo.helppets.conversation.ConversationListActivity;
 import com.sunupo.helppets.conversation.IMUtils;
 import com.sunupo.helppets.conversation.SubConversationListActivtiy;
 import com.sunupo.helppets.home.CollectionAdapter;
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 1:
-                    connect(((TokenReturnBean)msg.obj).getToken());
+//                    connect(((TokenReturnBean)msg.obj).getToken());
             }
         }
     };
@@ -82,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_mine:
-                    viewPager.setCurrentItem(1);
+                    viewPager.setCurrentItem(2);
                     return true;
                 case R.id.navigation_messages:
-                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(1);
                     return true;
             }
             return false;
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.mian);
         setTitle("宠物互助，爱心传递");
 //        TODO 获取当前用户的所有信息
 
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
-        BottomNavigationViewHelper.disableShiftMode(navigation);
+//        BottomNavigationViewHelper.disableShiftMode(navigation);
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -196,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intenta);
                 connect(Constants.zhangsanToken);
 //                RongIM.getInstance().startSubConversationList(MainActivity.this,Conversation.ConversationType.PRIVATE);
-                Map<String, Boolean> supportedConversation=new HashMap<>();
-                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
-                RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+//                Map<String, Boolean> supportedConversation=new HashMap<>();
+//                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
+//                RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
 
 //                GetToken.getUserToken("2","zhangsan","",handler);
                 break;
@@ -308,18 +310,23 @@ public class MainActivity extends AppCompatActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
 
+//
+//            RongIM.getInstance().disconnect();有新消息时，仍然能够收到推送通知，调用 disconnect() 方法。
+//        RongIM.getInstance().logout();;
     @RequiresApi(api = Build.VERSION_CODES.P)
     private void connect(String token) {
 
-        Log.d(TAG, "connect: ");
-        Log.d(TAG, "connect: "+getApplicationInfo().packageName.equals(MyApplication.getProcessName()));
+        Log.d(TAG, "before into connect: ");
 //
         if (getApplicationInfo().packageName.equals(MyApplication.getProcessName())) {
-            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            Log.d(TAG, "after into connect: ");
+
+            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
 
                 /**
                  * Token 错误。可以从下面两点检查
@@ -338,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(String userid) {
                     Log.d(TAG, "--onSuccess" + userid);
-                    startActivity(new Intent(MainActivity.this, io.rong.imkit.MainActivity.class));
+                    startActivity(new Intent(MainActivity.this, ConversationListActivity.class));
                     finish();
                 }
 
@@ -379,9 +386,16 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * 启动聚合后的某类型的会话列表。<br> 例如：如果设置了单聊会话为聚合，则通过该方法可以打开包含所有的单聊会话的列表。
-     *
-     * @param context          应用上下文。
-     * @param conversationType 会话类型。
+
      */
 //    public void startSubConversationList(Context context, Conversation.ConversationType conversationType)
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /**
+         * 判断网络变化，是否需要融云重新connect()
+         */
+    }
 }

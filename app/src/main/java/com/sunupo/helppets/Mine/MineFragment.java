@@ -19,8 +19,8 @@ public class MineFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       View view=LayoutInflater.from(container.getContext()).inflate(R.layout.fragment_mine,container,false);
+       View view=inflater.inflate(R.layout.activity_user_main_page,container,false);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
 }

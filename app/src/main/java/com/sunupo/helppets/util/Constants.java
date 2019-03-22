@@ -10,7 +10,7 @@ public class Constants
 	public static final String httpip="http://"+HOST+":"+PORT+"/laf";
 	public static final String IMAGE_ROOT_PATH=httpip+"/dynamicpicture";
 	public static final String LOGIN_NAME="Login_Name";
-	public static final String[] NAVIGATION_TITLE={"收藏","广场","同城"};
+	public static final String[] NAVIGATION_TITLE={"首页","关注","我的"};
 	public static final String[] HOME_TAB={"收藏","广场","同城"};
 	public static final String LoginInfo="LoginInfo";
 	public static final String COLOR_DARK="#FF5C5C";

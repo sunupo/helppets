@@ -9,12 +9,12 @@
         android:layout_height="wrap_content">
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="0dp"
-            android:layout_weight="9"
+            android:layout_weight="11"
             android:layout_height="match_parent"
             android:background="@drawable/linearlayout_corner">
             <EditText
                 android:id="@+id/research_Content"
-                android:hint="请输入查询条件（种类）"
+                android:hint="查询"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </android.support.v7.widget.LinearLayoutCompat>

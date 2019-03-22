@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
+import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.MyApplication;
 
@@ -72,9 +74,16 @@ public class HomeItemLocalFragment extends Fragment {
                     case 1:
                         if(msg.arg1==1){
                             dynamicBeanArrayList.clear();
-                            dynamicBeanArrayList.addAll((ArrayList<DynamicBean>)msg.obj);
+                            for(int i=0;i<((ArrayList<DynamicBean>)(msg.obj)).size();i++){
+                                if(((ArrayList<DynamicBean>)(msg.obj)).get(i).getCity().equals(MyApplication.loginUserInfo.getCity())){
+                                    dynamicBeanArrayList.add(   ((ArrayList<DynamicBean>)(msg.obj)).get(i)  );
+                                }
+                            }
                             localAdapter.notifyDataSetChanged();
                             Log.d(TAG, "handleMessage: squareAdapter.notifyDataSetChanged();");
+                        }else{
+                            //必须把自己排除在外，不然同城用户全是自己
+                            Log.d(TAG, "handleMessage: 没有同城用户");
                         }
                 }
             }
@@ -137,44 +146,23 @@ public class HomeItemLocalFragment extends Fragment {
     }
     public void parseJSONWithJSONObject(String responseData){
         try {
-
             int successCode=0;
+            DynamicBeanData dynamicBeanData;
+            Gson gson = new Gson();
+            dynamicBeanData = gson.fromJson(responseData, DynamicBeanData.class);
+            ArrayList<DynamicBean> dynamicBeanArrayList = dynamicBeanData.getData();
 
-            ArrayList<DynamicBean> list=new ArrayList<>();
-            list.clear();
-            JSONArray jsonArray = new JSONObject(responseData).getJSONArray("data");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject= jsonArray.getJSONObject(i);
-                DynamicBean dynamicBean=new DynamicBean(
-                        jsonObject.getInt("userId"),
-                        jsonObject.getString("loginName"),
-                        jsonObject.getInt("dynamicId"),
-                        jsonObject.getString("createTime"),
-                        jsonObject.getString("province"),
-                        jsonObject.getString("city"),
-                        jsonObject.getString("content"),
-                        jsonObject.getString("picture"),
-                        jsonObject.getString("type3"),
-                        jsonObject.getInt("collect"),
-                        jsonObject.getInt("favorite"),
-                        jsonObject.getInt("views"),
-                        jsonObject.getString("followFlag"),
-                        jsonObject.getString("collectFlag"),
-                        jsonObject.getString("favoriteFlag"),
-                        jsonObject.getInt("loginUserId")
-                );
-                if(i==(jsonArray.length()-1)){
-                    successCode=Integer.parseInt(jsonObject.getString("successCode"));
-                    Log.d(TAG, "parseJSONWithJSONObject: "+successCode);
-
-                }
-                if(dynamicBean.getCity().trim().equals(MyApplication.loginUserInfo.getCity().trim())){
-                    list.add(dynamicBean);
-                }
-                Message message=Message.obtain(handler,1,successCode,3,list);
+            if(dynamicBeanArrayList.size()==0){
+                //啥也不做，因为，列表为0，说明没有数据successCode=0;，最好这儿创建一个message，就return；
+                Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);
                 message.sendToTarget();
-
+                return ;
+            }else if(dynamicBeanArrayList.get(dynamicBeanArrayList.size()-1).getSuccessCode()==1){
+                successCode=1;
+                Log.d(TAG, "parseJSONWithJSONObject: "+successCode);
             }
+            Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);
+            message.sendToTarget();
         } catch (Exception e) {
             e.printStackTrace();
         }

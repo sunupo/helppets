@@ -18,8 +18,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
+import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.MyApplication;
 
@@ -80,6 +82,8 @@ public class HomeItemSquareFragment extends Fragment {
                             dynamicBeanArrayList.addAll((ArrayList<DynamicBean>)msg.obj);
                             squareAdapter.notifyDataSetChanged();
                             Log.d(TAG, "handleMessage: squareAdapter.notifyDataSetChanged();");
+                        }else{
+                            Log.d(TAG, "handleMessage: 没有人发布动态到广场square");
                         }
                         break;
 
@@ -148,39 +152,22 @@ public class HomeItemSquareFragment extends Fragment {
     }
     public void parseJSONWithJSONObject(String responseData){
         try {
-
             int successCode=0;
+            DynamicBeanData dynamicBeanData;
+            Gson gson = new Gson();
+            dynamicBeanData = gson.fromJson(responseData, DynamicBeanData.class);
+            ArrayList<DynamicBean> dynamicBeanArrayList = dynamicBeanData.getData();
 
-            ArrayList<DynamicBean> list=new ArrayList<>();
-            list.clear();
-            JSONArray jsonArray = new JSONObject(responseData).getJSONArray("data");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject= jsonArray.getJSONObject(i);
-                DynamicBean dynamicBean=new DynamicBean(
-                        jsonObject.getInt("userId"),
-                        jsonObject.getString("loginName"),
-                        jsonObject.getInt("dynamicId"),
-                        jsonObject.getString("createTime"),
-                        jsonObject.getString("province"),
-                        jsonObject.getString("city"),
-                        jsonObject.getString("content"),
-                        jsonObject.getString("picture"),
-                        jsonObject.getString("type3"),
-                        jsonObject.getInt("collect"),
-                        jsonObject.getInt("favorite"),
-                        jsonObject.getInt("views"),
-                        jsonObject.getString("followFlag"),
-                        jsonObject.getString("collectFlag"),
-                        jsonObject.getString("favoriteFlag"),
-                        jsonObject.getInt("loginUserId")
-                );
-                if(i==(jsonArray.length()-1)){
-                    successCode=jsonObject.getInt("successCode");
-                    Log.d(TAG, "parseJSONWithJSONObject: "+successCode);
-                }
-                list.add(dynamicBean);
+            if(dynamicBeanArrayList.size()==0){
+                //啥也不做，因为，列表为0，说明没有数据successCode=0;，最好这儿创建一个message，就return；
+                Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);
+                message.sendToTarget();
+                return ;
+            }else if(dynamicBeanArrayList.get(dynamicBeanArrayList.size()-1).getSuccessCode()==1){
+                successCode=1;
+                Log.d(TAG, "parseJSONWithJSONObject: "+successCode);
             }
-            Message message=Message.obtain(handler,1,successCode,3,list);
+            Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);
             message.sendToTarget();
         } catch (Exception e) {
             e.printStackTrace();

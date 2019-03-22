@@ -4,12 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_search"
         android:title="@string/menu_search"
-        android:icon="@mipmap/ic_launcher_search_round"
+        android:icon="@drawable/message"
         android:orderInCategory="1"
         app:showAsAction="always" />
     <item android:id="@+id/menu_release"
         android:title="@string/menu_release"
-        android:icon="@mipmap/ic_launcher_add_round"
+        android:icon="@drawable/release"
         android:orderInCategory="100"
         app:showAsAction="ifRoom|withText" />
 

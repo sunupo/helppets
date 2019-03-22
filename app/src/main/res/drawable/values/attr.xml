@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ImageTextButton">
+        <attr name="myDrawableTop"  format="integer" />
+        <attr name="drawable_space" format="float" />
+        <attr name="drawable_hight" format="float" />
+        <attr name="drawable_width" format="float" />
+    </declare-styleable>
+</resources>

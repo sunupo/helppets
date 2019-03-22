@@ -21,6 +21,8 @@ import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.MyApplication;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +48,14 @@ public class MessageFragment extends Fragment {
                 case 1:
                     Gson gson = new Gson();
                     if((String)msg.obj!=""&&!((String)msg.obj).equals("")){
-                        followListJsonData = gson.fromJson((String)msg.obj, FollowListJsonData.class);
-                        userInfoList.addAll(followListJsonData.getData());
-                        adapter.notifyDataSetChanged();
-                        Log.d(TAG, "handleMessage: adapter.notifyDataSetChanged();");
+                       try {
+                               followListJsonData = gson.fromJson((String) msg.obj, FollowListJsonData.class);
+                               userInfoList.addAll(followListJsonData.getData());
+                               adapter.notifyDataSetChanged();
+                               Log.d(TAG, "handleMessage: adapter.notifyDataSetChanged();");
+                       }catch(Exception e){
+                           Log.d(TAG, "handleMessage: 没有关注一个用户");
+                       }
                     }
 
             }
