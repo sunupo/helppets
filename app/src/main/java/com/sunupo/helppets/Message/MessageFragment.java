@@ -14,18 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.UserInfo;
-import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.util.Constants;
-import com.sunupo.helppets.util.MyApplication;
-
-import org.json.JSONObject;
+import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -65,7 +60,7 @@ public class MessageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFollowList(MyApplication.loginUserInfo.getUserId());
+        getFollowList(App.loginUserInfo.getUserId());
     }
 
     @Nullable

@@ -20,9 +20,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.bean.UserInfo;
+import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.main.MainActivity;
+import com.sunupo.helppets.util.GetToken;
+import com.sunupo.helppets.util.TokenReturnBean;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,14 +34,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.sunupo.helppets.util.MyApplication.loginUserInfo;
+import static com.sunupo.helppets.util.App.loginUserInfo;
 
 
 public class LoginActivity extends AppCompatActivity
@@ -55,26 +63,141 @@ public class LoginActivity extends AppCompatActivity
 	private CheckBox savePwd;//保存密码
 	private SharedPreferences sp=null;
 
+	private String firstLogin="true";
+
+	//   初次在密码验证正确之后调用             GetToken.getUserToken("2","zhangsan","",handler);
+//todo 第二次登陆从sp读取token
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            Gson gson = new Gson();
-            loginUserInfo = gson.fromJson((String)msg.obj, UserInfo.class);
-            Log.d(TAG, "handleMessage: loginUserInfo="+loginUserInfo.toString());
-            if(loginUserInfo.getSuccessCode()==1){
+        	switch (msg.what){
+        		case 7:
+        			if(firstLogin.equals("true")) {
+        				//写入token和FIRST_LOGIN="FALSE"
+						sp.edit().putString("FIRST_LOGIN", "false")
+								.putString("TOKEN",((TokenReturnBean)msg.obj).getToken()).commit();
+						connect(((TokenReturnBean) msg.obj).getToken());
+						Log.d(TAG, "handleMessage: ((TokenReturnBean) msg.obj).getToken()="+((TokenReturnBean) msg.obj).getToken());
+					}
+        			else if(firstLogin.equals("false")){
+						Log.d(TAG, "handleMessage: sp.getString(\"TOKEN\",\"\"="+sp.getString("TOKEN",""));
+        				connect(sp.getString("TOKEN",""));
+					}
+//        			else(读取数据库的token);
+        			break;
+        		case 1 :
+//					connect(Constants.zhangsanToken);
+					Gson gson = new Gson();
+					loginUserInfo = gson.fromJson((String)msg.obj, UserInfo.class);
+					Log.d(TAG, "handleMessage: loginUserInfo="+loginUserInfo.toString());
+					if(loginUserInfo.getSuccessCode()==1){
+
+						try{
+							firstLogin=sp.getString("FIRST_LOGIN","true");
+							if(firstLogin.equals("true")){
+								Log.d(TAG, "run: 第一次登陆，从网路中获取token");
+								GetToken.getUserToken(loginUserInfo.getUserId()+"",loginUserInfo.getLoginName(),loginUserInfo.getLogo(),handler);
+							}else if(firstLogin.equals("false")){
+								Message message=Message.obtain(handler,7,2,3,"false");
+								message.sendToTarget();
+							}
+						}catch(Exception e){
+							e.printStackTrace();
+							Log.d(TAG, "onCreate: 读取是第一次登陆失败 FIRST_LOGIN=false");
+						}
+
+
 //                Looper.prepare();
-				Log.d(TAG, "handleMessage: 登陆成功");
-                Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("uid",uuid);
-                intent.putExtra("ug",uug);
-                intent.putExtra("psw",upsw);
-                startActivity(intent);
+						Log.d(TAG, "handleMessage: 登陆成功");
+						Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+						Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+						intent.putExtra("uid",uuid);
+						intent.putExtra("ug",uug);
+						intent.putExtra("psw",upsw);
+						startActivity(intent);
 //									finish();
 //                Looper.loop();
+						break;
+			}
+
+
             }
         }
     };
+	private void connect(final String token) {
+
+		Log.d(TAG, "before into connect: ");
+//
+		if (getApplicationInfo().packageName.equals(App.getProcessName())) {
+			Log.d(TAG, "after into connect: ");
+//            不要使用 RongIMClient 实例去调用相关接口，否则会导致 UI 显示异常。
+			Thread thread=new Thread(new Runnable() {
+				@Override
+				public void run() {
+					Log.d(TAG, "begin RongIM.connect thread");
+					RongIM.connect(token, new RongIMClient.ConnectCallback() {
+						@Override
+						public void onTokenIncorrect() {
+							Log.d(TAG, "onTokenIncorrect: ");
+						}
+
+						@Override
+						public void onSuccess(String s) {
+//                    TODO init()-->connect()-->initConversationList()-->startConversationList()
+							Log.d(TAG, "onSuccess: ");
+
+						}
+
+						@Override
+						public void onError(RongIMClient.ErrorCode errorCode) {
+							Log.d(TAG, "onError: ");
+						}
+					});
+
+				}
+			});
+			thread.start();
+			try{
+				thread.join();
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			Log.d(TAG, " after RongIM.connect");
+//            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+//
+//                /**
+//                 * Token 错误。可以从下面两点检查
+//                 * 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+//                 *  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+//                 */
+//                @Override
+//                public void onTokenIncorrect() {
+//                    Log.d(TAG, "onTokenIncorrect: ");
+//                }
+//
+//                /**
+//                 * 连接融云成功
+//                 *  @param userid 当前 token 对应的用户 id
+//                 */
+//                @Override
+//                public void onSuccess(String userid) {
+//                    Log.d(TAG, "--onSuccess" + userid);
+//                    startActivity(new Intent(MainActivity.this, ConversationListActivity.class));
+//                    finish();
+//                }
+//
+//                /**
+//                 * 连接融云失败
+//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+//                 */
+//                @Override
+//                public void onError(RongIMClient.ErrorCode errorCode) {
+//
+//                    Log.d(TAG, "onError: "+errorCode);
+//                }
+//            });
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -85,6 +208,8 @@ public class LoginActivity extends AppCompatActivity
 		setTitle("登陆");
 
 		sp=this.getSharedPreferences(Constants.LoginInfo,MODE_PRIVATE);
+
+
 
 		final Button buttonLogin = (Button) findViewById(R.id.button_login);
 		Button buttonReg = (Button) findViewById(R.id.button_reg);
@@ -165,18 +290,18 @@ public class LoginActivity extends AppCompatActivity
 										sp.edit().remove(SAVE_PWD);
 									}
 
+                                    getUserInfoJson(uid);//需要在初始化handler之后使用，否者在message.sendToTarget()报空指针异
 
-                                    getUserInfoJson(uid);//需要在初始化handler之后使用，否者在message.sendToTarget()报空指针异常
 
-/*                                    Looper.prepare();
-									Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
-									Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-									intent.putExtra("uid",uuid);
-									intent.putExtra("ug",uug);
-									intent.putExtra("psw",psw);
-									startActivity(intent);
-//									finish();
-									Looper.loop();*/
+///*                                    Looper.prepare();
+//									Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
+//									Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+//									intent.putExtra("uid",uuid);
+//									intent.putExtra("ug",uug);
+//									intent.putExtra("psw",psw);
+//									startActivity(intent);
+////									finish();
+//									Looper.loop();*/
 								}
 								else
 								{

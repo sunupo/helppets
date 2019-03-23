@@ -26,14 +26,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
-import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.FollowCollectFavorite;
-import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.util.Constants;
-import com.sunupo.helppets.util.MyApplication;
+import com.sunupo.helppets.util.App;
 
-
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -152,22 +148,22 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     case 255://255完全不透明，代表已关注
                         followImage.setImageResource(R.mipmap.ic_launcher_person);
                         followImage.setImageAlpha(128);
-                        sendRequestWithHttpURLConnectionFollow(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"0",FOLLOW);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"取消关注"+DYNAMIC_USER_ID);
+                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"0",FOLLOW);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消关注"+DYNAMIC_USER_ID);
                         break;
 
                     case 128://128代表没有关注
 
                         followImage.setImageResource(R.mipmap.ic_launcher_people);
                         followImage.setImageAlpha(255);
-                        sendRequestWithHttpURLConnectionFollow(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
+                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
                         break;
                     default:
                         followImage.setImageResource(R.mipmap.ic_launcher_people);
                         followImage.setImageAlpha(255);
-                        sendRequestWithHttpURLConnectionFollow(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
+                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
                         break;
                 }
             }
@@ -185,23 +181,23 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         collectImage.setImageAlpha(128);
                         if(Integer.parseInt(collectNum.getText().toString())>0)
                             collectNum.setText((Integer.parseInt(collectNum.getText().toString())-1)+"");
-                        sendRequestWithHttpURLConnectionCollect(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"取消收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     case 128://128代表没有收藏
 
                         collectImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         collectImage.setImageAlpha(255);
                         collectNum.setText((Integer.parseInt(collectNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionCollect(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     default:
                         collectImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         collectImage.setImageAlpha(255);
                         collectNum.setText((Integer.parseInt(collectNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionCollect(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                 }
             }
@@ -220,23 +216,23 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         favoriteImage.setImageAlpha(128);
                         if(Integer.parseInt(favoriteNum.getText().toString())>0)
                             favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())-1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"取消点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     case 128://128代表没有点赞
 
                         favoriteImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         favoriteImage.setImageAlpha(255);
                         favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     default:
                         favoriteImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         favoriteImage.setImageAlpha(255);
                         favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+MyApplication.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
+                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                 }
             }
@@ -260,7 +256,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             }
         };
         //todo 根据loginUserId，dynaicUserId,dynamicId去服务器获取数据,得到做新的followflag，collectflag，favoriteflag
-        sendRequestWithHttpURLConnectionGetLatestFollowCollectFavorite(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID);
+        sendRequestWithHttpURLConnectionGetLatestFollowCollectFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID);
 //        根据参数得到评论信息
         sendRequestWithHttpURLConnectionHaveParam(DYNAMIC_USER_ID,DYNAMIC_ID,COMMENT_DATA_URL);
 
@@ -428,9 +424,9 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                             " "+calendar.get(Calendar.HOUR_OF_DAY)+
                             ":"+calendar.get(Calendar.MINUTE)+
                             ":"+calendar.get(Calendar.SECOND);
-                    CommentDetailBean detailBean = new CommentDetailBean(MyApplication.loginUserInfo.getLoginName(), commentContent,currentTime);
+                    CommentDetailBean detailBean = new CommentDetailBean(App.loginUserInfo.getLoginName(), commentContent,currentTime);
                     adapter.addTheCommentData(detailBean);
-                    setCommentData(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,commentContent,currentTime);
+                    setCommentData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,commentContent,currentTime);
                     Toast.makeText(CommentMainActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -480,7 +476,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
 
                     dialog.dismiss();
                     // TODO: 3/16/2019 回复人的信息 Constants.httpip+"/setCommentReplyData"
-                    ReplyDetailBean detailBean = new ReplyDetailBean(MyApplication.loginUserInfo.getLoginName(),replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(App.loginUserInfo.getLoginName(),replyContent);
                     adapter.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
                     Calendar calendar = Calendar.getInstance();
@@ -499,8 +495,8 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         Log.e(TAG, "onClick: commentsList.get(position).getId()"+commentsList.get(position).getId());
                     }
 
-                    setCommentReplyData(MyApplication.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,commentsList.get(position).getId()
-                            ,MyApplication.loginUserInfo.getUserId(),replyContent,currentTime);
+                    setCommentReplyData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,commentsList.get(position).getId()
+                            ,App.loginUserInfo.getUserId(),replyContent,currentTime);
                     Toast.makeText(CommentMainActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(CommentMainActivity.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();

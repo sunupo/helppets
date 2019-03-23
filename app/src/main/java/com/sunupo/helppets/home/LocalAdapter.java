@@ -19,7 +19,7 @@ import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.DownloadImageTask;
-import com.sunupo.helppets.util.MyApplication;
+import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder>{
 //        if(dynamicBeanArrayList.size()>0){
 //            loginUserId=dynamicBeanArrayList.get(0).getLoginUserId();
 //        }
-        loginUserId=MyApplication.loginUserInfo.getUserId();
+        loginUserId=App.loginUserInfo.getUserId();
 
     }
 

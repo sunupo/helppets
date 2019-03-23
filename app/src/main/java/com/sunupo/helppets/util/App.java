@@ -3,25 +3,18 @@ package com.sunupo.helppets.util;
 import android.app.Application;
 import android.content.Context;
 import android.net.Uri;
-import android.os.IBinder;
-import android.os.RemoteException;
 import android.util.Log;
 
 import com.sunupo.helppets.bean.UserInfo;
 
-import java.util.List;
-
-import io.rong.imkit.DefaultExtensionModule;
-import io.rong.imkit.IExtensionModule;
-import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Message;
 
 
-public class MyApplication extends Application {
+public class App extends Application {
 
-        private final String TAG=MyApplication.class.getSimpleName();
+        private final String TAG=App.class.getSimpleName();
         public static UserInfo loginUserInfo;
         private static Context mContext;
 

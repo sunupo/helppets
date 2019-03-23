@@ -55,7 +55,7 @@ public class GetToken {
                     Log.d(TAG, "run: " + responseData);
                     TokenReturnBean tokenReturnBean=new Gson().fromJson(responseData,TokenReturnBean.class);
                     Log.d(TAG, "run: token="+tokenReturnBean.getToken());
-                    Message message=Message.obtain(handler,1,2,3,tokenReturnBean);
+                    Message message=Message.obtain(handler,7,2,3,tokenReturnBean);
                     message.sendToTarget();
 
                 } catch (IOException e) {

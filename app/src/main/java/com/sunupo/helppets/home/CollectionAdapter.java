@@ -3,7 +3,6 @@ package com.sunupo.helppets.home;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -15,15 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.Resource;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
-import com.sunupo.helppets.comment.CommentDetailBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.DownloadImageTask;
-import com.sunupo.helppets.util.MyApplication;
-import com.sunupo.helppets.util.QueryFollowFlagTask;
+import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -118,7 +114,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
 //        if(dynamicBeanArrayList.size()>0){
 //            loginUserId=dynamicBeanArrayList.get(0).getLoginUserId();
 //        }
-        loginUserId=MyApplication.loginUserInfo.getUserId();
+        loginUserId=App.loginUserInfo.getUserId();
 
     }
 

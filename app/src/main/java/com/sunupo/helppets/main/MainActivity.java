@@ -11,28 +11,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.gson.Gson;
 import com.sunupo.helppets.Message.MessageFragment;
 import com.sunupo.helppets.Mine.MineFragment;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.ReleaseDynamic.GetLocalPhotoActivity;
-import com.sunupo.helppets.bean.UserInfo;
-import com.sunupo.helppets.conversation.ConversationListActivity;
-import com.sunupo.helppets.conversation.IMUtils;
-import com.sunupo.helppets.conversation.SubConversationListActivtiy;
-import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.home.HomeFragment;
-import com.sunupo.helppets.test.ImageDownloadActivity;
 import com.sunupo.helppets.util.Constants;
-import com.sunupo.helppets.util.GetToken;
-import com.sunupo.helppets.util.MyApplication;
-import com.sunupo.helppets.util.TokenReturnBean;
+import com.sunupo.helppets.util.App;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import okhttp3.FormBody;
@@ -54,9 +47,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.sunupo.helppets.util.GetToken.getUserToken;
-import static com.sunupo.helppets.util.MyApplication.loginUserInfo;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -182,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main,menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -197,6 +186,12 @@ public class MainActivity extends AppCompatActivity {
 //                Intent intenta=new Intent(this,ImageDownloadActivity.class);
 //                startActivity(intenta);
                 connect(Constants.zhangsanToken);
+                Map<String, Boolean> supportedConversation=new HashMap<>();
+                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
+                RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+
+
+
 //                RongIM.getInstance().startSubConversationList(MainActivity.this,Conversation.ConversationType.PRIVATE);
 //                Map<String, Boolean> supportedConversation=new HashMap<>();
 //                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
@@ -323,44 +318,85 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "before into connect: ");
 //
-        if (getApplicationInfo().packageName.equals(MyApplication.getProcessName())) {
+        if (getApplicationInfo().packageName.equals(App.getProcessName())) {
             Log.d(TAG, "after into connect: ");
-
-            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
-
-                /**
-                 * Token 错误。可以从下面两点检查
-                 * 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-                 *  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-                 */
+//            不要使用 RongIMClient 实例去调用相关接口，否则会导致 UI 显示异常。
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
                 @Override
                 public void onTokenIncorrect() {
                     Log.d(TAG, "onTokenIncorrect: ");
                 }
 
-                /**
-                 * 连接融云成功
-                 *  @param userid 当前 token 对应的用户 id
-                 */
                 @Override
-                public void onSuccess(String userid) {
-                    Log.d(TAG, "--onSuccess" + userid);
-                    startActivity(new Intent(MainActivity.this, ConversationListActivity.class));
-                    finish();
+                public void onSuccess(String s) {
+//                    TODO init()-->connect()-->initConversationList()-->startConversationList()
+                    Log.d(TAG, "onSuccess: ");
+                    initConversationList();
+                    Log.d(TAG, "onSuccess: initConversationList");
+                    Map<String, Boolean> supportedConversation=new HashMap<>();
+                  supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
+                 RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+
+
                 }
 
-                /**
-                 * 连接融云失败
-                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-                 */
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-
-                    Log.d(TAG, "onError: "+errorCode);
+                    Log.d(TAG, "onError: ");
                 }
             });
+//            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
+//
+//                /**
+//                 * Token 错误。可以从下面两点检查
+//                 * 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+//                 *  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+//                 */
+//                @Override
+//                public void onTokenIncorrect() {
+//                    Log.d(TAG, "onTokenIncorrect: ");
+//                }
+//
+//                /**
+//                 * 连接融云成功
+//                 *  @param userid 当前 token 对应的用户 id
+//                 */
+//                @Override
+//                public void onSuccess(String userid) {
+//                    Log.d(TAG, "--onSuccess" + userid);
+//                    startActivity(new Intent(MainActivity.this, ConversationListActivity.class));
+//                    finish();
+//                }
+//
+//                /**
+//                 * 连接融云失败
+//                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+//                 */
+//                @Override
+//                public void onError(RongIMClient.ErrorCode errorCode) {
+//
+//                    Log.d(TAG, "onError: "+errorCode);
+//                }
+//            });
         }
     }
+
+    private void initConversationList() {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        ConversationListFragment conversationlistFragment = (ConversationListFragment) supportFragmentManager.findFragmentById(R.id.conversationlist);
+        conversationlistFragment.getActivity();
+        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+                .build();
+        conversationlistFragment.setUri(uri);
+
+    }
+    
+    
     /**
      * <p>启动会话界面。</p>
      * <p>使用时，可以传入多种会话类型 {@link io.rong.imlib.model.Conversation.ConversationType} 对应不同的会话类型，开启不同的会话界面。

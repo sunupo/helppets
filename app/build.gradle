@@ -16,7 +16,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.sunupo.helppets"
-        minSdkVersion 24
+        minSdkVersion 28
         targetSdkVersion 28
         versionCode 2
         versionName "2.0"
@@ -29,6 +29,13 @@ android {
 
             targetCompatibility JavaVersion.VERSION_1_8
 
+        }
+
+//        网易云信第一步 jcentre()
+//        网易云信第二步，ndk过滤
+        ndk {
+            //设置支持的SO库架构
+            abiFilters "armeabi-v7a", "x86","arm64-v8a","x86_64"
         }
     }
     buildTypes {
@@ -100,10 +107,31 @@ dependencies {
     implementation 'com.youth.picker:pickerview:0.1.4@aar'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
-    implementation project(':IMLib')
+    //    implementation project(':IMLib')
     implementation project(':IMKit')
     implementation files('libs/codec.jar')
     implementation files('libs/alipaySdk-20180316.jar')
+
+
+//   /*网易云信的依赖开始*/
+    // 添加依赖。注意，版本号必须一致。
+    // 基础功能 (必需)
+    implementation 'com.netease.nimlib:basesdk:6.1.1'
+    // 音视频和互动白板服务需要
+    implementation 'com.netease.nimlib:nrtc:6.1.1'
+    // 音视频需要
+    implementation 'com.netease.nimlib:avchat:6.1.1'
+    // 聊天室需要
+    implementation 'com.netease.nimlib:chatroom:6.1.1'
+    // 互动白板服务需要
+    implementation 'com.netease.nimlib:rts:6.1.1'
+    // 全文检索服务需要
+    implementation 'com.netease.nimlib:lucene:6.1.1'
+    // 小米、华为、魅族、fcm 推送
+    implementation 'com.netease.nimlib:push:6.1.1'
+    //   /*网易云信的依赖结束*/
+
+
 }
 repositories {
     maven { url 'https://maven.google.com/'}

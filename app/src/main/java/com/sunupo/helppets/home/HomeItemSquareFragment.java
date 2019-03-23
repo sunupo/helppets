@@ -1,7 +1,5 @@
 package com.sunupo.helppets.home;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,10 +21,7 @@ import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.util.Constants;
-import com.sunupo.helppets.util.MyApplication;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +31,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeItemSquareFragment extends Fragment {
 
@@ -63,7 +56,7 @@ public class HomeItemSquareFragment extends Fragment {
         public void onClick(View v) {
 
             sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,editText.getText().toString(),createTime,limitNumFrom,limitNumTo
-                    ,MyApplication.loginUserInfo.getLoginName());
+                    ,App.loginUserInfo.getLoginName());
             squareAdapter.notifyDataSetChanged();
         }
     };
@@ -91,7 +84,7 @@ public class HomeItemSquareFragment extends Fragment {
             }
         };
         sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                ,MyApplication.loginUserInfo.getLoginName());
+                ,App.loginUserInfo.getLoginName());
     }
 
     @Nullable
@@ -111,7 +104,7 @@ public class HomeItemSquareFragment extends Fragment {
             @Override
             public void sendRequest() {
                 sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                        ,MyApplication.loginUserInfo.getLoginName());            }
+                        ,App.loginUserInfo.getLoginName());            }
         });
         recyclerView.setAdapter(squareAdapter);
 

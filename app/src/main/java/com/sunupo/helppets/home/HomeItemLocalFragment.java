@@ -1,7 +1,5 @@
 package com.sunupo.helppets.home;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +18,7 @@ import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.util.Constants;
-import com.sunupo.helppets.util.MyApplication;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,8 +28,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class HomeItemLocalFragment extends Fragment {
 
@@ -75,7 +67,7 @@ public class HomeItemLocalFragment extends Fragment {
                         if(msg.arg1==1){
                             dynamicBeanArrayList.clear();
                             for(int i=0;i<((ArrayList<DynamicBean>)(msg.obj)).size();i++){
-                                if(((ArrayList<DynamicBean>)(msg.obj)).get(i).getCity().equals(MyApplication.loginUserInfo.getCity())){
+                                if(((ArrayList<DynamicBean>)(msg.obj)).get(i).getCity().equals(App.loginUserInfo.getCity())){
                                     dynamicBeanArrayList.add(   ((ArrayList<DynamicBean>)(msg.obj)).get(i)  );
                                 }
                             }
@@ -89,7 +81,7 @@ public class HomeItemLocalFragment extends Fragment {
             }
         };
         sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                ,MyApplication.loginUserInfo.getLoginName());
+                ,App.loginUserInfo.getLoginName());
         View view=inflater.inflate(R.layout.fragment_local,container,false);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
         recyclerView=view.findViewById(R.id.local_recycler_view);
@@ -100,7 +92,7 @@ public class HomeItemLocalFragment extends Fragment {
             @Override
             public void sendRequest() {
                 sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                        ,MyApplication.loginUserInfo.getLoginName());            }
+                        ,App.loginUserInfo.getLoginName());            }
         });
         recyclerView.setAdapter(localAdapter);
         recyclerView.setAdapter(localAdapter);

@@ -3,8 +3,13 @@ package com.sunupo.helppets.conversation;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+
+import com.sunupo.helppets.R;
 
 import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -67,6 +72,20 @@ public class IMUtils extends Activity {
         RongIM.getInstance().startPrivateChat(contentText,userId,title);
     }
 
+//    卸载这儿只是为了好集中一点学习，使用的时候还是放在Activity吧
+    public  void initConversationList(FragmentManager supportFragmentManager) {
+//                FragmentManager supportFragmentManager = getSupportFragmentManager();
+        ConversationListFragment conversationlistFragment = (ConversationListFragment) supportFragmentManager.findFragmentById(R.id.conversationlist);
+        conversationlistFragment.getActivity();
+        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+                .appendPath("conversationlist")
+                .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//设置群组会话聚合显示
+                .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//设置讨论组会话非聚合显示
+                .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//设置系统会话非聚合显示
+                .build();
+        conversationlistFragment.setUri(uri);
+    }
 
 }
 
