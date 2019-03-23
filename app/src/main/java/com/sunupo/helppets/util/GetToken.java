@@ -65,11 +65,11 @@ public class GetToken {
             }
         });
         t.start();
-        try {
-            t.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            t.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
         //SHA1加密//http://www.rongcloud.cn/docs/server.html#通用_API_接口签名规则
 

@@ -65,6 +65,13 @@ public class LoginActivity extends AppCompatActivity
 
 	private String firstLogin="true";
 
+	// TODO: 3/23/2019 首先判断是否第一次登陆
+//	如果是第一次登陆，登陆成功过后（用的是原来的api，只是判断用户名密码是否匹配）
+// 		把newUserLoginName与laseUserLoginName设为相等，
+//		从网络中获取loginUserInfo（新的api，得到当前用户的完整信息）：getUserInfoJson(uid)，再发送message.what=1到handler
+// 		从网络中获取token，发送
+//
+
 	//   初次在密码验证正确之后调用             GetToken.getUserToken("2","zhangsan","",handler);
 //todo 第二次登陆从sp读取token
     Handler handler=new Handler(){
@@ -75,13 +82,30 @@ public class LoginActivity extends AppCompatActivity
         			if(firstLogin.equals("true")) {
         				//写入token和FIRST_LOGIN="FALSE"
 						sp.edit().putString("FIRST_LOGIN", "false")
-								.putString("TOKEN",((TokenReturnBean)msg.obj).getToken()).commit();
+								.putString("TOKEN",((TokenReturnBean)msg.obj).getToken())
+								.putString("LAST_LOGIN_USER_NAME",loginUserInfo.getLoginName())
+								.putString("NEW_LOGIN_USER_NAME",loginUserInfo.getLoginName())
+								.commit();
 						connect(((TokenReturnBean) msg.obj).getToken());
 						Log.d(TAG, "handleMessage: ((TokenReturnBean) msg.obj).getToken()="+((TokenReturnBean) msg.obj).getToken());
 					}
         			else if(firstLogin.equals("false")){
-						Log.d(TAG, "handleMessage: sp.getString(\"TOKEN\",\"\"="+sp.getString("TOKEN",""));
-        				connect(sp.getString("TOKEN",""));
+
+						sp.edit().putString("NEW_LOGIN_USER_NAME",loginUserInfo.getLoginName()).commit();
+
+        				if(sp.getString("NEW_LOGIN_USER_NAME","").equals(sp.getString("LAST_LOGIN_USER_NAME",""))){
+
+        					Log.d(TAG, "不是首次登陆，与上次登录用户相同="+sp.getString("TOKEN",""));
+							connect(sp.getString("TOKEN",""));
+
+						}else if(!sp.getString("NEW_LOGIN_USER_NAME","").equals(sp.getString("LAST_LOGIN_USER_NAME",""))){
+
+							sp.edit().putString("LAST_LOGIN_USER_NAME",sp.getString("NEW_LOGIN_USER_NAME","")).commit();
+
+        					Log.d(TAG, "handleMessage: 本次用户和上次用户不一样，本次用户这也是第一次登陆，需要重新获取token.");
+							Log.d(TAG, "handleMessage: 然后通过message.what=1,会输出日志中（不是首次登陆，与上次登录用户相同=）");
+							GetToken.getUserToken(loginUserInfo.getLoginName()+"",loginUserInfo.getLoginName(),loginUserInfo.getLogo(),handler);
+						}
 					}
 //        			else(读取数据库的token);
         			break;
@@ -96,7 +120,7 @@ public class LoginActivity extends AppCompatActivity
 							firstLogin=sp.getString("FIRST_LOGIN","true");
 							if(firstLogin.equals("true")){
 								Log.d(TAG, "run: 第一次登陆，从网路中获取token");
-								GetToken.getUserToken(loginUserInfo.getUserId()+"",loginUserInfo.getLoginName(),loginUserInfo.getLogo(),handler);
+								GetToken.getUserToken(loginUserInfo.getLoginName()+"",loginUserInfo.getLoginName(),Constants.httpip+"/"+loginUserInfo.getLogo(),handler);
 							}else if(firstLogin.equals("false")){
 								Message message=Message.obtain(handler,7,2,3,"false");
 								message.sendToTarget();
@@ -126,42 +150,41 @@ public class LoginActivity extends AppCompatActivity
     };
 	private void connect(final String token) {
 
-		Log.d(TAG, "before into connect: ");
-//
-		if (getApplicationInfo().packageName.equals(App.getProcessName())) {
-			Log.d(TAG, "after into connect: ");
-//            不要使用 RongIMClient 实例去调用相关接口，否则会导致 UI 显示异常。
-			Thread thread=new Thread(new Runnable() {
-				@Override
-				public void run() {
-					Log.d(TAG, "begin RongIM.connect thread");
-					RongIM.connect(token, new RongIMClient.ConnectCallback() {
-						@Override
-						public void onTokenIncorrect() {
-							Log.d(TAG, "onTokenIncorrect: ");
-						}
+//		if (getApplicationInfo().packageName.equals(App.getProcessName())) {
+			Log.d(TAG, "before connect: ");
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                @Override
+                public void onTokenIncorrect() {
+                    Log.d(TAG, "onTokenIncorrect: ");
+                }
 
-						@Override
-						public void onSuccess(String s) {
+                @Override
+                public void onSuccess(String s) {
 //                    TODO init()-->connect()-->initConversationList()-->startConversationList()
-							Log.d(TAG, "onSuccess: ");
+                    Log.d(TAG, "onSuccess: RongIM.connect");
 
-						}
+                }
 
-						@Override
-						public void onError(RongIMClient.ErrorCode errorCode) {
-							Log.d(TAG, "onError: ");
-						}
-					});
-
-				}
-			});
-			thread.start();
-			try{
-				thread.join();
-			}catch (Exception e){
-				e.printStackTrace();
-			}
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.d(TAG, "onError: ");
+                }
+            });
+//            不要使用 RongIMClient 实例去调用相关接口，否则会导致 UI 显示异常。
+//			Thread thread=new Thread(new Runnable() {
+//				@Override
+//				public void run() {
+//					Log.d(TAG, "begin RongIM.connect thread");
+//
+//
+//				}
+//			});
+//			thread.start();
+//			try{
+//				thread.join();
+//			}catch (Exception e){
+//				e.printStackTrace();
+//			}
 			Log.d(TAG, " after RongIM.connect");
 //            RongIMClient.connect(token, new RongIMClient.ConnectCallback() {
 //
@@ -196,7 +219,7 @@ public class LoginActivity extends AppCompatActivity
 //                    Log.d(TAG, "onError: "+errorCode);
 //                }
 //            });
-		}
+//		}
 	}
 
 	@Override

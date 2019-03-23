@@ -1,6 +1,14 @@
 package com.sunupo.helppets.bean;
 
-public class DynamicBean {
+
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
+/**
+ * 由userinfo表和dynamic表，follow表，collect表，favorite表查询得到的数据组构成的bean
+ */
+public class DynamicBean implements Serializable {
     private String loginName;
     private String logo;//头像
     private String province;

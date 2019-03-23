@@ -26,12 +26,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
+import com.sunupo.helppets.bean.DynamicBean;
+import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.bean.FollowCollectFavorite;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.App;
+import com.sunupo.helppets.util.DownloadImageTask;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,59 +57,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     private CommentBean commentBean;
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
-    private String testJson = "{\n" +
-            "\t\"code\": 1000,\n" +
-            "\t\"message\": \"查看评论成功\",\n" +
-            "\t\"data\": {\n" +
-            "\t\t\"total\": 3,\n" +
-            "\t\t\"list\": [{\n" +
-            "\t\t\t\t\"id\": 42,\n" +
-            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\t\"commentId\": \"42\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 41,\n" +
-            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 1,\n" +
-            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-            "\t\t\t\t\"replyList\": [{\n" +
-            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-            "\t\t\t\t\t\"status\": \"01\",\n" +
-            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-            "\t\t\t\t}]\n" +
-            "\t\t\t},\n" +
-            "\t\t\t{\n" +
-            "\t\t\t\t\"id\": 40,\n" +
-            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
-            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
-            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-            "\t\t\t\t\"replyTotal\": 0,\n" +
-            "\t\t\t\t\"createDate\": \"三天前\",\n" +
-            "\t\t\t\t\"replyList\": []\n" +
-            "\t\t\t}\n" +
-            "\t\t]\n" +
-            "\t}\n" +
-            "}";
+    private String testJson=Constants.TEST_JSON;
     private Handler handler;
     int DYNAMIC_USER_ID;
     int DYNAMIC_ID;
@@ -113,12 +65,28 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     private final String collectFlag="已收藏";
     private final String favoriteFlag="已点赞";
 
-    ImageView followImage,collectImage,favoriteImage;
-    TextView  collectNum,favoriteNum;
+    ImageView dynamicImage,followImage,collectImage,favoriteImage,dynamicUserLogo;
+    TextView  dynamicUserName,dynamictTime,dynamicAddress,ifSend,dynamicContentText,collectNum,favoriteNum,petBriefInfo;
+
+
 
     FollowCollectFavorite followCollectFavorite;
+    DynamicBean dynamicBean;
 
     final String COMMENT_DATA_URL=Constants.httpip + "/getCommentJson";
+
+    // TODO: 3/23/2019  
+    private void initDynamicContent(){
+        new DownloadImageTask(dynamicUserLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+        new DownloadImageTask(dynamicImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+        dynamicUserName.setText(dynamicBean.getLoginName()+"");
+        String[] array=dynamicBean.getCreateTime().split("-");
+        dynamictTime.setText(array[0]+"-"+array[1]+"-"+array[2]+" "+array[3]+":"+array[4]+":"+array[5]);
+        dynamicAddress.setText(dynamicBean.getProvince()+"-"+dynamicBean.getCity());
+        dynamicContentText.setText(dynamicBean.getContent());
+        ifSend.setText(dynamicBean.getIsSend());
+        petBriefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,16 +95,29 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         this.setTitle("详情");
 
         Intent intent=getIntent();
+        Bundle bundle=intent.getBundleExtra("BUNDLE");
+//        dynamicBean=(DynamicBean) bundle.getSerializable("DYNAMIC_BEAN");
+
 
         DYNAMIC_USER_ID=intent.getIntExtra("DYNAMIC_USER_ID",-1);
         DYNAMIC_ID=intent.getIntExtra("DYNAMIC_ID",-1);
 
+        dynamicUserLogo=findViewById(R.id.dynamic_user_logo);
+        dynamicUserName=findViewById(R.id.dynamic_user_name);
+        dynamicImage=findViewById(R.id.dynamic_image);
+        dynamictTime=findViewById(R.id.dynamic_time);
+        dynamicAddress=findViewById(R.id.dynamic_address);
+        ifSend=findViewById(R.id.if_send);
+        dynamicContentText=findViewById(R.id.dynamic_content_text);
 
         followImage=findViewById(R.id.follow_image);
         favoriteImage=findViewById(R.id.favorite_image);
         favoriteNum=findViewById(R.id.favorite_num);
         collectImage=findViewById(R.id.collect_image);
         collectNum=findViewById(R.id.collect_num);
+        petBriefInfo=findViewById(R.id.pet_brief_info);
+
+        getOneDynamicContent(App.loginUserInfo.getLoginName(),DYNAMIC_USER_ID,DYNAMIC_ID,Constants.httpip+"/getDynamic");
 
         View.OnClickListener followListener=new View.OnClickListener() {
             @Override
@@ -148,7 +129,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     case 255://255完全不透明，代表已关注
                         followImage.setImageResource(R.mipmap.ic_launcher_person);
                         followImage.setImageAlpha(128);
-                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"0",FOLLOW);
+                        Follow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"0",FOLLOW);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消关注"+DYNAMIC_USER_ID);
                         break;
 
@@ -156,13 +137,13 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
 
                         followImage.setImageResource(R.mipmap.ic_launcher_people);
                         followImage.setImageAlpha(255);
-                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
+                        Follow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
                         break;
                     default:
                         followImage.setImageResource(R.mipmap.ic_launcher_people);
                         followImage.setImageAlpha(255);
-                        sendRequestWithHttpURLConnectionFollow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
+                        Follow(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,"1",FOLLOW);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"关注"+DYNAMIC_USER_ID);
                         break;
                 }
@@ -181,7 +162,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         collectImage.setImageAlpha(128);
                         if(Integer.parseInt(collectNum.getText().toString())>0)
                             collectNum.setText((Integer.parseInt(collectNum.getText().toString())-1)+"");
-                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
+                        Collect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     case 128://128代表没有收藏
@@ -189,14 +170,14 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         collectImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         collectImage.setImageAlpha(255);
                         collectNum.setText((Integer.parseInt(collectNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Collect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     default:
                         collectImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         collectImage.setImageAlpha(255);
                         collectNum.setText((Integer.parseInt(collectNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionCollect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        Collect(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"收藏"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                 }
@@ -216,7 +197,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         favoriteImage.setImageAlpha(128);
                         if(Integer.parseInt(favoriteNum.getText().toString())>0)
                             favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())-1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
+                        sendFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"取消点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     case 128://128代表没有点赞
@@ -224,14 +205,14 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         favoriteImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         favoriteImage.setImageAlpha(255);
                         favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        sendFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                     default:
                         favoriteImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
                         favoriteImage.setImageAlpha(255);
                         favoriteNum.setText((Integer.parseInt(favoriteNum.getText().toString())+1)+"");
-                        sendRequestWithHttpURLConnectionFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
+                        sendFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
                         Log.d(TAG, "onClick: "+App.loginUserInfo.getLoginName()+"点赞"+DYNAMIC_USER_ID+"-"+DYNAMIC_ID);
                         break;
                 }
@@ -252,11 +233,17 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         followCollectFavorite=new Gson().fromJson((String)msg.obj,FollowCollectFavorite.class);
                         Log.d(TAG, "handleMessage:followCollectFavorite= "+followCollectFavorite.toString());
                         initFollowCollectFavorite();
+                        break;
+                    case 99:
+                        dynamicBean=new Gson().fromJson((String)msg.obj,DynamicBean.class);
+                        Log.d(TAG, "handleMessage:pureDynamic= "+dynamicBean.toString());
+                        initDynamicContent();
+
                 }
             }
         };
         //todo 根据loginUserId，dynaicUserId,dynamicId去服务器获取数据,得到做新的followflag，collectflag，favoriteflag
-        sendRequestWithHttpURLConnectionGetLatestFollowCollectFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID);
+        getLatestFollowCollectFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID);
 //        根据参数得到评论信息
         sendRequestWithHttpURLConnectionHaveParam(DYNAMIC_USER_ID,DYNAMIC_ID,COMMENT_DATA_URL);
 
@@ -311,7 +298,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
-        commentsList = generateTestData();
+        commentsList = generateCommentReplyData();
         initExpandableListView(commentsList);
     }
 
@@ -360,11 +347,10 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * by moos on 2018/04/20
-     * func:生成测试数据
+     * func:生成显示的评论回复数据
      * @return 评论数据
      */
-    private List<CommentDetailBean> generateTestData(){
+    private List<CommentDetailBean> generateCommentReplyData(){
 
         Gson gson = new Gson();
         commentBean = gson.fromJson(testJson, CommentBean.class);
@@ -390,7 +376,6 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     }
 
     /**
-     * by moos on 2018/04/20
      * func:弹出评论框
      */
     private void showCommentDialog(){
@@ -457,9 +442,11 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         dialog.show();
     }
 
+
     /**
-     * by moos on 2018/04/20
+     * @time 2019/03/20
      * func:弹出回复框
+     * @param position
      */
     private void showReplyDialog(final int position){
         dialog = new BottomSheetDialog(this);
@@ -526,7 +513,13 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         dialog.show();
     }
 
-    //筛选获得动态dynamic的数据
+    /**
+     * 从数据库请求评论数据
+     * @param dynaimcUserId
+     * @param dynamicId
+     * @param commentDataUrl
+     */
+
     private void sendRequestWithHttpURLConnectionHaveParam(final int dynaimcUserId ,final int dynamicId,final String commentDataUrl) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -560,6 +553,15 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
+
+    /**
+     * 把评论数据写到数据库
+     * @param fromUid
+     * @param toUid
+     * @param dynamicId
+     * @param commentContent
+     * @param commentTime
+     */
     private void setCommentData(final int fromUid,final int toUid,final int dynamicId,final String commentContent,final String commentTime){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -591,6 +593,16 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * 把回复数据写到数据库
+     * @param fromUid
+     * @param toUid
+     * @param dynamicId
+     * @param commentId
+     * @param replyUid
+     * @param replyContent
+     * @param replyTime
+     */
     private void setCommentReplyData(final int fromUid,final int toUid,final int dynamicId
             ,final int commentId,final int replyUid,final String replyContent,final String replyTime){
         Thread t = new Thread(new Runnable() {
@@ -624,7 +636,15 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
-    private void sendRequestWithHttpURLConnectionGetLatestFollowCollectFavorite(final int loginUserId ,final int dynamicUserId,final int dynamicId) {
+
+    /**
+     * 由于在上个界面可能操作了点赞，收藏关注，是直接发送请求到数据库
+     * 而上个界面我初次加载的数据没有更新
+     * @param loginUserId
+     * @param dynamicUserId
+     * @param dynamicId
+     */
+    private void getLatestFollowCollectFavorite(final int loginUserId ,final int dynamicUserId,final int dynamicId) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -656,8 +676,14 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
-    private void sendRequestWithHttpURLConnectionFollow(final int loginUserId ,final int dynamicUserId
+    /**
+     * 发送取消关注/关注请求
+     * @param loginUserId
+     * @param dynamicUserId
+     * @param followFlag
+     * @param url
+     */
+    private void Follow(final int loginUserId ,final int dynamicUserId
             ,final String followFlag,final String url) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -691,7 +717,15 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    private void sendRequestWithHttpURLConnectionCollect(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String collectFlag,final String url) {
+    /**
+     * 发送收藏，取消收藏请求
+     * @param loginUserId
+     * @param dynamicUserId
+     * @param dynamicId
+     * @param collectFlag
+     * @param url
+     */
+    private void Collect(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String collectFlag,final String url) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -721,7 +755,17 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
-    private void sendRequestWithHttpURLConnectionFavorite(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String favoriteFlag,final String url) {
+
+
+    /**
+     * 发送取消收藏/收藏请求
+     * @param loginUserId
+     * @param dynamicUserId
+     * @param dynamicId
+     * @param favoriteFlag
+     * @param url
+     */
+    private void sendFavorite(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String favoriteFlag,final String url) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -751,58 +795,55 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
+    
+    private void getOneDynamicContent(final String loginName,final int dynamicUserId,final int dynamicId,final String url){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("loginName",loginName)
+                            .add("dynamicUserId",dynamicUserId+"")
+                            .add("dynamicId",dynamicId+"").build();//
+                    Request request = new Request.Builder().url(url).post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "run: "+responseData);
+                    parseJSONWithJSONObject(responseData);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void parseJSONWithJSONObject(String responseData){
+        try {
+            int successCode=0;
+            DynamicBeanData dynamicBeanData;
+            Gson gson = new Gson();
+            dynamicBeanData = gson.fromJson(responseData, DynamicBeanData.class);
+            ArrayList<DynamicBean> dynamicBeanArrayList = dynamicBeanData.getData();
+
+
+            if(dynamicBeanArrayList.get(0).getSuccessCode()==1){
+                Message message=Message.obtain(handler,99,successCode,3,dynamicBeanArrayList.get(0));
+                message.sendToTarget();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
-//    private String testJson = "{\n" +
-//            "\t\"code\": 1000,\n" +
-//            "\t\"message\": \"查看评论成功\",\n" +
-//            "\t\"data\": {\n" +
-//            "\t\t\"total\": 3,\n" +
-//            "\t\t\"list\": [{\n" +
-//            "\t\t\t\t\"id\": 42,\n" +
-//            "\t\t\t\t\"nickName\": \"程序猿\",\n" +
-//            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-//            "\t\t\t\t\"content\": \"时间是一切财富中最宝贵的财富。\",\n" +
-//            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-//            "\t\t\t\t\"replyTotal\": 1,\n" +
-//            "\t\t\t\t\"createDate\": \"三分钟前\",\n" +
-//            "\t\t\t\t\"replyList\": [{\n" +
-//            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-//            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-//            "\t\t\t\t\t\"id\": 40,\n" +
-//            "\t\t\t\t\t\"commentId\": \"42\",\n" +
-//            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-//            "\t\t\t\t\t\"status\": \"01\",\n" +
-//            "\t\t\t\t\t\"createDate\": \"一个小时前\"\n" +
-//            "\t\t\t\t}]\n" +
-//            "\t\t\t},\n" +
-//            "\t\t\t{\n" +
-//            "\t\t\t\t\"id\": 41,\n" +
-//            "\t\t\t\t\"nickName\": \"设计狗\",\n" +
-//            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-//            "\t\t\t\t\"content\": \"这世界要是没有爱情，它在我们心中还会有什么意义！这就如一盏没有亮光的走马灯。\",\n" +
-//            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-//            "\t\t\t\t\"replyTotal\": 1,\n" +
-//            "\t\t\t\t\"createDate\": \"一天前\",\n" +
-//            "\t\t\t\t\"replyList\": [{\n" +
-//            "\t\t\t\t\t\"nickName\": \"沐風\",\n" +
-//            "\t\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-//            "\t\t\t\t\t\"commentId\": \"41\",\n" +
-//            "\t\t\t\t\t\"content\": \"时间总是在不经意中擦肩而过,不留一点痕迹.\",\n" +
-//            "\t\t\t\t\t\"status\": \"01\",\n" +
-//            "\t\t\t\t\t\"createDate\": \"三小时前\"\n" +
-//            "\t\t\t\t}]\n" +
-//            "\t\t\t},\n" +
-//            "\t\t\t{\n" +
-//            "\t\t\t\t\"id\": 40,\n" +
-//            "\t\t\t\t\"nickName\": \"产品喵\",\n" +
-//            "\t\t\t\t\"userLogo\": \"http://ucardstorevideo.b0.upaiyun.com/userLogo/9fa13ec6-dddd-46cb-9df0-4bbb32d83fc1.png\",\n" +
-//            "\t\t\t\t\"content\": \"笨蛋自以为聪明，聪明人才知道自己是笨蛋。\",\n" +
-//            "\t\t\t\t\"imgId\": \"xcclsscrt0tev11ok364\",\n" +
-//            "\t\t\t\t\"replyTotal\": 0,\n" +
-//            "\t\t\t\t\"createDate\": \"三天前\",\n" +
-//            "\t\t\t\t\"replyList\": []\n" +
-//            "\t\t\t}\n" +
-//            "\t\t]\n" +
-//            "\t}\n" +
-//            "}";

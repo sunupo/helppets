@@ -2,7 +2,9 @@ package com.sunupo.helppets.home;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -85,6 +87,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         ImageView viewsImage;
         TextView viewsNum;
 
+        TextView briefInfo;
+
         int userId;
         int dynamicId;
 
@@ -106,6 +110,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             favoriteNum=itemView.findViewById(R.id.favorite_num);
             viewsImage=itemView.findViewById(R.id.views_image);
             viewsNum=itemView.findViewById(R.id.views_num);
+            briefInfo=itemView.findViewById(R.id.pet_brief_info);
         }
     }
 
@@ -139,11 +144,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
                 // TODO: 3/19/2019 向dynamic表 where DYNAMIC_USER_ID and DYNAMIC_ID，写入views+1
                 sendRequestWithHttpURLConnectionAddViews(DYNAMIC_USER_ID,DYNAMIC_ID,ADD_VIEWS);
 
-//                intent.putExtra("lOGIN_USER_ID",loginUserId);//可以用MyApplication.userinfo.getUserId();替换
                 intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
                 intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
+                intent.putExtra("BUNDLE",bundle);
 
-                Log.d("CollectionAdapter", "onClick: "+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                Log.d("CollectionAdapter", "onClick:用户= "+dynamicBean.getUserId()+"的动态="+dynamicBean.getDynamicId());
 
                 v.getContext().startActivity(intent);
             }
@@ -297,6 +304,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         viewHolder.contentText.setText(dynamicBean.getContent());
         new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
         new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+        viewHolder.briefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
         viewHolder.userId=dynamicBean.getUserId();
         viewHolder.dynamicId=dynamicBean.getDynamicId();
 

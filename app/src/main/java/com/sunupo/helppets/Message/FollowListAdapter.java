@@ -13,6 +13,7 @@ import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.main.MainActivity;
+import com.sunupo.helppets.util.App;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +60,7 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 UserInfo userInfo=userInfoArrayList.get(position);
-                RongIM.getInstance().startPrivateChat(v.getContext(), "4", "标题");
+                RongIM.getInstance().startPrivateChat(v.getContext(), userInfo.getLoginName()+"", "您（"+App.loginUserInfo.getLoginName()+"）正在与"+userInfo.getLoginName()+"聊天");
 //                RongIM.getInstance().startConversation(view.getContext(),Conversation.ConversationType.PRIVATE,userInfo.getUserId()+"","CONVERSATION_TITLE");
 //                RongIM.getInstance().startSubConversationList(view.getContext(),Conversation.ConversationType.PRIVATE);
 //                Map<String, Boolean> supportedConversation=new HashMap<>();

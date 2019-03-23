@@ -55,6 +55,7 @@
             </android.support.v7.widget.LinearLayoutCompat>
 
         </LinearLayout>
+
         <ImageView
             android:layout_gravity="right"
             android:id="@+id/dynamic_item_icon"
@@ -74,67 +75,19 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="6dp"
         android:textColor="#484848"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:layout_marginLeft="52dp"
         android:layout_marginRight="24dp"
+        android:maxLines="2"
         android:text="从前有座山，山里有座庙，庙里有个老和尚"/>
+
+
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/dynamic_item_content_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:textColor="#484848"
-        android:textSize="14sp"
-
-        android:src="@drawable/dog"/>
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="58dp"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:background="@android:color/white"-->
-        <!--android:elevation="2dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:gravity="center_vertical">-->
-        <!--<TextView-->
-            <!--android:id="@+id/detail_page_do_comment"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="34dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:textColor="#B6B6B6"-->
-            <!--android:textSize="12sp"-->
-            <!--android:text="说点什么吧..."-->
-            <!--android:background="@drawable/comment_bt_selector"-->
-            <!--android:layout_marginLeft="12dp"-->
-            <!--android:layout_marginRight="22dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:paddingLeft="18dp"/>-->
-        <!--<ImageView-->
-            <!--android:layout_width="22dp"-->
-            <!--android:layout_height="22dp"-->
-            <!--android:src="@drawable/icon_collect"/>-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="#9A9A9A"-->
-            <!--android:textSize="14sp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:text="32"/>-->
-
-        <!--<ImageView-->
-            <!--android:layout_width="22dp"-->
-            <!--android:layout_height="22dp"-->
-            <!--android:src="@drawable/icon_work_like"-->
-            <!--android:layout_marginLeft="20dp" />-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="#9A9A9A"-->
-            <!--android:textSize="14sp"-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_marginRight="14dp"-->
-            <!--android:text="66"/>-->
-
-    <!--</LinearLayout>-->
+        android:textSize="14sp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -147,7 +100,7 @@
             android:id="@+id/views_image"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:src="@mipmap/ic_launcher_eye_round"/>
+            android:src="@mipmap/ic_launcher_eye"/>
         <TextView
             android:id="@+id/views_num"
             android:layout_width="wrap_content"
@@ -157,19 +110,19 @@
             android:layout_marginLeft="10dp"
             android:text="0"/>
         <TextView
-            android:visibility="invisible"
-            android:id="@+id/detail_page_do_comment"
+            android:visibility="visible"
+            android:id="@+id/pet_brief_info"
             android:layout_width="0dp"
-            android:layout_height="34dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="#B6B6B6"
             android:textSize="12sp"
-            android:text="说点什么吧..."
+            android:text=" "
             android:background="@drawable/comment_bt_selector"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="22dp"
+            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
-            android:paddingLeft="18dp"/>
+            android:paddingLeft="5dp"/>
+
         <ImageView
             android:id="@+id/collect_image"
             android:layout_width="22dp"
@@ -181,7 +134,7 @@
             android:layout_height="wrap_content"
             android:textColor="#9A9A9A"
             android:textSize="14sp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="1dp"
             android:text="0"/>
 
         <ImageView
@@ -189,15 +142,15 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:src="@drawable/icon_work_like"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginLeft="6dp" />
         <TextView
             android:id="@+id/favorite_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#9A9A9A"
             android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="14dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:text="0"/>
 
     </LinearLayout>

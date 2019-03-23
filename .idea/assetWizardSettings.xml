@@ -45,7 +45,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="message_icon" />
+                                      <entry key="outputName" value="icon_message" />
                                     </map>
                                   </option>
                                 </PersistentState>

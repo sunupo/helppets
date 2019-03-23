@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.sunupo.helppets.Message.MessageFragment;
 import com.sunupo.helppets.Mine.MineFragment;
@@ -95,16 +96,6 @@ public class MainActivity extends AppCompatActivity {
         String uid=intent.getStringExtra("uid");
         String psw=intent.getStringExtra("psw");
 
-//        handler=new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                Gson gson = new Gson();
-//                loginUserInfo = gson.fromJson((String)msg.obj, UserInfo.class);
-//                Log.d(TAG, "handleMessage: loginUserInfo="+loginUserInfo.toString());
-//            }
-//        };
-//        getUserInfoJson(uid);//需要在初始化handler之后使用，否者在message.sendToTarget()报空指针异常
-
 
         final BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
@@ -113,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         viewPager=findViewById(R.id.mian_viewpager);
+        viewPager.setSelected(true);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -128,6 +120,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 menuItem = navigation.getMenu().getItem(i);
                 menuItem.setChecked(true);
+                switch(i){
+                    case 1:
+
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+
+                        break;
+
+                }
             }
 
 
@@ -185,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 //                // TODO: 3/16/2019 发布一条消息测试
 //                Intent intenta=new Intent(this,ImageDownloadActivity.class);
 //                startActivity(intenta);
-                connect(Constants.zhangsanToken);
+//                connect(Constants.zhangsanToken);
                 Map<String, Boolean> supportedConversation=new HashMap<>();
                 supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
                 RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
@@ -333,9 +336,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "onSuccess: ");
                     initConversationList();
                     Log.d(TAG, "onSuccess: initConversationList");
-                    Map<String, Boolean> supportedConversation=new HashMap<>();
-                  supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
-                 RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+//                    Map<String, Boolean> supportedConversation=new HashMap<>();
+//                  supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
+//                 RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
+                    RongIM.getInstance().startSubConversationList(MainActivity.this,Conversation.ConversationType.APP_PUBLIC_SERVICE);
 
 
                 }
@@ -433,5 +437,12 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 判断网络变化，是否需要融云重新connect()
          */
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+        Log.d(TAG, "onDestroy:         RongIM.getInstance().disconnect();\n");
     }
 }

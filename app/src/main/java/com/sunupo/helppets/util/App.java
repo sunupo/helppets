@@ -73,7 +73,12 @@ public class App extends Application {
 //                RedeceTimeSchedule redeceTimeSchedule = new RedeceTimeSchedule();
 //                redeceTimeSchedule.start();
                 mContext = getApplicationContext();
+
                 Log.d(TAG, "onCreate: ");
+        }
+        public static String getCurProvessName(Context context){
+
+            return null;
         }
 
         @Override

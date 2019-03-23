@@ -30,7 +30,7 @@
                 app:expandedTitleMarginEnd="64dp">
 
                 <ImageView
-                    android:id="@+id/detail_page_image"
+                    android:id="@+id/dynamic_image"
                     android:layout_width="match_parent"
                     android:layout_height="248dp"
                     android:scaleType="centerCrop"
@@ -69,7 +69,7 @@
                         android:layout_marginBottom="10dp"
                         android:gravity="center_vertical">
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/detail_page_userLogo"
+                            android:id="@+id/dynamic_user_logo"
                             android:layout_width="48dp"
                             android:layout_height="48dp"
                             android:src="@drawable/user_logo"
@@ -83,20 +83,34 @@
                             android:layout_marginLeft="6dp"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/detail_page_userName"
+                                android:id="@+id/dynamic_user_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#5B595A"
                                 android:textSize="14sp"
                                 android:text="沐风" />
-                            <TextView
-                                android:id="@+id/detail_page_time"
+                            <android.support.v7.widget.LinearLayoutCompat
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1小时前"
-                                android:textSize="12sp"
-                                android:layout_marginTop="3dp"
-                                android:textColor="#989898"/>
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:id="@+id/dynamic_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1小时前"
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="3dp"
+                                    android:textColor="#989898"/>
+                                <TextView
+                                    android:id="@+id/dynamic_address"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1小时前"
+                                    android:textSize="12sp"
+                                    android:layout_marginTop="3dp"
+                                    android:textColor="#989898"/>
+                            </android.support.v7.widget.LinearLayoutCompat>
+
                         </LinearLayout>
                         <ImageView
                             android:id="@+id/follow_image"
@@ -107,7 +121,7 @@
                             android:padding="6dp"/>
                     </LinearLayout>
                     <TextView
-                        android:id="@+id/detail_page_title"
+                        android:id="@+id/if_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="诗和远方"
@@ -117,16 +131,31 @@
                         android:textSize="18sp"
                         android:textColor="#363636"/>
                     <TextView
-                        android:id="@+id/detail_page_story"
+                        android:id="@+id/dynamic_content_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dp"
-                        android:text="水光潋滟晴方好，山色空蒙雨亦奇。\n欲把西湖比西子，淡抹浓妆总相宜。"
+                        android:text="水光潋滟晴方好-山色空蒙雨亦奇。\n\n欲把西湖比西子-淡抹浓妆总相宜。"
                         android:maxLines="10"
                         android:ellipsize="end"
                         android:layout_marginRight="10dp"
                         android:textSize="14sp"
                         android:textColor="#6e6e6e"/>
+
+                    <TextView
+                        android:visibility="visible"
+                        android:id="@+id/pet_brief_info"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="#B6B6B6"
+                        android:textSize="12sp"
+                        android:text=" "
+                        android:background="@drawable/comment_bt_selector"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"/>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
