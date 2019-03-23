@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.UiThread;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -92,11 +93,11 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_main);
-        this.setTitle("详情");
+        this.setTitle("Detail");
 
         Intent intent=getIntent();
         Bundle bundle=intent.getBundleExtra("BUNDLE");
-//        dynamicBean=(DynamicBean) bundle.getSerializable("DYNAMIC_BEAN");
+        dynamicBean=(DynamicBean) bundle.getSerializable("DYNAMIC_BEAN");
 
 
         DYNAMIC_USER_ID=intent.getIntExtra("DYNAMIC_USER_ID",-1);
@@ -117,7 +118,9 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         collectNum=findViewById(R.id.collect_num);
         petBriefInfo=findViewById(R.id.pet_brief_info);
 
-        getOneDynamicContent(App.loginUserInfo.getLoginName(),DYNAMIC_USER_ID,DYNAMIC_ID,Constants.httpip+"/getDynamic");
+        initDynamicContent();
+
+//        getOneDynamicContent(App.loginUserInfo.getLoginName(),DYNAMIC_USER_ID,DYNAMIC_ID,Constants.httpip+"/getDynamic");
 
         View.OnClickListener followListener=new View.OnClickListener() {
             @Override
@@ -235,9 +238,15 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         initFollowCollectFavorite();
                         break;
                     case 99:
+                        Log.d(TAG, "handleMessage: 99");
                         dynamicBean=new Gson().fromJson((String)msg.obj,DynamicBean.class);
                         Log.d(TAG, "handleMessage:pureDynamic= "+dynamicBean.toString());
-                        initDynamicContent();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initDynamicContent();//运行在ui线程
+                            }
+                        });
 
                 }
             }
