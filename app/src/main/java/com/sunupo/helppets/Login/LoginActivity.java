@@ -110,12 +110,11 @@ public class LoginActivity extends AppCompatActivity
 //        			else(读取数据库的token);
         			break;
         		case 1 :
-//					connect(Constants.zhangsanToken);
+
 					Gson gson = new Gson();
 					loginUserInfo = gson.fromJson((String)msg.obj, UserInfo.class);
 					Log.d(TAG, "handleMessage: loginUserInfo="+loginUserInfo.toString());
 					if(loginUserInfo.getSuccessCode()==1){
-
 						try{
 							firstLogin=sp.getString("FIRST_LOGIN","true");
 							if(firstLogin.equals("true")){
