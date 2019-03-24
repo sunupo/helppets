@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -37,7 +38,9 @@ import android.widget.Toast;
 
 import com.sunupo.helppets.Login.LoginActivity;
 import com.sunupo.helppets.R;
+import com.sunupo.helppets.comment.CommentMainActivity;
 import com.sunupo.helppets.test.ImageDownloadActivity;
+import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.CityBaseActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.UploadImage;
@@ -161,7 +164,10 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         View.OnClickListener releaseListener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(GetLocalPhotoActivity.this,"您暂时不能发言，请联系挂管理员",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = connectivityManager
                         .getActiveNetworkInfo();
@@ -316,15 +322,36 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 }
                 if(resCode.equals("1"))//成功
                 {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(GetLocalPhotoActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
+                            GetLocalPhotoActivity.this.finish();
+                        }
+                    });
                     return 1;
                 }
                 else if(resCode.equals("-2"))//禁言
                 {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(GetLocalPhotoActivity.this,"你暂时不能说话，请联系管理员！",Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
                     return -2;
                 }
             }
             else
             {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(GetLocalPhotoActivity.this,"发布失败！",Toast.LENGTH_SHORT).show();
+
+                    }
+                });
                 return -1;//失败
             }
         } catch (MalformedURLException e) {

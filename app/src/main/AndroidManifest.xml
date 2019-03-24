@@ -170,7 +170,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ReleaseDynamic.GetLocalPhotoActivity"/>
         <activity android:name=".test.ImageDownloadActivity"/>
-
+        <activity android:name=".user.UserMainPageActivity"/>
         <!--android:authorities="您的 ApplicationId.FileProvider"-->
         <!--<provider-->
             <!--android:name="android.support.v4.content.FileProvider"-->

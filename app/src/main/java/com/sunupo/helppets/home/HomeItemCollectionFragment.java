@@ -86,6 +86,13 @@ public class HomeItemCollectionFragment extends Fragment {
                 ,sp.getString(Constants.LOGIN_NAME,Constants.LOGIN_NAME));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
+                ,sp.getString(Constants.LOGIN_NAME,Constants.LOGIN_NAME));
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.UiThread;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +60,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     private List<CommentDetailBean> commentsList;
     private BottomSheetDialog dialog;
     private String testJson=Constants.TEST_JSON;
-    private Handler handler;
+
     int DYNAMIC_USER_ID;
     int DYNAMIC_ID;
     private final String followFlag="已关注";
@@ -76,6 +77,54 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
 
     final String COMMENT_DATA_URL=Constants.httpip + "/getCommentJson";
 
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case 1:
+                    testJson=(String)msg.obj;
+                    initView();
+                    break;
+                case 2:
+                    followCollectFavorite=new Gson().fromJson((String)msg.obj,FollowCollectFavorite.class);
+                    Log.d(TAG, "handleMessage:followCollectFavorite= "+followCollectFavorite.toString());
+                    initFollowCollectFavorite();
+                    break;
+                case 99:
+                    Log.d(TAG, "handleMessage: 99");
+                    dynamicBean=new Gson().fromJson((String)msg.obj,DynamicBean.class);
+                    Log.d(TAG, "handleMessage:pureDynamic= "+dynamicBean.toString());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initDynamicContent();//运行在ui线程
+                        }
+                    });
+                    break;
+                case 10:
+                    switch (msg.arg1){
+                        case 1:
+                            Toast.makeText(CommentMainActivity.this,"你应经申请了，直接联系他，或者等待回复吧",Toast.LENGTH_LONG).show();
+                            break;
+                        case 2:
+                            Toast.makeText(CommentMainActivity.this,"你上次已经申请成功了!",Toast.LENGTH_SHORT).show();
+                            break;
+                        case 3:
+                            Toast.makeText(CommentMainActivity.this,"你上次上次申请过了，没有通过!",Toast.LENGTH_SHORT).show();
+                            break;
+                        case -2:
+                            Toast.makeText(CommentMainActivity.this,"您暂时不能说话",Toast.LENGTH_SHORT).show();
+                            break;
+                        case -1:
+                            Toast.makeText(CommentMainActivity.this,"提交失败,请重试",Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    break;
+
+            }
+        }
+    };
+
     // TODO: 3/23/2019  
     private void initDynamicContent(){
         new DownloadImageTask(dynamicUserLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
@@ -85,7 +134,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         dynamictTime.setText(array[0]+"-"+array[1]+"-"+array[2]+" "+array[3]+":"+array[4]+":"+array[5]);
         dynamicAddress.setText(dynamicBean.getProvince()+"-"+dynamicBean.getCity());
         dynamicContentText.setText(dynamicBean.getContent());
-        ifSend.setText(dynamicBean.getIsSend());
+        ifSend.setText(dynamicBean.getIsSend()+dynamicBean.getType5()+"的"+dynamicBean.getType3());
         petBriefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
     }
 
@@ -224,33 +273,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         favoriteImage.setOnClickListener(favoriteListener);
 
 
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch(msg.what){
-                    case 1:
-                        testJson=(String)msg.obj;
-                        initView();
-                        break;
-                    case 2:
-                        followCollectFavorite=new Gson().fromJson((String)msg.obj,FollowCollectFavorite.class);
-                        Log.d(TAG, "handleMessage:followCollectFavorite= "+followCollectFavorite.toString());
-                        initFollowCollectFavorite();
-                        break;
-                    case 99:
-                        Log.d(TAG, "handleMessage: 99");
-                        dynamicBean=new Gson().fromJson((String)msg.obj,DynamicBean.class);
-                        Log.d(TAG, "handleMessage:pureDynamic= "+dynamicBean.toString());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                initDynamicContent();//运行在ui线程
-                            }
-                        });
 
-                }
-            }
-        };
         //todo 根据loginUserId，dynaicUserId,dynamicId去服务器获取数据,得到做新的followflag，collectflag，favoriteflag
         getLatestFollowCollectFavorite(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID);
 //        根据参数得到评论信息
@@ -302,8 +325,10 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         expandableListView = (CommentExpandableListView) findViewById(R.id.detail_page_lv_comment);
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
@@ -373,6 +398,11 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             finish();
             return true;
         }
+        if(item.getItemId()==R.id.menu_apply){
+            // TODO: 3/24/2019 发送申请宠物的申请数据到数据库
+            showApplyDialog();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -405,6 +435,10 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onClick(View view) {
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(CommentMainActivity.this,"您暂时不能发言，请联系管理员",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String commentContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(commentContent)){
 
@@ -467,6 +501,10 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(CommentMainActivity.this,"您暂时不能发言，请联系管理员",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String replyContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(replyContent)){
 
@@ -521,6 +559,76 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         });
         dialog.show();
     }
+
+    /**
+     * func:弹出申请框
+     */
+    private void showApplyDialog(){
+        dialog = new BottomSheetDialog(this);
+        View commentView = LayoutInflater.from(this).inflate(R.layout.comment_apply_layout,null);
+        final EditText applyText = (EditText) commentView.findViewById(R.id.dialog_apply_et);
+        final Button bt_apply = (Button) commentView.findViewById(R.id.dialog_apply_bt);
+        dialog.setContentView(commentView);
+        /**
+         * 解决bsd显示不全的情况
+         */
+        View parent = (View) commentView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        commentView.measure(0,0);
+        behavior.setPeekHeight(commentView.getMeasuredHeight());
+
+        bt_apply.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(CommentMainActivity.this,"您暂时不能发言，请联系管理员",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String applyContent = applyText.getText().toString().trim();
+                if(!TextUtils.isEmpty(applyContent)){
+
+                    //commentOnWork(commentContent);
+                    dialog.dismiss();
+                    // TODO: 3/16/2019 根据申请内容 ，往数据库写数据，Constants.httpip+"/apply"
+                    Calendar calendar = Calendar.getInstance();
+                    String currentTime=calendar.get(Calendar.YEAR)
+                            +"-"+(calendar.get(Calendar.MONTH)+1)
+                            +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
+                            " "+calendar.get(Calendar.HOUR_OF_DAY)+
+                            ":"+calendar.get(Calendar.MINUTE)+
+                            ":"+calendar.get(Calendar.SECOND);
+
+                    setApplyData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,applyContent,currentTime);
+
+                }else {
+                }
+            }
+        });
+        applyText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(!TextUtils.isEmpty(charSequence) && charSequence.length()>2){
+                    bt_apply.setBackgroundColor(Color.parseColor("#FFB568"));
+                }else {
+                    bt_apply.setBackgroundColor(Color.parseColor("#D8D8D8"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        dialog.show();
+    }
+
+
 
     /**
      * 从数据库请求评论数据
@@ -645,6 +753,50 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
+
+    /**
+     * 把申请内容写到数据库
+     * @param applyUid
+     * @param toUid
+     * @param dynamicId
+     * @param applyContent
+     * @param applyTime
+     */
+    private void setApplyData(final int applyUid,final int toUid,final int dynamicId,final String applyContent,final String applyTime){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("applyUid",applyUid+"")
+                            .add("toUid",toUid+"")
+                            .add("dynamicId",dynamicId+"")
+                            .add("applyContent",applyContent+"")
+                            .add("applyTime",applyTime+"").build();//
+                    Request request = new Request.Builder().url(Constants.httpip+"/setApplyData").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    int code=Integer.parseInt(responseData);
+                    Log.d(TAG, "run: code="+code);
+                    Log.d(TAG, "run: setApplyData responseData="+responseData);
+                    Message message=Message.obtain(handler,10,code,3,responseData);
+                    message.sendToTarget();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 由于在上个界面可能操作了点赞，收藏关注，是直接发送请求到数据库
@@ -853,6 +1005,12 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.comment_activity_menu,menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 }

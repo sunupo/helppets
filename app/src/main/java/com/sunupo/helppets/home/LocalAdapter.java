@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
+import com.sunupo.helppets.user.UserMainPageActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.DownloadImageTask;
 import com.sunupo.helppets.util.App;
@@ -289,6 +290,27 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder>{
             }
         };
         holder.favoriteImage.setOnClickListener(favoriteListener);
+
+        //点击某个用户头像，查看他的主页
+        View.OnClickListener detailListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position=holder.getAdapterPosition();
+                DynamicBean dynamicBean=dynamicBeanArrayList.get(position);
+                final int DYNAMIC_USER_ID=dynamicBean.getUserId();
+                final int DYNAMIC_ID=dynamicBean.getDynamicId();
+                Intent intent=new Intent(v.getContext(),UserMainPageActivity.class);
+                intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
+                intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
+                intent.putExtra("BUNDLE",bundle);
+
+                v.getContext().startActivity(intent);
+
+            }
+        };
+        holder.logo.setOnClickListener(detailListener);
         return holder;
     }
 

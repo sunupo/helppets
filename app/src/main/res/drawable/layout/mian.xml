@@ -46,7 +46,7 @@
 
 
     <android.support.design.widget.BottomNavigationView
-        android:visibility="invisible"
+        android:visibility="visible"
         app:labelVisibilityMode="selected"
         android:id="@+id/navigation"
         android:layout_width="0dp"

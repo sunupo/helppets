@@ -1,6 +1,5 @@
-package com.sunupo.helppets.home;
+package com.sunupo.helppets.user;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,20 +8,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.DynamicBeanData;
-import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.App;
+import com.sunupo.helppets.util.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,11 +29,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static android.content.Context.MODE_PRIVATE;
+public class MineItemDynamicFragment extends Fragment {
 
-public class HomeItemSquareFragment extends Fragment {
 
-    private final String TAG="HomeItemSquareFragment";
+    private final String TAG="MineItemDynamicFragment";
 
     private RecyclerView recyclerView;
     final String province="" ;
@@ -50,78 +45,69 @@ public class HomeItemSquareFragment extends Fragment {
     final String limitNumTo="100";
     private  ArrayList<DynamicBean> dynamicBeanArrayList=new ArrayList<>();
 
-    ImageView researchImageView;
-    EditText editText;
-    SquareAdapter squareAdapter;
-    Handler handler;
-    SharedPreferences sp=null;
-    View.OnClickListener researchListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-            sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,editText.getText().toString(),createTime,limitNumFrom,limitNumTo
-                    ,App.loginUserInfo.getLoginName());
-            squareAdapter.notifyDataSetChanged();
-        }
-    };
+    private Handler handler;
+    MineDynamicAdapter dynamicAdapter;
+    Bundle bundle;
+    DynamicBean dynamicBean;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sp=this.getActivity().getSharedPreferences(Constants.LoginInfo,MODE_PRIVATE);
-        handler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what){
-                    case 1:
-                        if(msg.arg1==1){
-                            dynamicBeanArrayList.clear();
-                            dynamicBeanArrayList.addAll((ArrayList<DynamicBean>)msg.obj);
-                            squareAdapter.notifyDataSetChanged();
-                            Log.d(TAG, "handleMessage: squareAdapter.notifyDataSetChanged();");
-                        }else{
-                            Log.d(TAG, "handleMessage: 没有人发布动态到广场square");
-                        }
-                        break;
 
-                }
-            }
-        };
-        sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                ,App.loginUserInfo.getLoginName());
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                ,sp.getString(Constants.LOGIN_NAME,Constants.LOGIN_NAME));
+        Log.d(TAG, "onCreate: "+((DynamicBean)(getArguments().getSerializable("DYNAMIC_BEAN"))).getLoginName());
+        bundle=getArguments();
+        dynamicBean=(DynamicBean) bundle.getSerializable("DYNAMIC_BEAN");
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_square,container,false);
-        researchImageView=view.findViewById(R.id.research_image_view);
-        editText=view.findViewById(R.id.research_Content);
-        researchImageView.setOnClickListener(researchListener);
 
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
-        recyclerView=view.findViewById(R.id.square_recycler_view);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-//        recyclerView.setLayoutManager(linearLayoutManager);
-        squareAdapter=new SquareAdapter(dynamicBeanArrayList);
-        squareAdapter.setHttpRequest(new SquareAdapter.HttpRequest() {
+
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+
+                switch (msg.what){
+                    case 1:
+                        if(msg.arg1==1){
+                            dynamicBeanArrayList.clear();
+                            for(int i=0;i<((ArrayList<DynamicBean>)(msg.obj)).size();i++){
+                                if(((ArrayList<DynamicBean>)(msg.obj)).get(i).getLoginName().equals(((DynamicBean)(getArguments().getSerializable("DYNAMIC_BEAN"))).getLoginName())){
+                                    dynamicBeanArrayList.add(   ((ArrayList<DynamicBean>)(msg.obj)).get(i)  );
+                                }
+                            }
+                            dynamicAdapter.notifyDataSetChanged();
+                            Log.d(TAG, "handleMessage: squareAdapter.notifyDataSetChanged();");
+                        }else{
+                            //必须把自己排除在外，不然同城用户全是自己
+                            Log.d(TAG, "handleMessage: 没有同城用户");
+                        }
+                }
+            }
+        };
+        sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
+                ,App.loginUserInfo.getLoginName());
+        View view=inflater.inflate(R.layout.fragment_local,container,false);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
+        recyclerView=view.findViewById(R.id.local_recycler_view);
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(linearLayoutManager);
+        dynamicAdapter  =new MineDynamicAdapter(dynamicBeanArrayList);
+        dynamicAdapter.setHttpRequest(new MineDynamicAdapter.HttpRequest() {
             @Override
             public void sendRequest() {
                 sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
                         ,App.loginUserInfo.getLoginName());            }
         });
-        recyclerView.setAdapter(squareAdapter);
+        recyclerView.setAdapter(dynamicAdapter);
+        recyclerView.setAdapter(dynamicAdapter);
 
         return view;
     }
 
     //筛选获得动态dynamic的数据
+//    在创建了handler之后调用
     private void sendRequestWithHttpURLConnectionHaveParam(final String province ,final String city,final String type1,final String type2
             ,final String type3,final String createTime,final String limitNumFrom,final String limitNumTo,final String loginName) {
         Thread t = new Thread(new Runnable() {
@@ -139,7 +125,10 @@ public class HomeItemSquareFragment extends Fragment {
                     Request request = new Request.Builder().url(Constants.httpip + "/getDynamicJson").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
+                    Log.d(TAG, "run: "+responseData);
                     parseJSONWithJSONObject(responseData);
+//                    Message message=Message.obtain(handler,1,2,3,responseData);
+//                    message.sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

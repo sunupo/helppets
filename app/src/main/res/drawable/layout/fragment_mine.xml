@@ -1,9 +1,387 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:zsg="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:background="@drawable/border_grey"
+    android:orientation="vertical">
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#bdc7c0"
+            android:orientation="vertical">
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="#fffdfd">
+                <android.support.design.circularreveal.CircularRevealGridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="horizontal"
+                    android:columnCount="3"
+                    android:rowCount="1">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:src="@drawable/keji"
+                        android:id="@+id/user_logo"
+                        android:layout_rowWeight="1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_columnSpan="1"/>
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_gravity="center"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_rowWeight="4">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/user_login_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:text="孙敬钦"
+                            android:textColor="#216e81"
+                            android:textSize="18sp" />
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/user_user_id"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:text="ID:123456 "
+                                android:textColor="#a9a9a9"
+                                android:textSize="14sp" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:gravity="right"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:text="状态："
+                                android:textColor="#a9a9a9"
+                                android:textSize="14sp" />
+                            <!--禁言，正常-->
+                            <android.support.v7.widget.AppCompatTextView
+                                android:textStyle="italic"
+                                android:id="@+id/user_state"
+                                android:layout_width="match_parent"
+                                android:layout_height="30dp"
+                                android:layout_weight="1"
+                                android:text="正常 "
+                                android:textColor="#38715d"
+                                android:textSize="14sp" />
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_rowWeight="1"
+                            android:textColor="#9bab97"
+                            android:textSize="16sp"
+                            android:text="登陆天数"
+                            android:background="@drawable/linearlayout_corner"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/join_days"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_rowWeight="1"
+                            android:textColor="#080808"
+                            android:textSize="10sp"
+                            android:text="22"
+                            android:background="@drawable/linearlayout_corner"/>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
 
 
-</LinearLayout>
+
+                </android.support.design.circularreveal.CircularRevealGridLayout>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:background="@drawable/border_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp" />
+
+
+                <!--我的粉丝 我的关注 收获的点赞，自己的收藏-->
+                <GridLayout
+                    android:layout_gravity="center"
+                    android:orientation="horizontal"
+                    android:rowCount="2"
+                    android:columnCount="4"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:textColor="#a1ab9f"
+                        android:text="粉丝"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_rowWeight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:textColor="#a1ab9f"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_rowWeight="1"
+                        android:text="关注"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <android.support.v7.widget.AppCompatTextView
+                        android:textColor="#a1ab9f"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_rowWeight="1"
+                        android:text="获赞"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="获藏"
+                        android:textColor="#a1ab9f"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+
+                        android:id="@+id/his_fans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="22"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/his_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="22"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/his_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="12"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/his_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_rowWeight="1"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:text="33"
+                        android:textStyle="bold" />
+
+
+
+
+                </GridLayout>
+
+
+                <!--用来显示通知、申请消息-->
+                <android.support.v7.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_white"
+                    android:orientation="vertical">
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_marginLeft="5dp"
+                            android:text="消息"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_weight="2"/>
+
+                        <!--android:text="想要领养一只金毛犬"-->
+                        <com.gongwen.marqueen.SimpleMarqueeView
+                            android:layout_weight="5"
+                            android:id="@+id/simpleMarqueeView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:flipInterval="2500"
+                            android:inAnimation="@anim/in_right"
+                            android:outAnimation="@anim/out_left"
+                            app:marqueeAnimDuration="2000"
+                            app:smvTextColor="#9e1111"
+                            app:smvTextEllipsize="end"
+                            app:smvTextGravity="center_vertical"
+                            app:smvTextSingleLine="true"
+                            app:smvTextSize="15sp"/>
+
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:alpha="0"/>
+
+            <!--我的申请,切换会否可以显示-->
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/apply_layout"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="35dp"
+                android:background="#ffffff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/apply_list"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/message" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="我的申请"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.LinearLayoutCompat>
+            <!--点击我的申请，RecyclerView才显示；再次点击就隐藏-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/apply_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp">
+            </android.support.v7.widget.RecyclerView>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:alpha="0"/>
+            <!--收到的申请-->
+            <android.support.v7.widget.LinearLayoutCompat
+                android:id="@+id/get_apply_layout"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_height="35dp"
+                android:background="#ffffff"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/get_apply_list"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/message" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:text="收到的申请"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.LinearLayoutCompat>
+            <!--点击我的申请，RecyclerView才显示；再次点击就隐藏-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/get_apply_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"/>
+
+            <!--TabLayout+viewPager-->
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linearlayout_corner"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/mine_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill"
+                    app:tabTextColor="@color/colorPrimary"
+                    app:tabIndicatorColor="@color/liji_c_blue"
+                    app:tabSelectedTextColor="@color/liji_material_red_500">
+                </android.support.design.widget.TabLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/mine_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp">
+
+                </android.support.v4.view.ViewPager>
+
+            </android.support.v7.widget.LinearLayoutCompat>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.v7.widget.LinearLayoutCompat>

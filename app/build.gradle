@@ -113,8 +113,8 @@ dependencies {
     implementation project(':IMKit')
     implementation files('libs/codec.jar')
     implementation files('libs/alipaySdk-20180316.jar')
-//    跑马灯text view
-    implementation 'com.gongwen:marqueelibrary:1.0.4'
+//    跑马灯textview：地址https://github.com/gongwen/MarqueeViewLibrary
+    implementation 'com.gongwen:marqueelibrary:1.1.3'
 }
 repositories {
     maven { url 'https://maven.google.com/'}

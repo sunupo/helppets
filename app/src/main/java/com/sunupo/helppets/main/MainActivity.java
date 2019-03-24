@@ -192,9 +192,6 @@ public class MainActivity extends AppCompatActivity {
                 Map<String, Boolean> supportedConversation=new HashMap<>();
                 supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);
                 RongIM.getInstance().startConversationList(MainActivity.this,supportedConversation);
-
-
-
 //                RongIM.getInstance().startSubConversationList(MainActivity.this,Conversation.ConversationType.PRIVATE);
 //                Map<String, Boolean> supportedConversation=new HashMap<>();
 //                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(),false);

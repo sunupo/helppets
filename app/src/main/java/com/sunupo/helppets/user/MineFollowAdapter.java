@@ -1,4 +1,4 @@
-package com.sunupo.helppets.home;
+package com.sunupo.helppets.user;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,10 +18,9 @@ import android.widget.TextView;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
-import com.sunupo.helppets.user.UserMainPageActivity;
+import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.DownloadImageTask;
-import com.sunupo.helppets.util.App;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,10 +33,10 @@ import okhttp3.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder>{
+public class MineFollowAdapter extends RecyclerView.Adapter<MineFollowAdapter.ViewHolder>{
 
     private ArrayList<DynamicBean> dynamicBeanArrayList;
-    private final String TAG="SquareAdapter";
+    private final String TAG="MineDynamicAdapter";
     SharedPreferences sp=null;
     private int loginUserId=0;
     Handler  handler=new Handler() {
@@ -87,6 +86,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         TextView favoriteNum;
         ImageView viewsImage;
         TextView viewsNum;
+
         TextView briefInfo;
 
         int userId;
@@ -114,7 +114,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         }
     }
 
-    public SquareAdapter(ArrayList<DynamicBean> dynamicBeanArrayList) {
+    public MineFollowAdapter(ArrayList<DynamicBean> dynamicBeanArrayList) {
         this.dynamicBeanArrayList = dynamicBeanArrayList;
 //        if(dynamicBeanArrayList.size()>0){
 //            loginUserId=dynamicBeanArrayList.get(0).getLoginUserId();
@@ -125,7 +125,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
 
     @NonNull
     @Override
-    public SquareAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public MineFollowAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View itemView= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_collection,viewGroup,false);
         ViewHolder holder=new ViewHolder(itemView);
@@ -150,7 +150,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                 bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
                 intent.putExtra("BUNDLE",bundle);
 
-                Log.d(TAG, "onClick: "+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                Log.d("MineDynamicAdapter", "onClick:用户= "+dynamicBean.getUserId()+"的动态="+dynamicBean.getDynamicId());
 
                 v.getContext().startActivity(intent);
             }
@@ -180,7 +180,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         holder.dynamicItemIcon.setImageAlpha(128);
                         sendRequestWithHttpURLConnectionFollow(loginUserId,DYNAMIC_USER_ID,"0",FOLLOW);
 //                        holder.dynamicItemIcon.setColorFilter(Color.parseColor("#aaaaaa"));
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"取消关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"取消关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
 
                     case 128://128代表没有关注
@@ -189,14 +189,14 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         holder.dynamicItemIcon.setImageAlpha(255);
                         sendRequestWithHttpURLConnectionFollow(loginUserId,DYNAMIC_USER_ID,"1",FOLLOW);
 //                        holder.dynamicItemIcon.setColorFilter(Color.parseColor("#FF5C5C"));
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
 //                    default:
 //                        holder.dynamicItemIcon.setImageResource(R.mipmap.ic_launcher_people);
 //                        holder.dynamicItemIcon.setImageAlpha(255);
 //                        sendRequestWithHttpURLConnectionFollow(loginUserId,DYNAMIC_USER_ID,"1",FOLLOW);
 ////                        holder.dynamicItemIcon.setColorFilter(Color.parseColor("#FF5C5C"));
-//                        Log.d(TAG, "onClick: "+LOGIN_NAME+"关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+//                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"关注"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
 //                        break;
                 }
             }
@@ -225,7 +225,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         if(Integer.parseInt(holder.collectNum.getText().toString())>0)
                             holder.collectNum.setText((Integer.parseInt(holder.collectNum.getText().toString())-1)+"");
                         sendRequestWithHttpURLConnectionCollect(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"取消收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"取消收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
                     case 128://128代表没有收藏
 
@@ -233,14 +233,14 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         holder.collectImage.setImageAlpha(255);
                         holder.collectNum.setText((Integer.parseInt(holder.collectNum.getText().toString())+1)+"");
                         sendRequestWithHttpURLConnectionCollect(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
 //                    default:
 //                        holder.collectImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
 //                        holder.collectImage.setImageAlpha(255);
 //                        holder.collectNum.setText((Integer.parseInt(holder.collectNum.getText().toString())+1)+"");
 //                        sendRequestWithHttpURLConnectionCollect(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-//                        Log.d(TAG, "onClick: "+LOGIN_NAME+"收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+//                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"收藏"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
 //                        break;
                 }
             }
@@ -269,7 +269,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         if(Integer.parseInt(holder.favoriteNum.getText().toString())>0)
                             holder.favoriteNum.setText((Integer.parseInt(holder.favoriteNum.getText().toString())-1)+"");
                         sendRequestWithHttpURLConnectionFavorite(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"0",URL);
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"取消点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"取消点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
                     case 128://128代表没有点赞
 
@@ -277,45 +277,24 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                         holder.favoriteImage.setImageAlpha(255);
                         holder.favoriteNum.setText((Integer.parseInt(holder.favoriteNum.getText().toString())+1)+"");
                         sendRequestWithHttpURLConnectionFavorite(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-                        Log.d(TAG, "onClick: "+LOGIN_NAME+"点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
                         break;
 //                    default:
 //                        holder.favoriteImage.setColorFilter(Color.parseColor(Constants.COLOR_DARK));
 //                        holder.favoriteImage.setImageAlpha(255);
 //                        holder.favoriteNum.setText((Integer.parseInt(holder.favoriteNum.getText().toString())+1)+"");
 //                        sendRequestWithHttpURLConnectionFavorite(loginUserId,DYNAMIC_USER_ID,DYNAMIC_ID,"1",URL);
-//                        Log.d(TAG, "onClick: "+LOGIN_NAME+"点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
+//                        Log.d("MineDynamicAdapter", "onClick: "+LOGIN_NAME+"点赞"+dynamicBean.getUserId()+"-"+dynamicBean.getDynamicId());
 //                        break;
                 }
             }
         };
         holder.favoriteImage.setOnClickListener(favoriteListener);
-        //点击某个用户头像，查看他的主页
-        View.OnClickListener detailListener=new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position=holder.getAdapterPosition();
-                DynamicBean dynamicBean=dynamicBeanArrayList.get(position);
-                final int DYNAMIC_USER_ID=dynamicBean.getUserId();
-                final int DYNAMIC_ID=dynamicBean.getDynamicId();
-                Intent intent=new Intent(v.getContext(),UserMainPageActivity.class);
-                intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
-                intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
-                intent.putExtra("BUNDLE",bundle);
-
-                v.getContext().startActivity(intent);
-
-            }
-        };
-        holder.logo.setOnClickListener(detailListener);
-
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SquareAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull MineFollowAdapter.ViewHolder viewHolder, int i) {
 
         DynamicBean dynamicBean=dynamicBeanArrayList.get(i);
         String[] array=dynamicBean.getCreateTime().split("-");
@@ -325,9 +304,11 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         viewHolder.contentText.setText(dynamicBean.getContent());
         new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
         new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
-        viewHolder.briefInfo.setVisibility(View.GONE);
+        viewHolder.briefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
         viewHolder.userId=dynamicBean.getUserId();
         viewHolder.dynamicId=dynamicBean.getDynamicId();
+        viewHolder.dynamicItemIcon.setVisibility(View.INVISIBLE);
+
 
         // TODO: 3/19/2019 通过loginName， dynamicUserId，查询是否关注
 //        final String FOLLOW=Constants.httpip+"/follow";
@@ -387,7 +368,9 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
 
                 try {
                     OkHttpClient client = new OkHttpClient();
-                    RequestBody requestBody = new FormBody.Builder().add("userId",dynaimcUserId+"").add("dynamicId",dynamicId+"").build();//
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("userId",dynaimcUserId+"")
+                            .add("dynamicId",dynamicId+"").build();//
                     Request request = new Request.Builder().url(commentDataUrl).post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
@@ -416,6 +399,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
 
     private void sendRequestWithHttpURLConnectionFollow(final int loginUserId ,final int dynamicUserId
             ,final String followFlag,final String url) {
+        Log.d(TAG, "sendRequestWithHttpURLConnectionFollow: "+"loginUserId="+loginUserId);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -452,6 +436,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         }
     }
     private void sendRequestWithHttpURLConnectionCollect(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String collectFlag,final String url) {
+        Log.d(TAG, "sendRequestWithHttpURLConnectionCollect: "+"loginUserId="+loginUserId);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -486,6 +471,7 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         }
     }
     private void sendRequestWithHttpURLConnectionFavorite(final int loginUserId ,final int dynamicUserId,final int dynamicId,final String favoriteFlag,final String url) {
+        Log.d(TAG, "sendRequestWithHttpURLConnectionFavorite: "+"loginUserId="+loginUserId);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
