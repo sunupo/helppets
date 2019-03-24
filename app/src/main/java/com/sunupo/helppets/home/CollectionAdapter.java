@@ -312,6 +312,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
             }
         };
         holder.logo.setOnClickListener(detailListener);
+        holder.displayTime.setOnClickListener(detailListener);
+        holder.usernameName.setOnClickListener(detailListener);
+        holder.displayCity.setOnClickListener(detailListener);
         return holder;
     }
 

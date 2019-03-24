@@ -310,6 +310,9 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
             }
         };
         holder.logo.setOnClickListener(detailListener);
+        holder.displayTime.setOnClickListener(detailListener);
+        holder.usernameName.setOnClickListener(detailListener);
+        holder.displayCity.setOnClickListener(detailListener);
 
         return holder;
     }

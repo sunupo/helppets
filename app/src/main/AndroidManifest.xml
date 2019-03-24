@@ -153,7 +153,9 @@
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Login.LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -162,9 +164,12 @@
         </activity>
         <activity
             android:name=".main.MainActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Login.ResetAccountActivity"/>
-        <activity android:name=".Login.RegisterActivity"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login.ResetAccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Login.RegisterActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".comment.CommentMainActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:screenOrientation="portrait"/>

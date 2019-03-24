@@ -31,6 +31,7 @@ import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.DynamicBeanData;
 import com.sunupo.helppets.bean.FollowCollectFavorite;
+import com.sunupo.helppets.user.UserMainPageActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.DownloadImageTask;
@@ -166,6 +167,28 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         collectImage=findViewById(R.id.collect_image);
         collectNum=findViewById(R.id.collect_num);
         petBriefInfo=findViewById(R.id.pet_brief_info);
+
+        //点击某个用户头像，查看他的主页
+        View.OnClickListener detailListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int DYNAMIC_USER_ID=dynamicBean.getUserId();
+                final int DYNAMIC_ID=dynamicBean.getDynamicId();
+                Intent intent=new Intent(v.getContext(),UserMainPageActivity.class);
+                intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
+                intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
+                Bundle bundle=new Bundle();
+                bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
+                intent.putExtra("BUNDLE",bundle);
+
+                v.getContext().startActivity(intent);
+
+            }
+        };
+        dynamicUserLogo.setOnClickListener(detailListener);
+        dynamicUserName.setOnClickListener(detailListener);
+        dynamictTime.setOnClickListener(detailListener);
+        dynamicAddress.setOnClickListener(detailListener);
 
         initDynamicContent();
 
@@ -449,9 +472,9 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     String currentTime=calendar.get(Calendar.YEAR)
                             +"-"+(calendar.get(Calendar.MONTH)+1)
                             +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
-                            " "+calendar.get(Calendar.HOUR_OF_DAY)+
-                            ":"+calendar.get(Calendar.MINUTE)+
-                            ":"+calendar.get(Calendar.SECOND);
+                            "_"+calendar.get(Calendar.HOUR_OF_DAY)+
+                            "-"+calendar.get(Calendar.MINUTE)+
+                            "-"+calendar.get(Calendar.SECOND);
                     CommentDetailBean detailBean = new CommentDetailBean(App.loginUserInfo.getLoginName(), commentContent,currentTime);
                     adapter.addTheCommentData(detailBean);
                     setCommentData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,commentContent,currentTime);
@@ -517,9 +540,9 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     String currentTime=calendar.get(Calendar.YEAR)
                             +"-"+(calendar.get(Calendar.MONTH)+1)
                             +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
-                            " "+calendar.get(Calendar.HOUR_OF_DAY)+
-                            ":"+calendar.get(Calendar.MINUTE)+
-                            ":"+calendar.get(Calendar.SECOND);
+                            "-"+calendar.get(Calendar.HOUR_OF_DAY)+
+                            "-"+calendar.get(Calendar.MINUTE)+
+                            "-"+calendar.get(Calendar.SECOND);
 //                    TODO 怎么获取当前的COMMENTID
 //                    commentsList.get(position).getId();
                     try{
@@ -595,9 +618,9 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     String currentTime=calendar.get(Calendar.YEAR)
                             +"-"+(calendar.get(Calendar.MONTH)+1)
                             +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
-                            " "+calendar.get(Calendar.HOUR_OF_DAY)+
-                            ":"+calendar.get(Calendar.MINUTE)+
-                            ":"+calendar.get(Calendar.SECOND);
+                            "-"+calendar.get(Calendar.HOUR_OF_DAY)+
+                            "-"+calendar.get(Calendar.MINUTE)+
+                            "-"+calendar.get(Calendar.SECOND);
 
                     setApplyData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,applyContent,currentTime);
 

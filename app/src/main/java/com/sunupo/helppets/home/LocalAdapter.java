@@ -311,6 +311,9 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder>{
             }
         };
         holder.logo.setOnClickListener(detailListener);
+        holder.displayTime.setOnClickListener(detailListener);
+        holder.usernameName.setOnClickListener(detailListener);
+        holder.displayCity.setOnClickListener(detailListener);
         return holder;
     }
 
