@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -14,16 +15,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -47,6 +54,8 @@ import com.sunupo.helppets.util.UploadImage;
 import com.youth.picker.PickerView;
 import com.youth.picker.entity.PickerData;
 import com.youth.picker.listener.OnPickerClickListener;
+
+import static com.alipay.sdk.app.statistic.c.v;
 
 /**
  * @address BeiJing
@@ -77,6 +86,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
     private final String Separatior="-";
 
     SharedPreferences sp=null;
+    private Uri photoUri1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +104,43 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 ,Constants.LOGIN_NAME);
         //获取ImageView控件
         imageView = (ImageView) findViewById(R.id.takePhoto_imageView);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+                                         @Override
+                                         public void onClick(View v) {
+                                             AlertDialog.Builder builder = new AlertDialog.Builder(GetLocalPhotoActivity.this);
+                                             builder.setTitle("选择方式");
+                                             builder.setPositiveButton("拍照", new DialogInterface.OnClickListener() {
+                                                 @Override
+                                                 public void onClick(DialogInterface dialog, int which) {
+                                                     dialog.dismiss();
+                                                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");// 判断存储卡是否可以用，可用进行存储
+//                        if (hasSdcard()){
+                                                     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+//                        }
+                                                     String filename = timeStampFormat.format(new Date());
+                                                     ContentValues values = new ContentValues();
+                                                     values.put(MediaStore.Audio.Media.TITLE, filename);
+                                                     photoUri1 = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+                                                     ;
+                                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri1);
+                                                     startActivityForResult(intent, TAKE_PHOTO);
+
+                                                 }
+                                             });
+                                             builder.setNeutralButton("相册", new DialogInterface.OnClickListener(){
+                                                 @Override
+                                                 public void onClick(DialogInterface dialog, int which){
+                                                     dialog.dismiss();
+                                                     Intent intent = new Intent(Intent.ACTION_PICK);
+                                                     intent.setType("image/*");
+                                                     startActivityForResult(intent, GET_PHOTO);
+                                                 }
+                                             });
+                                             builder.create().show();
+
+                                         }
+                                     });
 
         /*
          * 拍照取图
@@ -242,6 +289,8 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         };
         releaseDynamicButton.setOnClickListener(releaseListener);
 
+
+
     }
     //接受回传值
     @Override
@@ -253,7 +302,13 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 
                 Bundle bundle = data.getExtras();   //获取data数据集合
                 Bitmap bitmap = (Bitmap) bundle.get("data");        //获得data数据
-                Log.i("TAG", "拍照回传bitmap："+bitmap);
+                Log.i(TAG, "拍照回传bitmap："+bitmap);
+                Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+                Matrix matrix = new Matrix();
+                matrix.postScale((float) 144 / bitmap.getWidth(), (float) 144/ bitmap.getWidth()); // 长和宽放大缩小的比例
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
+                Log.i(TAG, "拍照回传bitmap："+bitmap);
+                Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                 imageView.setImageBitmap(bitmap);
                 photoBitmap=bitmap;
 
@@ -261,11 +316,23 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 
             if (requestCode == GET_PHOTO) {     //相册取图
 
+                if(data!=null){
+                    Uri photoUri=data.getData();
+                    Log.d(TAG, "onActivityResult: "+photoUri.toString()+"\n"+photoUri.getPath());
+                    String photoPath=photoUri.getPath();
+                }
+
                 ContentResolver contentResolver = getContentResolver();
                 try {
 
                     Bitmap bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.getData()));
                     Log.i("TAG", "从相册回传bitmap："+bitmap);
+                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+                    Matrix matrix = new Matrix();
+                    matrix.postScale((float) 48 / bitmap.getWidth(), (float) 48/ bitmap.getWidth()); // 长和宽放大缩小的比例
+                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
+                    Log.i(TAG, "拍照回传bitmap："+bitmap);
+                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                     imageView.setImageBitmap(bitmap);
                     photoBitmap=bitmap;
 
