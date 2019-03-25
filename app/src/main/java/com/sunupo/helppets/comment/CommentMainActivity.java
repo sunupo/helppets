@@ -625,6 +625,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     setApplyData(App.loginUserInfo.getUserId(),DYNAMIC_USER_ID,DYNAMIC_ID,applyContent,currentTime);
 
                 }else {
+                    Toast.makeText(CommentMainActivity.this,"申请内容不能为空",Toast.LENGTH_SHORT).show();
                 }
             }
         });

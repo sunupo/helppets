@@ -6,12 +6,15 @@ public class Constants
 //	public static final String PORT="47793";
 //	http://192.168.43.109:34098/
 	public static final String HOST="192.168.43.109";
-//	public static final String PORT="34098";
+	public static final String PORT="34098";
 //public static final String HOST="192.168.0.105";
 //	public static final String HOST="172.22.106.192";
 //	 172.22.106.192
-	public static final String PORT="34098";
-	public static final String httpip="http://"+HOST+":"+PORT+"/laf";
+//	public static final String PORT="34098";
+//    public static final String PORT="8899";
+//    public static final String HOST="114.116.167.1";
+
+    public static final String httpip="http://"+HOST+":"+PORT+"/laf";
 	public static final String IMAGE_ROOT_PATH=httpip+"/dynamicpicture";
 	public static final String LOGIN_NAME="Login_Name";
 	public static final String[] NAVIGATION_TITLE={"首页","关注","我的"};

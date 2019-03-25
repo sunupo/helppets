@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sunupo.helppets">
 
-
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 联网权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 在SDCard中创建与删除文件权限 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <!-- 往SDCard写入数据权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -24,7 +23,8 @@
     <!-- 获取机型信息权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+    <uses-permission
+        android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
         tools:ignore="ProtectedPermissions" />
 
     <!-- 查看 Wi-Fi 状态 -->
@@ -40,7 +40,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- 防止设备休眠 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
@@ -51,7 +52,6 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
     <!--
-
         &lt;!&ndash; 权限声明 &ndash;&gt;
         &lt;!&ndash; 访问网络状态&ndash;&gt;
         <uses-permission android:name="android.permission.INTERNET" />
@@ -81,22 +81,19 @@
         <uses-feature android:name="android.hardware.camera" />
         <uses-feature android:name="android.hardware.camera.autofocus" />
         <uses-feature android:glEsVersion="0x00020000" android:required="true" />
-        -->
-
-
+    -->
     <application
         android:name=".util.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config">
+        android:theme="@style/AppTheme">
 
-
-
-       <!-- &lt;!&ndash; APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
+        <!--
+        &lt;!&ndash; APP key, 可以在这里设置，也可以在 SDKOptions 中提供。
             如果 SDKOptions 中提供了，取 SDKOptions 中的值。 &ndash;&gt;
         <meta-data
             android:name="com.netease.nim.appKey"
@@ -142,19 +139,17 @@
             android:authorities="com.netease.nim.demo.ipc.provider"
             android:exported="false"
             android:process=":core" />
-
--->
-
+        -->
 
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="mgb7ka1nmd87g"/>
+            android:value="mgb7ka1nmd87g" />
 
         <activity
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:name=".Login.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -165,35 +160,37 @@
         <activity
             android:name=".main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Login.ResetAccountActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Login.RegisterActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".comment.CommentMainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ReleaseDynamic.GetLocalPhotoActivity"/>
-        <activity android:name=".test.ImageDownloadActivity"/>
-        <activity android:name=".user.UserMainPageActivity"/>
-        <!--android:authorities="您的 ApplicationId.FileProvider"-->
-        <!--<provider-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:authorities="com.sunupo.helppets.FileProvider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/rc_file_path" />-->
-        <!--</provider>-->
-        <!--<meta-data-->
-            <!--android:name="com.amap.api.v2.apikey"-->
-            <!--android:value="高德地图的 AppKey" />-->
+        <activity
+            android:name=".Login.ResetAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".comment.CommentMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <activity android:name=".ReleaseDynamic.GetLocalPhotoActivity" />
+        <activity android:name=".test.ImageDownloadActivity" />
+        <activity android:name=".user.UserMainPageActivity" />
+        <!-- android:authorities="您的 ApplicationId.FileProvider" -->
+        <!-- <provider -->
+        <!-- android:name="android.support.v4.content.FileProvider" -->
+        <!-- android:authorities="com.sunupo.helppets.FileProvider" -->
+        <!-- android:exported="false" -->
+        <!-- android:grantUriPermissions="true"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.support.FILE_PROVIDER_PATHS" -->
+        <!-- android:resource="@xml/rc_file_path" /> -->
+        <!-- </provider> -->
+        <!-- <meta-data -->
+        <!-- android:name="com.amap.api.v2.apikey" -->
+        <!-- android:value="高德地图的 AppKey" /> -->
         <activity
             android:name=".conversation.ConversationListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -205,35 +202,39 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <!--聚合会话列表-->
+        <!-- 聚合会话列表 -->
         <activity
             android:name=".conversation.SubConversationListActivtiy"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.sunupo.helppets"
                     android:pathPrefix="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <!--会话界面-->
+        <!-- 会话界面 -->
         <activity
             android:name=".conversation.ConversationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.sunupo.helppets"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".Mine.FromApplyActivity"></activity>
     </application>
-
 
 </manifest>

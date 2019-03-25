@@ -245,7 +245,7 @@
                         android:orientation="horizontal">
                         <android.support.v7.widget.AppCompatTextView
                             android:layout_marginLeft="5dp"
-                            android:text="消息"
+                            android:text="签名"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -284,7 +284,7 @@
 
             <!--我的申请,切换会否可以显示-->
             <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/apply_layout"
+                android:id="@+id/from_apply_layout"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="35dp"
@@ -293,7 +293,6 @@
                 android:layout_marginRight="15dp">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_gravity="center"
-                    android:id="@+id/apply_list"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/message" />
@@ -304,16 +303,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.LinearLayoutCompat>
-            <!--点击我的申请，RecyclerView才显示；再次点击就隐藏-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/apply_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:background="#ffffff"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="15dp">
-            </android.support.v7.widget.RecyclerView>
+
+
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
@@ -321,7 +312,7 @@
                 android:alpha="0"/>
             <!--收到的申请-->
             <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/get_apply_layout"
+                android:id="@+id/to_apply_layout"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="35dp"
@@ -330,7 +321,6 @@
                 android:layout_marginRight="15dp">
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_gravity="center"
-                    android:id="@+id/get_apply_list"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:background="@drawable/message" />
@@ -341,15 +331,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.LinearLayoutCompat>
-            <!--点击我的申请，RecyclerView才显示；再次点击就隐藏-->
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/get_apply_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_gravity="center"
-                android:background="#ffffff"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="15dp"/>
+
 
             <!--TabLayout+viewPager-->
             <android.support.v7.widget.LinearLayoutCompat

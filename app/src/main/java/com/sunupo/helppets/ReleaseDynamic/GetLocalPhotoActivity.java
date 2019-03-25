@@ -87,6 +87,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 
     SharedPreferences sp=null;
     private Uri photoUri1;
+    TextView attentionImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,14 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         animalWeight=findViewById(R.id.animal_weight);
         animalColor=findViewById(R.id.animal_color);
         animalAge=findViewById(R.id.animal_age);
+        attentionImage=findViewById(R.id.attention_image);
+        attentionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attentionImage.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        });
 
         sp=this.getSharedPreferences("LoginInfo",MODE_PRIVATE);
         loginName=sp.getString(Constants.LOGIN_NAME
@@ -173,6 +182,12 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         initProvinceDatas();
         show_type_selecter= (Button) findViewById(R.id.show_type_selecter);
         type_text= (TextView) findViewById(R.id.type_text);
+        type_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show_type_selecter.callOnClick();
+            }
+        });
         //选择器数据实体类封装
         PickerData data=new PickerData();
         //设置数据，有多少层级自己确定
@@ -302,13 +317,11 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 
                 Bundle bundle = data.getExtras();   //获取data数据集合
                 Bitmap bitmap = (Bitmap) bundle.get("data");        //获得data数据
-                Log.i(TAG, "拍照回传bitmap："+bitmap);
                 Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                 Matrix matrix = new Matrix();
-                matrix.postScale((float) 144 / bitmap.getWidth(), (float) 144/ bitmap.getWidth()); // 长和宽放大缩小的比例
+                matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
-                Log.i(TAG, "拍照回传bitmap："+bitmap);
-                Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+                Log.d(TAG,"裁剪后拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                 imageView.setImageBitmap(bitmap);
                 photoBitmap=bitmap;
 
@@ -326,13 +339,11 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 try {
 
                     Bitmap bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(data.getData()));
-                    Log.i("TAG", "从相册回传bitmap："+bitmap);
-                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+                    Log.d(TAG,"相册,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                     Matrix matrix = new Matrix();
-                    matrix.postScale((float) 48 / bitmap.getWidth(), (float) 48/ bitmap.getWidth()); // 长和宽放大缩小的比例
+                    matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
                     bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
-                    Log.i(TAG, "拍照回传bitmap："+bitmap);
-                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+                    Log.d(TAG,"裁剪后相册,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                     imageView.setImageBitmap(bitmap);
                     photoBitmap=bitmap;
 

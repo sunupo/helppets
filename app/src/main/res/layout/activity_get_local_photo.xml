@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/border_grey">
   <android.support.v7.widget.LinearLayoutCompat
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -19,14 +20,16 @@
               android:layout_width="0dp"
               android:layout_height="110dp"
               android:background="@drawable/linearlayout_corner">
+
               <EditText
-                  android:background="@null"
                   android:id="@+id/release_dynamic_content_text"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:layout_margin="5dp"
+                  android:background="@null"
                   android:hint="@string/release_dynamic_content_text"
-                  android:maxLines="2"/>
+                  android:maxLines="2"
+                  android:text="hello" />
           </LinearLayout>
           <RadioGroup
               android:layout_weight="1"
@@ -69,6 +72,7 @@
               android:layout_weight="7"
               android:gravity="center"/>
           <Button
+              android:visibility="invisible"
               android:background="@null"
               android:textColor="#0e811f"
               android:id="@+id/show_type_selecter"
@@ -89,17 +93,19 @@
               android:layout_marginLeft="10dp"
               android:layout_weight="1"
               android:layout_gravity="center_vertical"/>
+
           <android.support.v7.widget.AppCompatEditText
-              android:hint="整数"
-              android:textSize="14sp"
               android:id="@+id/animal_weight"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:maxWidth="10dp"
-              android:layout_marginRight="10dp"
               android:layout_gravity="center_vertical"
-              android:background="@drawable/linearlayout_corner"/>
+              android:layout_marginRight="10dp"
+              android:layout_weight="1"
+              android:background="@drawable/linearlayout_corner"
+              android:hint="kg"
+              android:maxWidth="10dp"
+              android:text="0"
+              android:textSize="14sp" />
           <android.support.v7.widget.AppCompatTextView
               android:textColor="#3f9767"
               android:text="颜色:"
@@ -123,34 +129,46 @@
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
               android:layout_weight="1"/>
+
           <android.support.v7.widget.AppCompatEditText
               android:id="@+id/animal_age"
-              android:hint="整数"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:layout_weight="1"
-              android:textSize="14sp"
-              android:maxWidth="10dp"
-              android:layout_marginRight="10dp"
               android:layout_gravity="center_vertical"
-              android:background="@drawable/linearlayout_corner"/>
+              android:layout_marginRight="10dp"
+              android:layout_weight="1"
+              android:background="@drawable/linearlayout_corner"
+              android:hint="月"
+              android:maxWidth="10dp"
+              android:text="0"
+              android:textSize="14sp" />
       </android.support.v7.widget.LinearLayoutCompat>
       <android.support.v7.widget.LinearLayoutCompat
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:orientation="vertical">
           <android.support.v7.widget.AppCompatTextView
+              android:alpha="0"
               android:textColor="#3f9767"
               android:text="请上传一张照片"
               android:gravity="center"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" />
+              android:layout_height="10dp" />
           <android.support.v7.widget.LinearLayoutCompat
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
+              android:layout_gravity="center"
               android:background="@drawable/linearlayout_corner">
+              <TextView
+                  android:gravity="center"
+                  android:text="@string/attention_image"
+                  android:id="@+id/attention_image"
+                  android:layout_gravity="center_horizontal|center"
+                  android:layout_width="200dp"
+                  android:layout_height="100dp" />
               <ImageView
+                  android:visibility="gone"
                   android:autofillHints="请上传一张图片"
                   android:background="@drawable/linearlayout_corner"
                   android:id="@+id/takePhoto_imageView"
@@ -160,6 +178,7 @@
                   android:layout_gravity="center"
                   android:layout_weight="12"/>
               <android.support.v7.widget.LinearLayoutCompat
+                  android:visibility="gone"
                   android:layout_weight="1"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"

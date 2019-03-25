@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_apply">申请</string>
+    <string name="attention_image">点击上传图片</string>
 </resources>

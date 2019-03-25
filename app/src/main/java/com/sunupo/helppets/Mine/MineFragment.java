@@ -1,5 +1,6 @@
 package com.sunupo.helppets.Mine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,12 +9,14 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gongwen.marqueen.SimpleMF;
@@ -49,9 +52,8 @@ public class MineFragment extends Fragment {
     private ImageView userLogo;
     private TextView userLoginName,userUserId,userState,joinDays
             ,hisFan,hisFollow,hisFavorite,hisCollect;
-    RecyclerView applyRecyclerView,getApplyRecyclerView;
-//    ApplyAdapter applyAdapter;
-//    GetApplyAdapter getApplyAdapter;
+
+    LinearLayoutCompat fromApplyLayout,toApplyLayout;
 
     private Bundle bundle;//
 
@@ -80,6 +82,24 @@ public class MineFragment extends Fragment {
         hisFollow=view.findViewById(R.id.his_follow);
         hisFavorite=view.findViewById(R.id.his_favorite);
         hisCollect=view.findViewById(R.id.his_collect);
+
+        fromApplyLayout=view.findViewById(R.id.from_apply_layout);
+        toApplyLayout=view.findViewById(R.id.to_apply_layout);
+
+        fromApplyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),FromApplyActivity.class);
+                startActivity(intent);
+            }
+        });
+        toApplyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),FromApplyActivity.class);
+                startActivity(intent);
+            }
+        });
 
         new DownloadImageTask(userLogo).execute(Constants.httpip+"/"+ App.loginUserInfo.getLogo());
         userLoginName.setText(App.loginUserInfo.getLoginName());
@@ -133,6 +153,7 @@ public class MineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        View view=inflater.inflate(R.layout.fragment_mine,container,false);
 
+        // TODO: 3/25/2019 把这个消息替换为签名
         final List<String> datas = Arrays.asList("最近即将出国了", "家里面有两只金毛，一条哈士奇，没人照顾。", "想找个重庆江北区的朋友","来帮我代养一周", "谢谢！", "........");
     //SimpleMarqueeView<T>，SimpleMF<T>：泛型T指定其填充的数据类型，比如String，Spanned等
         SimpleMarqueeView<String> marqueeView = (SimpleMarqueeView)view.findViewById(R.id.simpleMarqueeView);
@@ -140,6 +161,7 @@ public class MineFragment extends Fragment {
         marqueeFactory.setData(datas);
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
+
         allBind(view);
         initView(view);
         return view;
