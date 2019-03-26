@@ -54,7 +54,7 @@ import okhttp3.Response;
 public class CommentMainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "CommentMainActivity";
     private android.support.v7.widget.Toolbar toolbar;
-    private TextView bt_comment;
+    private TextView bt_comment,deleteDynamic;
     private CommentExpandableListView expandableListView;
     private CommentExpandAdapter adapter;
     private CommentBean commentBean;
@@ -349,6 +349,21 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         bt_comment = (TextView) findViewById(R.id.detail_page_do_comment);
         bt_comment.setOnClickListener(this);
 
+        if(App.loginUserInfo.getIsAdmin().equals("是")||App.loginUserInfo.getLoginName().equals(dynamicBean.getLoginName())){
+            Log.d(TAG, "initView:  deleteDynamic.setOnClickListener");
+            deleteDynamic=findViewById(R.id.delete_dynamic);
+            deleteDynamic.setVisibility(View.VISIBLE);
+            deleteDynamic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: 3/26/2019  删除这一条动态
+                    deleteDynamic(dynamicBean.getUserId(),dynamicBean.getDynamicId());
+                }
+            });
+        }
+
+
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -357,6 +372,38 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         collapsingToolbar.setTitle("");
         commentsList = generateCommentReplyData();
         initExpandableListView(commentsList);
+    }
+
+    private void deleteDynamic(int userId, int dynamicId) {
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("userId",userId+"")
+                            .add("dynamicId",dynamicId+"").build();//
+                    Request request = new Request.Builder().url(Constants.httpip+"/deleteDynamic").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "run: "+responseData);
+                    // TODO: 3/26/2019 创建message 返回服务器删除的结果
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     /**

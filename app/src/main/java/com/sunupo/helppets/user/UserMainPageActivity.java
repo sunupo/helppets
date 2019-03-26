@@ -76,21 +76,33 @@ public class UserMainPageActivity extends BaseActivity {
                 case 2:
                     Gson gson=new Gson();
                     dynamicUserInfo=gson.fromJson(((String)msg.obj),UserInfo.class);
-                    if(App.loginUserInfo.getIsAdmin().equals("是")){
-                        adminLayout.setVisibility(View.VISIBLE);
-                        if(dynamicUserInfo.getIsBanned().equals("是")){
-                            banRadioBroup.check(R.id.ban_button);
-                        }else{
-                            banRadioBroup.check(R.id.withdraw_button);
-                        }
-                        if(dynamicUserInfo.getIsAdmin().equals("是")){
-                            powerRadioGroup.check(R.id.empower_button);
-                        }else{
-                            powerRadioGroup.check(R.id.remove_power__button);
-                        }
-                    }else {
-                        adminLayout.setVisibility(View.GONE);
+                    if(dynamicUserInfo.getIsBanned().equals("是")){
+                        banRadioBroup.check(R.id.ban_button);
+                    }else{
+                        banRadioBroup.check(R.id.withdraw_button);
                     }
+                    if(dynamicUserInfo.getIsAdmin().equals("是")){
+                        powerRadioGroup.check(R.id.empower_button);
+                    }else{
+                        powerRadioGroup.check(R.id.remove_power__button);
+                    }
+                    break;
+                case 3:
+                    switch(msg.arg1){
+                        case 1:
+                            Log.d(TAG, "handleMessage: 管理员权限更改成功");
+                            break;
+                        case 2:
+                            Log.d(TAG, "handleMessage: 会话权限更改成功");
+                            break;
+                        case -1:
+                            Log.d(TAG, "handleMessage: 管理员权限更改失败");
+                            break;
+                        case -2:
+                            Log.d(TAG, "handleMessage: 会话权限更改失败");
+                            break;
+                    }
+                    break;
             }
         }
     };
@@ -101,14 +113,6 @@ public class UserMainPageActivity extends BaseActivity {
         setContentView(R.layout.activity_user_main_page);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-//       上一个界面
-// Intent intent=new Intent(v.getContext(),UserMainPageActivity.class);
-//        intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
-//        intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
-//        Bundle bundle=new Bundle();
-//        bundle.putSerializable("DYNAMIC_BEAN",dynamicBean);
-//        intent.putExtra("BUNDLE",bundle);
         Intent intent=getIntent();
         bundle=intent.getBundleExtra("BUNDLE");
         dynamicBean=(DynamicBean)(bundle.getSerializable("DYNAMIC_BEAN"));
@@ -129,6 +133,16 @@ public class UserMainPageActivity extends BaseActivity {
         initView();
 
         adminLayout=findViewById(R.id.admin_layout);
+        if(App.loginUserInfo.getIsAdmin().equals("是")){
+            Log.d(TAG, "handleMessage: App.loginUserInfo.getIsAdmin().equals(\"是\")"+App.loginUserInfo.getIsAdmin().equals("是"));
+            adminLayout.setVisibility(View.VISIBLE);
+            Log.e(TAG, "onCreate: 是");
+
+        }else {
+            adminLayout.setVisibility(View.GONE);
+            Log.e(TAG, "onCreate: 否");
+
+        }
         banRadioBroup=findViewById(R.id.ban_radio_group);
         powerRadioGroup=findViewById(R.id.power_radio_group);
 //        TODO 发送请求得到他isban，isadmin,
@@ -138,30 +152,43 @@ public class UserMainPageActivity extends BaseActivity {
         banRadioBroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-//
-                    case R.id.ban_button:
-                        // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"否" ，"isBanned"）
-                        // TODO: 3/26/2019 最好应该在message里面出传递服务器返回的消息， 判断是否修改成功
-                        setBanAdmin("是","isBanned");
-                        break;
-                    case R.id.withdraw_button:
-                        setBanAdmin("否","isBanned");
-                        break;
+                if(dynamicUserInfo!=null){
+                    try{
+                        switch (checkedId) {
+                            case R.id.ban_button:
+                                // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"否" ，"isBanned"）
+                                // TODO: 3/26/2019 最好应该在message里面出传递服务器返回的消息， 判断是否修改成功
+                                setBanAdmin(dynamicUserInfo.getUserId(), "是", "isBanned");
+                                break;
+                            case R.id.withdraw_button:
+                                setBanAdmin(dynamicUserInfo.getUserId(), "否", "isBanned");
+                                break;
+                        }
+                    }catch (Exception E){
+                        Log.e(TAG, "onCheckedChanged: 初次启动" );
+                    }
                 }
+
             }
         });
         powerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.empower_button:
-                        setBanAdmin("是","isAdmin");
-                        // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"是" ，"isAdmin"）
-                        break;
-                    case R.id.remove_power__button:
-                        setBanAdmin("否","isAdmin");
-                        break;
+                if(dynamicUserInfo!=null) {
+                    try {
+                        switch (checkedId) {
+                            case R.id.empower_button:
+                                setBanAdmin(dynamicUserInfo.getUserId(), "是", "isAdmin");
+                                // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"是" ，"isAdmin"）
+                                break;
+                            case R.id.remove_power__button:
+                                setBanAdmin(dynamicUserInfo.getUserId(), "否", "isAdmin");
+                                break;
+                        }
+                    }
+                    catch (Exception E){
+                        Log.e(TAG, "onCheckedChanged: 初次启动" );
+                    }
                 }
             }
         });
@@ -398,7 +425,7 @@ public class UserMainPageActivity extends BaseActivity {
      * @param panduan isBanned  / isAdmin
      * @return
      */
-    private String setBanAdmin(final String flag,final String panduan){
+    private String setBanAdmin(final int userId,final String flag,final String panduan){
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -407,15 +434,16 @@ public class UserMainPageActivity extends BaseActivity {
                 try {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder()
+                            .add("userId",userId+"")
                             .add("flag",flag)
                             .add("panduan",panduan).build();
                     Request request = new Request.Builder().url(Constants.httpip + "/setBanAdmin").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
-                    Log.d(TAG, "run: loginUserInfo= "+responseData);
+                    Log.d(TAG, "run: admin/ban code= "+responseData);
 
-                    Message message=Message.obtain(handler,3,2,3,responseData);
-                    message.sendToTarget();
+//                    Message message=Message.obtain(handler,3,Integer.parseInt(responseData),3,responseData);
+//                    message.sendToTarget();
 
 
                 } catch (IOException e) {

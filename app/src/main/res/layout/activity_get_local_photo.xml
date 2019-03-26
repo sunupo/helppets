@@ -8,38 +8,63 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="vertical">
+      <android.support.v7.widget.AppCompatTextView
+          android:textStyle="bold|italic"
+          android:gravity="center"
+          android:textSize="20sp"
+          android:text="@string/dynamic_tips"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@drawable/border_white"/>
+      <android.support.v7.widget.AppCompatTextView
+          android:textStyle="bold"
+          android:gravity="center"
+          android:text="@string/dynamic_tips"
+          android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@drawable/border_grey"/>
       <android.support.v7.widget.LinearLayoutCompat
           android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
           <LinearLayout
               android:layout_marginTop="8dp"
               android:layout_marginLeft="3dp"
               android:layout_marginRight="3dp"
               android:layout_gravity="left"
               android:layout_weight="9"
-              android:layout_width="0dp"
-              android:layout_height="110dp"
-              android:background="@drawable/linearlayout_corner">
+              android:layout_width="match_parent"
+              android:layout_height="130dp"
+              android:background="@drawable/border_white"
+              android:orientation="vertical">
 
               <EditText
                   android:id="@+id/release_dynamic_content_text"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+                  android:layout_height="100dp"
                   android:layout_margin="5dp"
                   android:background="@null"
                   android:hint="@string/release_dynamic_content_text"
-                  android:maxLines="2"
-                  android:text="hello" />
+                  android:maxLines="2"/>
+              <TextView
+                  android:id="@+id/clear_content"
+                  android:layout_marginLeft="5dp"
+                  android:textSize="12sp"
+                  android:text="X长按清空"
+                  android:layout_gravity="center_vertical"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
           </LinearLayout>
+
           <RadioGroup
               android:layout_weight="1"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:id="@+id/send_adopt_animal_selector"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_gravity="right">
               <android.support.v7.widget.AppCompatRadioButton
-                  android:textColor="#10c744"
+                  android:textColor="#6f7871"
                   android:text="送养"
                   android:checked="true"
                   android:id="@+id/send_animal"
@@ -47,7 +72,7 @@
                   android:layout_height="wrap_content"
                   />
               <android.support.v7.widget.AppCompatRadioButton
-                  android:textColor="#10c744"
+                  android:textColor="#949f97"
                   android:text="收养"
                   android:id="@+id/adopt_animal"
                   android:layout_width="wrap_content"
@@ -64,7 +89,7 @@
           android:background="@drawable/linearlayout_corner">
           <TextView
               android:id="@+id/type_text"
-              android:layout_width="0dp"
+              android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:hint="@string/type_text"
               android:textColor="@color/liji_c_blue"
@@ -72,7 +97,7 @@
               android:layout_weight="7"
               android:gravity="center"/>
           <Button
-              android:visibility="invisible"
+              android:visibility="gone"
               android:background="@null"
               android:textColor="#0e811f"
               android:id="@+id/show_type_selecter"
@@ -86,7 +111,7 @@
           android:layout_height="wrap_content"
           android:background="@drawable/linearlayout_corner">
           <android.support.v7.widget.AppCompatTextView
-              android:textColor="#3f9767"
+              android:textColor="#6f7871"
               android:text="体重:"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -96,34 +121,19 @@
 
           <android.support.v7.widget.AppCompatEditText
               android:id="@+id/animal_weight"
+              android:inputType="number"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
               android:layout_marginRight="10dp"
               android:layout_weight="1"
-              android:background="@drawable/linearlayout_corner"
+              android:background="@drawable/border_grey"
               android:hint="kg"
               android:maxWidth="10dp"
               android:text="0"
               android:textSize="14sp" />
           <android.support.v7.widget.AppCompatTextView
-              android:textColor="#3f9767"
-              android:text="颜色:"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_gravity="center_vertical"
-              android:layout_weight="1"/>
-          <android.support.v7.widget.AppCompatEditText
-              android:id="@+id/animal_color"
-              android:layout_width="0dp"
-              android:layout_height="wrap_content"
-              android:layout_weight="3"
-              android:maxWidth="10dp"
-              android:layout_gravity="center_vertical"
-              android:layout_marginRight="10dp"
-              android:background="@drawable/linearlayout_corner"/>
-          <android.support.v7.widget.AppCompatTextView
-              android:textColor="#3f9767"
+              android:textColor="#6f7871"
               android:text="宠龄:"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
@@ -132,16 +142,36 @@
 
           <android.support.v7.widget.AppCompatEditText
               android:id="@+id/animal_age"
+              android:inputType="number"
+
               android:layout_width="0dp"
               android:layout_height="wrap_content"
               android:layout_gravity="center_vertical"
               android:layout_marginRight="10dp"
               android:layout_weight="1"
-              android:background="@drawable/linearlayout_corner"
+              android:background="@drawable/border_grey"
               android:hint="月"
               android:maxWidth="10dp"
               android:text="0"
               android:textSize="14sp" />
+          <android.support.v7.widget.AppCompatTextView
+              android:textColor="#6f7871"
+              android:text="颜色:"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center_vertical"
+              android:layout_weight="1"/>
+          <android.support.v7.widget.AppCompatEditText
+              android:id="@+id/animal_color"
+              android:inputType="text"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="3"
+              android:maxWidth="10dp"
+              android:layout_gravity="center_vertical"
+              android:layout_marginRight="10dp"
+              android:background="@drawable/border_grey"/>
+
       </android.support.v7.widget.LinearLayoutCompat>
       <android.support.v7.widget.LinearLayoutCompat
           android:layout_width="match_parent"
@@ -157,26 +187,28 @@
           <android.support.v7.widget.LinearLayoutCompat
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:layout_gravity="center"
               android:background="@drawable/linearlayout_corner">
               <TextView
                   android:gravity="center"
+                  android:textSize="8sp"
                   android:text="@string/attention_image"
                   android:id="@+id/attention_image"
                   android:layout_gravity="center_horizontal|center"
-                  android:layout_width="200dp"
-                  android:layout_height="100dp" />
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
               <ImageView
-                  android:visibility="gone"
+                  android:visibility="visible"
                   android:autofillHints="请上传一张图片"
-                  android:background="@drawable/linearlayout_corner"
+                  android:background="@drawable/dog"
                   android:id="@+id/takePhoto_imageView"
                   android:layout_margin="3dp"
                   android:layout_width="100dp"
-                  android:layout_height="250dp"
+                  android:layout_height="200dp"
                   android:layout_gravity="center"
                   android:layout_weight="12"/>
+              <!--隐藏的相册相机按钮-->
               <android.support.v7.widget.LinearLayoutCompat
                   android:visibility="gone"
                   android:layout_weight="1"
@@ -214,17 +246,18 @@
 
 
 
-
+      <Button
+          android:background="@drawable/border_grey"
+          android:id="@+id/release_dynamic_button"
+          android:text="@string/release_dynamic_button"
+          android:textSize="30sp"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginEnd="5dp"
+          android:layout_gravity="bottom"
+          android:visibility="visible"/>
   </android.support.v7.widget.LinearLayoutCompat>
 
-    <Button
-        android:background="@mipmap/ic_launcher_star_border"
-        android:textColor="@color/liji_material_red_500"
-        android:id="@+id/release_dynamic_button"
-        android:text="@string/release_dynamic_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="5dp"
-        android:visibility="gone"/>
+
 
 </LinearLayout>

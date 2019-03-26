@@ -2,4 +2,5 @@
 <resources>
     <string name="menu_apply">申请</string>
     <string name="attention_image">点击上传图片</string>
+    <string name="dynamic_tips">请输入完整消息...</string>
 </resources>

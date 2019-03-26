@@ -79,7 +79,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 
     private Button show_type_selecter;
     PickerView pickerView;
-    TextView type_text;
+    TextView type_text,clearContent;
 
     private Button releaseDynamicButton;
 
@@ -94,6 +94,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         super.onCreate(savedInstanceState);
         setTitle("发布动态");
         setContentView(R.layout.activity_get_local_photo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dynamicContentText=findViewById(R.id.release_dynamic_content_text);
         sendAdoptSelector=findViewById(R.id.send_adopt_animal_selector);
         animalWeight=findViewById(R.id.animal_weight);
@@ -105,6 +106,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
             public void onClick(View v) {
                 attentionImage.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
+                imageView.callOnClick();
             }
         });
 
@@ -188,6 +190,17 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 show_type_selecter.callOnClick();
             }
         });
+        clearContent=findViewById(R.id.clear_content);
+        clearContent.setOnLongClickListener(new  View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                dynamicContentText.setText("");
+                return true;
+
+            }
+        });
+
         //选择器数据实体类封装
         PickerData data=new PickerData();
         //设置数据，有多少层级自己确定
@@ -443,12 +456,12 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.release_dynamic,menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.release_dynamic,menu);
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -456,6 +469,10 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         switch (id){
             case R.id.menu_release_dynamic:
                 releaseDynamicButton.callOnClick();
+                break;
+            case android.R.id.home:
+                finish();
+                break;
             default:
                 break;
         }

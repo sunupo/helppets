@@ -167,6 +167,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <android.support.v7.widget.AppCompatRadioButton
+                            android:checked="true"
                             android:id="@+id/withdraw_button"
                             android:text="解除"
                             android:layout_width="wrap_content"
@@ -192,13 +193,14 @@
                         android:background="@drawable/border_white">
                         <android.support.v7.widget.AppCompatRadioButton
                             android:id="@+id/empower_button"
-                            android:text="禁言"
+                            android:text="管理员"
                             android:layout_marginRight="100dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <android.support.v7.widget.AppCompatRadioButton
+                            android:checked="true"
                             android:id="@+id/remove_power__button"
-                            android:text="解除"
+                            android:text="会员"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </RadioGroup>
