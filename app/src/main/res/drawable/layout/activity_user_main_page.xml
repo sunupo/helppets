@@ -131,7 +131,82 @@
                         android:text="天"
                         android:layout_gravity="center_vertical"
                         android:backgroundTint="@null"/>
+
                 </android.support.v7.widget.LinearLayoutCompat>
+
+                <GridLayout
+                    android:visibility="gone"
+                    android:id="@+id/admin_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rowCount="2"
+                    android:columnCount="2">
+
+                    <!--禁言-->
+                    <android.support.v7.widget.AppCompatTextView
+                    android:textColor="#a1ab9f"
+                    android:layout_gravity="center"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_rowWeight="1"
+                    android:text="聊天限制"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                    <RadioGroup
+                        android:layout_gravity="center"
+                        android:id="@+id/ban_radio_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/border_white">
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/ban_button"
+                            android:text="禁言"
+                            android:layout_marginRight="100dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/withdraw_button"
+                            android:text="解除"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+                    <!--设为管理员-->
+                    <android.support.v7.widget.AppCompatTextView
+                        android:textColor="#a1ab9f"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_rowWeight="1"
+                        android:text="权限限制"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <RadioGroup
+                        android:layout_gravity="center"
+                        android:id="@+id/power_radio_group"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/border_white">
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/empower_button"
+                            android:text="禁言"
+                            android:layout_marginRight="100dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/remove_power__button"
+                            android:text="解除"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+
+                </GridLayout>
+
+
+
                 <!--我的粉丝 我的关注 收获的点赞，自己的收藏-->
                 <GridLayout
                     android:layout_gravity="center"

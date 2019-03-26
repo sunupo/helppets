@@ -440,7 +440,7 @@ public class LoginActivity extends AppCompatActivity
 	}
 
 
-    private String getUserInfoJson(String uid){
+    private String getUserInfoJson(String loginName){
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -449,7 +449,7 @@ public class LoginActivity extends AppCompatActivity
                 try {
                     OkHttpClient client = new OkHttpClient();
                     RequestBody requestBody = new FormBody.Builder()
-                            .add("uid",uid).build();
+                            .add("loginName",loginName).build();
                     Request request = new Request.Builder().url(Constants.httpip + "/loginUserInfo").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();

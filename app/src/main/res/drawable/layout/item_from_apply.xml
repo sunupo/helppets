@@ -105,6 +105,13 @@
             android:layout_height="150dp"
             android:orientation="vertical">
             <android.support.v7.widget.AppCompatTextView
+                android:layout_gravity="left"
+                android:text="原始动态："
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/dynamic_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -116,14 +123,54 @@
 
         </android.support.v7.widget.LinearLayoutCompat>
         <!--响应内容-->
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/response_content"
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/response_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/response_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_gravity="center"
+                    android:text="回复内容"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/response_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_gravity="center"
+                    android:text="回复时间"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/response_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
 
         <!--同意 拒绝按钮-->
         <android.support.v7.widget.LinearLayoutCompat
@@ -169,5 +216,9 @@
         </android.support.v7.widget.LinearLayoutCompat>
 
     </android.support.v7.widget.LinearLayoutCompat>
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/rc_divider_line"/>
 
 </android.support.v7.widget.LinearLayoutCompat>

@@ -299,7 +299,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="我的申请"
+                    android:text="收到的申请"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.LinearLayoutCompat>
@@ -327,7 +327,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_gravity="center"
                     android:textStyle="bold"
-                    android:text="收到的申请"
+                    android:text="发出的申请"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.LinearLayoutCompat>

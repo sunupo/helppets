@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
@@ -37,6 +38,8 @@ public class MessageFragment extends Fragment {
     FollowListAdapter adapter;
     FollowListJsonData followListJsonData;
 
+    TextView warningInfo;
+
     Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -50,6 +53,7 @@ public class MessageFragment extends Fragment {
                                adapter.notifyDataSetChanged();
                                Log.d(TAG, "handleMessage: adapter.notifyDataSetChanged();");
                        }catch(Exception e){
+                           warningInfo.setVisibility(View.VISIBLE);
                            Log.d(TAG, "handleMessage: 没有关注一个用户");
                        }
                     }
@@ -68,6 +72,10 @@ public class MessageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_message,container,false);
+
+        warningInfo=view.findViewById(R.id.warning_info);
+        warningInfo.setVisibility(View.GONE);
+
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
         recyclerView=view.findViewById(R.id.follow_list);
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -80,7 +80,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
         SimpleMarqueeView<String> marqueeView;
         SimpleMF<String> marqueeFactory;
         View view;
-        LinearLayoutCompat dynamicFormerLayout;
+        LinearLayoutCompat dynamicFormerLayout,responseLayout;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -103,6 +103,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
             sucessStatus=view.findViewById(R.id.success_status);
             failureStatus=view.findViewById(R.id.failure_status);
             dynamicFormerLayout=view.findViewById(R.id.dynamic_former_content);
+            responseLayout=view.findViewById(R.id.response_layout);
         }
     }
 
@@ -184,6 +185,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
             @Override
             public void onClick(View v) {
                 int i=holder.getAdapterPosition();
+                Toast.makeText(v.getContext(),"如果同意该用户，将会拒绝其他用户，请注意！",Toast.LENGTH_LONG).show();
                 showAgreeDialog(v.getContext(),new BottomSheetDialog(v.getContext())
                         ,fromApplyDetailBeanArrayList.get(i).getApplyUid(),
                         fromApplyDetailBeanArrayList.get(i).getUserId(),
@@ -235,6 +237,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
                 viewHolder.sucessStatus.setVisibility(View.GONE);
                 viewHolder.failureStatus.setVisibility(View.GONE);
 
+                viewHolder.responseLayout.setVisibility(View.GONE);
                 viewHolder.responseContent.setVisibility(View.GONE);
                 viewHolder.responseTime.setVisibility(View.GONE);
                 break;
@@ -244,6 +247,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
                 viewHolder.sucessStatus.setVisibility(View.VISIBLE);
                 viewHolder.failureStatus.setVisibility(View.GONE);
 
+                viewHolder.responseLayout.setVisibility(View.VISIBLE);
                 viewHolder.responseContent.setVisibility(View.VISIBLE);
                 viewHolder.responseTime.setVisibility(View.VISIBLE);
                 viewHolder.responseContent.setText(fromApplyDetailBean.getResponseContent());
@@ -256,17 +260,20 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
                 viewHolder.sucessStatus.setVisibility(View.GONE);
                 viewHolder.failureStatus.setVisibility(View.VISIBLE);
 
+                viewHolder.responseLayout.setVisibility(View.VISIBLE);
                 viewHolder.responseContent.setVisibility(View.VISIBLE);
                 viewHolder.responseTime.setVisibility(View.VISIBLE);
                 viewHolder.responseContent.setText(fromApplyDetailBean.getResponseContent());
                 array1=fromApplyDetailBean.getResponseTime().split("-");
-                viewHolder.responseTime.setText(array1[0]+"-"+array1[1]+"-"+array1[2]+" "+array1[3]+":"+array1[4]+":"+array1[5]);                break;
+                viewHolder.responseTime.setText(array1[0]+"-"+array1[1]+"-"+array1[2]+" "+array1[3]+":"+array1[4]+":"+array1[5]);
+                break;
             default:
                 viewHolder.agreeButton.setVisibility(View.VISIBLE);
                 viewHolder.rejectButton.setVisibility(View.VISIBLE);
                 viewHolder.sucessStatus.setVisibility(View.GONE);
                 viewHolder.failureStatus.setVisibility(View.GONE);
 
+                viewHolder.responseLayout.setVisibility(View.GONE);
                 viewHolder.responseContent.setVisibility(View.GONE);
                 viewHolder.responseTime.setVisibility(View.GONE);
                 break;
@@ -406,7 +413,7 @@ class FromApplyAdapter extends RecyclerView.Adapter<FromApplyAdapter.ViewHolder>
                             "-"+calendar.get(Calendar.MINUTE)+
                             "-"+calendar.get(Calendar.SECOND);
                     // TODO: 3/25/2019 向数据库写入统一的信息
-                    responseApply(applyUid,dynamicUid,dynamicId,1,currentTime,responseContent);
+                    responseApply(applyUid,dynamicUid,dynamicId,3,currentTime,responseContent);
 
 
                     Toast.makeText(context,"回应成功",Toast.LENGTH_SHORT).show();

@@ -3,16 +3,16 @@ package com.sunupo.helppets.Mine;
 import java.util.ArrayList;
 
 public class ToApplyBean {
-    private ArrayList<FromApplyDetailBean> fromApplyDetailBeanArrayList;
+    private ArrayList<ToApplyDetailBean> data;
     private String message;
     private int code;
 
-    public ArrayList<FromApplyDetailBean> getFromApplyDetailBeanArrayList() {
-        return fromApplyDetailBeanArrayList;
+    public ArrayList<ToApplyDetailBean> getData() {
+        return data;
     }
 
-    public void setFromApplyDetailBeanArrayList(ArrayList<FromApplyDetailBean> fromApplyDetailBeanArrayList) {
-        this.fromApplyDetailBeanArrayList = fromApplyDetailBeanArrayList;
+    public void setData(ArrayList<ToApplyDetailBean> data) {
+        this.data = data;
     }
 
     public String getMessage() {

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".Mine.FromApplyActivity"
     android:orientation="vertical">
+    <!--    android:background="@drawable/border_grey"
+-->
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
@@ -21,30 +26,26 @@
             android:layout_marginRight="5dp"
             android:textColor="#4a4b42"
             android:textStyle="bold"
-            android:text="关注的联系人"
+            android:text="收到申请"
             android:textSize="35sp"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/border_white"/>
     </android.support.v7.widget.LinearLayoutCompat>
-
     <TextView
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/warning_info"
         android:textSize="24sp"
         android:textColor="#144822"
-        android:text="快去广场找朋友吧！O(∩_∩)O"
+        android:text="暂无申请"
         android:visibility="gone"
         android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
-    <!--数据用userinfo填充-->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/follow_list"
+        android:id="@+id/from_apply_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

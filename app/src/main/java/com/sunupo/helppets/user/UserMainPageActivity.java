@@ -9,15 +9,20 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
+import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
+import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.BaseActivity;
 import com.sunupo.helppets.util.Constants;
@@ -46,13 +51,16 @@ public class UserMainPageActivity extends BaseActivity {
     CircleImageView userLogo;
     TextView userLoginName,userUserId,userFollow,userCancelFollow,hisFan,hisFollow,hisFavorite,hisCollect;
     LinearLayoutCompat chatLayout;
+    GridLayout adminLayout;
 
-
+    RadioGroup banRadioBroup,powerRadioGroup;
 
     int dynamicUserId;//动态对应的userid
     int dunamicId;//动态对应的dynamicId
     Bundle bundle;//保存着具体的那一条动态的所有信息，这个bundle继续传递给fragment，来得到不同的动态、喜欢、关注等信息
     DynamicBean dynamicBean;
+
+    UserInfo dynamicUserInfo;
 
     Handler handler=new Handler(){
         @Override
@@ -65,6 +73,24 @@ public class UserMainPageActivity extends BaseActivity {
                     hisFavorite.setText(str[2]+"");
                     hisCollect.setText(str[3]+"");
                     break;
+                case 2:
+                    Gson gson=new Gson();
+                    dynamicUserInfo=gson.fromJson(((String)msg.obj),UserInfo.class);
+                    if(App.loginUserInfo.getIsAdmin().equals("是")){
+                        adminLayout.setVisibility(View.VISIBLE);
+                        if(dynamicUserInfo.getIsBanned().equals("是")){
+                            banRadioBroup.check(R.id.ban_button);
+                        }else{
+                            banRadioBroup.check(R.id.withdraw_button);
+                        }
+                        if(dynamicUserInfo.getIsAdmin().equals("是")){
+                            powerRadioGroup.check(R.id.empower_button);
+                        }else{
+                            powerRadioGroup.check(R.id.remove_power__button);
+                        }
+                    }else {
+                        adminLayout.setVisibility(View.GONE);
+                    }
             }
         }
     };
@@ -87,6 +113,8 @@ public class UserMainPageActivity extends BaseActivity {
         bundle=intent.getBundleExtra("BUNDLE");
         dynamicBean=(DynamicBean)(bundle.getSerializable("DYNAMIC_BEAN"));
 
+
+
 //        http://localhost:34098/laf/getFanFollowFavoriteCollect?dynamicUserId=1
         getFanFollowFavoriteCollect(dynamicBean.getUserId(),Constants.httpip+"/getFanFollowFavoriteCollect");
         Log.d(TAG, "onCreate: ");
@@ -99,6 +127,45 @@ public class UserMainPageActivity extends BaseActivity {
         marqueeView.setMarqueeFactory(marqueeFactory);
         marqueeView.startFlipping();
         initView();
+
+        adminLayout=findViewById(R.id.admin_layout);
+        banRadioBroup=findViewById(R.id.ban_radio_group);
+        powerRadioGroup=findViewById(R.id.power_radio_group);
+//        TODO 发送请求得到他isban，isadmin,
+        getUserInfoJson(dynamicBean.getLoginName());//handler处理
+
+//        设置监听
+        banRadioBroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+//
+                    case R.id.ban_button:
+                        // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"否" ，"isBanned"）
+                        // TODO: 3/26/2019 最好应该在message里面出传递服务器返回的消息， 判断是否修改成功
+                        setBanAdmin("是","isBanned");
+                        break;
+                    case R.id.withdraw_button:
+                        setBanAdmin("否","isBanned");
+                        break;
+                }
+            }
+        });
+        powerRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.empower_button:
+                        setBanAdmin("是","isAdmin");
+                        // TODO: 3/26/2019 发送请求跟新userinfo信息，两个参数（"是" ，"isAdmin"）
+                        break;
+                    case R.id.remove_power__button:
+                        setBanAdmin("否","isAdmin");
+                        break;
+                }
+            }
+        });
+
 //            CircleImageView userLogo;
 //    TextView userLoginName,userFollow,userCancelFollow;
 //    LinearLayoutCompat chatLayout;
@@ -129,6 +196,13 @@ public class UserMainPageActivity extends BaseActivity {
         userFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(App.loginUserInfo.getUserId()==dynamicBean.getUserId()){
+
+                    Toast toast=Toast.makeText(UserMainPageActivity.this,"不用关注自己，给自己点赞就好了^_^",Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.CENTER,0,0);
+                    toast.show();
+                    return;
+                }
                 userCancelFollow.setVisibility(View.VISIBLE);
                 userFollow.setVisibility(View.GONE);
 //                TODO 发送请求到服务器，关注
@@ -140,6 +214,7 @@ public class UserMainPageActivity extends BaseActivity {
         userCancelFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 userFollow.setVisibility(View.VISIBLE);
                 userCancelFollow.setVisibility(View.GONE);
 //                TODO 发送请求到服务器，取关
@@ -150,6 +225,14 @@ public class UserMainPageActivity extends BaseActivity {
         chatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(App.loginUserInfo.getUserId()==dynamicBean.getUserId()){
+                    Toast.makeText(UserMainPageActivity.this,"你想和自己说悄悄话吗，^_^",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(UserMainPageActivity.this,"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 RongIM.getInstance().startPrivateChat(UserMainPageActivity.this,dynamicBean.getLoginName()+"",App.loginUserInfo.getLoginName()+"正在与"+dynamicBean.getLoginName()+"聊天");
             }
         });
@@ -273,5 +356,80 @@ public class UserMainPageActivity extends BaseActivity {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    private String getUserInfoJson(String loginName){
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("loginName",loginName).build();
+                    Request request = new Request.Builder().url(Constants.httpip + "/loginUserInfo").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "run: loginUserInfo= "+responseData);
+
+                    Message message=Message.obtain(handler,2,2,3,responseData);
+                    message.sendToTarget();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     *
+     * 更改权限，或者设置聊天权限
+     * @param flag 是 /否
+     * @param panduan isBanned  / isAdmin
+     * @return
+     */
+    private String setBanAdmin(final String flag,final String panduan){
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("flag",flag)
+                            .add("panduan",panduan).build();
+                    Request request = new Request.Builder().url(Constants.httpip + "/setBanAdmin").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "run: loginUserInfo= "+responseData);
+
+                    Message message=Message.obtain(handler,3,2,3,responseData);
+                    message.sendToTarget();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

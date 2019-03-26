@@ -1,60 +1,36 @@
 package com.sunupo.helppets.Mine;
 
 public class ToApplyDetailBean {
-    private String loginName;
-    private String logo;
-    private int applyUid;
-    private String applyTime;
-    private int applyStatus;
-    private String applyContent;
-    private String responseTime;
-    private String responseContent;
     private int userId;
     private int dynamicId;
-    private String isSend;
-    private String content;
-    private String type1;
-    private String type2;
-    private String type3;
-    private int type4;
-    private String type5;
-    private int type6;
-    private int collect;
-    private int favorite;
-    private int views;
-    private String createTime;
-    private String picture;
+    private int applyStatus;
 
-    public String getLoginName() {
-        return loginName;
+    private String applyTime;
+    private String applyContent;
+
+    private String responseTime;
+    private String responseContent;
+
+    private String  logo;
+    private String  loginName;
+    private String  createtime;
+    private String  content;
+    private String  picture;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getLogo() {
-        return logo;
+    public int getDynamicId() {
+        return dynamicId;
     }
 
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public int getApplyUid() {
-        return applyUid;
-    }
-
-    public void setApplyUid(int applyUid) {
-        this.applyUid = applyUid;
-    }
-
-    public String getApplyTime() {
-        return applyTime;
-    }
-
-    public void setApplyTime(String applyTime) {
-        this.applyTime = applyTime;
+    public void setDynamicId(int dynamicId) {
+        this.dynamicId = dynamicId;
     }
 
     public int getApplyStatus() {
@@ -63,6 +39,14 @@ public class ToApplyDetailBean {
 
     public void setApplyStatus(int applyStatus) {
         this.applyStatus = applyStatus;
+    }
+
+    public String getApplyTime() {
+        return applyTime;
+    }
+
+    public void setApplyTime(String applyTime) {
+        this.applyTime = applyTime;
     }
 
     public String getApplyContent() {
@@ -89,28 +73,28 @@ public class ToApplyDetailBean {
         this.responseContent = responseContent;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public int getDynamicId() {
-        return dynamicId;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setDynamicId(int dynamicId) {
-        this.dynamicId = dynamicId;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
-    public String getIsSend() {
-        return isSend;
+    public String getCreatetime() {
+        return createtime;
     }
 
-    public void setIsSend(String isSend) {
-        this.isSend = isSend;
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
     }
 
     public String getContent() {
@@ -119,86 +103,6 @@ public class ToApplyDetailBean {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getType1() {
-        return type1;
-    }
-
-    public void setType1(String type1) {
-        this.type1 = type1;
-    }
-
-    public String getType2() {
-        return type2;
-    }
-
-    public void setType2(String type2) {
-        this.type2 = type2;
-    }
-
-    public String getType3() {
-        return type3;
-    }
-
-    public void setType3(String type3) {
-        this.type3 = type3;
-    }
-
-    public int getType4() {
-        return type4;
-    }
-
-    public void setType4(int type4) {
-        this.type4 = type4;
-    }
-
-    public String getType5() {
-        return type5;
-    }
-
-    public void setType5(String type5) {
-        this.type5 = type5;
-    }
-
-    public int getType6() {
-        return type6;
-    }
-
-    public void setType6(int type6) {
-        this.type6 = type6;
-    }
-
-    public int getCollect() {
-        return collect;
-    }
-
-    public void setCollect(int collect) {
-        this.collect = collect;
-    }
-
-    public int getFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(int favorite) {
-        this.favorite = favorite;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
     }
 
     public String getPicture() {

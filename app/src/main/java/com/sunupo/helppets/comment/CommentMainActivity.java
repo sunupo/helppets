@@ -608,6 +608,11 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                     Toast.makeText(CommentMainActivity.this,"您暂时不能发言，请联系管理员",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(App.loginUserInfo.getUserId()==DYNAMIC_USER_ID){
+                    Toast.makeText(CommentMainActivity.this,"这是您自己发表的内容",Toast.LENGTH_SHORT).show();
+                    return;
+
+                }
                 String applyContent = applyText.getText().toString().trim();
                 if(!TextUtils.isEmpty(applyContent)){
 

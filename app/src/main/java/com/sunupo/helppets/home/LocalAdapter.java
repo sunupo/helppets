@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
@@ -167,6 +168,12 @@ public class LocalAdapter extends RecyclerView.Adapter<LocalAdapter.ViewHolder>{
                 final String LOGIN_NAME=sp.getString(Constants.LOGIN_NAME,"");
                 int position=holder.getAdapterPosition();
                 DynamicBean dynamicBean=dynamicBeanArrayList.get(position);
+
+
+                if(App.loginUserInfo.getUserId()==dynamicBean.getUserId()){
+                    Toast.makeText(v.getContext(),"关注自己，是想和自己说悄悄话吧，^_^",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 final int DYNAMIC_USER_ID=dynamicBean.getUserId();
 //                final String FOLLOW=Constants.httpip+"/getComment";

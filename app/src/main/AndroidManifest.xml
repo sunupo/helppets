@@ -235,6 +235,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Mine.FromApplyActivity"></activity>
+        <activity android:name=".Mine.ToApplyActivity"/>
     </application>
 
 </manifest>

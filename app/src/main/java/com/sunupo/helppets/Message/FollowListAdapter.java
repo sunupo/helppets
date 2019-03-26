@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.main.MainActivity;
+import com.sunupo.helppets.user.UserMainPageActivity;
 import com.sunupo.helppets.util.App;
 
 import java.util.ArrayList;
@@ -60,6 +62,14 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
             public void onClick(View v) {
                 int position=holder.getAdapterPosition();
                 UserInfo userInfo=userInfoArrayList.get(position);
+                if(App.loginUserInfo.getUserId()==userInfo.getUserId()){
+                    Toast.makeText(v.getContext(),"你想和自己说悄悄话吗，^_^",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(App.loginUserInfo.getIsBanned().equals("是")){
+                    Toast.makeText(v.getContext(),"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 RongIM.getInstance().startPrivateChat(v.getContext(), userInfo.getLoginName()+"", "您（"+App.loginUserInfo.getLoginName()+"）正在与"+userInfo.getLoginName()+"聊天");
 //                RongIM.getInstance().startConversation(view.getContext(),Conversation.ConversationType.PRIVATE,userInfo.getUserId()+"","CONVERSATION_TITLE");
 //                RongIM.getInstance().startSubConversationList(view.getContext(),Conversation.ConversationType.PRIVATE);
@@ -78,7 +88,11 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
         UserInfo userInfo=userInfoArrayList.get(i);
         viewHolder.logo.setImageResource(R.drawable.keji);
         viewHolder.userId.setText(userInfo.getUserId()+"");
-        viewHolder.loginName.setText(userInfo.getLoginName());
+        if(userInfo.getLoginName().equals("Admin")){
+            viewHolder.loginName.setText("系统管理员(Admin)");
+        }else {
+            viewHolder.loginName.setText(userInfo.getLoginName());
+        }
         viewHolder.address.setText(userInfo.getProvince()+"-"+userInfo.getCity());
 
     }
