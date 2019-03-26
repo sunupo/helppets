@@ -313,6 +313,8 @@ public class LoginActivity extends AppCompatActivity
 									}
 
                                     getUserInfoJson(uid);//需要在初始化handler之后使用，否者在message.sendToTarget()报空指针异
+									// TODO: 3/26/2019 更改服务端的代码，在登陆成功时，添加登录次数loginCount
+
 
 
 ///*                                    Looper.prepare();
@@ -473,4 +475,5 @@ public class LoginActivity extends AppCompatActivity
         }
         return null;
     }
+
 }

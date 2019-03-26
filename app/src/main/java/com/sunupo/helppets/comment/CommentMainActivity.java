@@ -1,5 +1,6 @@
 package com.sunupo.helppets.comment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
@@ -7,6 +8,7 @@ import android.os.Message;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -357,7 +359,24 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onClick(View v) {
                     // TODO: 3/26/2019  删除这一条动态
-                    deleteDynamic(dynamicBean.getUserId(),dynamicBean.getDynamicId());
+                    AlertDialog.Builder builder=new AlertDialog.Builder(CommentMainActivity.this);
+                    builder.setTitle("确定删除该条动态吗？不可恢复");
+                    builder.setPositiveButton("确认", new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deleteDynamic(dynamicBean.getUserId(),dynamicBean.getDynamicId());
+                                    Toast.makeText(CommentMainActivity.this,"你已经删除了，等待刷新",Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            Toast.makeText(CommentMainActivity.this,"你已取消删除",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    builder.create().show();
                 }
             });
         }

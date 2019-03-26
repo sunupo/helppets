@@ -107,8 +107,8 @@ public class HomeItemSquareFragment extends Fragment {
 
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
         recyclerView=view.findViewById(R.id.square_recycler_view);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(linearLayoutManager);
         squareAdapter=new SquareAdapter(dynamicBeanArrayList);
         squareAdapter.setHttpRequest(new SquareAdapter.HttpRequest() {
             @Override
