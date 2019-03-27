@@ -65,6 +65,8 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     private BottomSheetDialog dialog;
     private String testJson=Constants.TEST_JSON;
 
+    private String fromTime,toTime;
+
     int DYNAMIC_USER_ID;
     int DYNAMIC_ID;
     private final String followFlag="已关注";
@@ -151,6 +153,36 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         dynamicContentText.setText(dynamicBean.getContent());
         ifSend.setText(dynamicBean.getIsSend()+dynamicBean.getType5()+"的"+dynamicBean.getType3());
         petBriefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+         Calendar calendar = Calendar.getInstance();
+        fromTime=calendar.get(Calendar.YEAR)
+                +"-"+(calendar.get(Calendar.MONTH)+1)
+                +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
+                "-"+calendar.get(Calendar.HOUR_OF_DAY)+
+                "-"+calendar.get(Calendar.MINUTE)+
+                "-"+calendar.get(Calendar.SECOND);
+        Log.d(TAG, "syy+onStart: "+fromTime);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Calendar calendar = Calendar.getInstance();
+        toTime=calendar.get(Calendar.YEAR)
+                +"-"+(calendar.get(Calendar.MONTH)+1)
+                +"-"+calendar.get(Calendar.DAY_OF_MONTH)+
+                "-"+calendar.get(Calendar.HOUR_OF_DAY)+
+                "-"+calendar.get(Calendar.MINUTE)+
+                "-"+calendar.get(Calendar.SECOND);
+
+        Log.d(TAG, "syy+onDestroy: "+App.loginUserInfo.getUserId()+"&"+dynamicBean.getUserId()+"&"+dynamicBean.getDynamicId()+"&"+fromTime+"&"+toTime);
+        // TODO: 3/27/2019  记录用户访问行为  在DB添加，userId，dynamicUserId，dynamicId visitFromTime visitToTime
+        writeLoginUserVisitRecord(App.loginUserInfo.getUserId(),dynamicBean.getUserId(),dynamicBean.getDynamicId(),fromTime,toTime);
+
     }
 
     @Override
@@ -1063,7 +1095,8 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
-    
+
+//    没用上的函数1
     private void getOneDynamicContent(final String loginName,final int dynamicUserId,final int dynamicId,final String url){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -1094,7 +1127,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
-
+    //    没用上的函数2
     public void parseJSONWithJSONObject(String responseData){
         try {
             int successCode=0;
@@ -1118,6 +1151,39 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.comment_activity_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void writeLoginUserVisitRecord(final int loginUserId,final int dynamicUserId
+            ,final int dynamicId,final String fromTime,final String toTime){
+        Log.d(TAG, "writeLoginUserVisitRecord: ");
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("loginUserId",loginUserId+"")
+                            .add("dynamicUserId",dynamicUserId+"")
+                            .add("dynamicId",dynamicId+"")
+                            .add("fromTime",fromTime+"")
+                            .add("toTime",toTime+"").build();//
+                    Request request = new Request.Builder().url(Constants.httpip+"/writeLoginUserVisitRecord").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    Log.d(TAG, "writeLoginUserVisitRecord  responseData="+responseData);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -168,12 +168,14 @@
             android:name=".Login.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:launchMode="singleInstance"
             android:name=".comment.CommentMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".ReleaseDynamic.GetLocalPhotoActivity" />
         <activity android:name=".test.ImageDownloadActivity" />
-        <activity android:name=".user.UserMainPageActivity" />
+        <activity android:name=".user.UserMainPageActivity"
+            android:launchMode="singleInstance"/>
         <!-- android:authorities="您的 ApplicationId.FileProvider" -->
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->

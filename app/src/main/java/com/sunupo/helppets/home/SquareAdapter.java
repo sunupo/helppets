@@ -146,6 +146,9 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
                 // TODO: 3/19/2019 向dynamic表 where DYNAMIC_USER_ID and DYNAMIC_ID，写入views+1
                 sendRequestWithHttpURLConnectionAddViews(DYNAMIC_USER_ID,DYNAMIC_ID,ADD_VIEWS);
 
+                // TODO: 3/27/2019 记录用户访问行为  在DB添加，userId，dynamicUserId，dynamicId visitFromTime visitToTime
+                // TODO: 3/27/2019 在CommentMainActivity实现往数据库写入， 
+
                 intent.putExtra("DYNAMIC_USER_ID",DYNAMIC_USER_ID);
                 intent.putExtra("DYNAMIC_ID",DYNAMIC_ID);
                 Bundle bundle=new Bundle();

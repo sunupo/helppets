@@ -126,7 +126,7 @@ public class HomeItemLocalFragment extends Fragment {
                             .add("paraType3",type3).add("paraCreateTime",createTime)
                             .add("limitNumFrom",limitNumFrom).add("limitNumTo",limitNumTo)
                             .add("loginName",loginName).build();
-                    Request request = new Request.Builder().url(Constants.httpip + "/getDynamicJson").post(requestBody).build();
+                    Request request = new Request.Builder().url(Constants.httpip + "/getDynamicJsonLocal").post(requestBody).build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     Log.d(TAG, "run: "+responseData);
