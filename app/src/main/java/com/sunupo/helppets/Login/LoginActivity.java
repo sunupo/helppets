@@ -16,8 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.util.App;
@@ -109,10 +111,20 @@ public class LoginActivity extends AppCompatActivity
 					}
 //        			else(读取数据库的token);
         			break;
+				case 2:
+
+					App.signText=((String)(msg.obj));
+					Log.d(TAG, "handleMessage: App.signText"+App.signText);
+					break;
         		case 1 :
 
 					Gson gson = new Gson();
 					loginUserInfo = gson.fromJson((String)msg.obj, UserInfo.class);
+
+					getSignName();//在得到loginUserInfo之后根据userid获取签名
+
+					sp.edit().putString("USER_LOGO",loginUserInfo.getLogo());
+
 					Log.d(TAG, "handleMessage: loginUserInfo="+loginUserInfo.toString());
 					if(loginUserInfo.getSuccessCode()==1){
 						try{
@@ -141,6 +153,7 @@ public class LoginActivity extends AppCompatActivity
 //									finish();
 //                Looper.loop();
 						break;
+
 			}
 
 
@@ -228,6 +241,14 @@ public class LoginActivity extends AppCompatActivity
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 		setTitle("登陆");
+
+		ImageView loginLogo=findViewById(R.id.login_logo);
+		try{
+			Glide.with(this).load(Constants.httpip+"/"+App.loginUserInfo.getLogo());
+		}catch(Exception e){
+			e.printStackTrace();
+			Log.d(TAG, "onCreate: 头像没有缓存");
+		}
 
 		sp=this.getSharedPreferences(Constants.LoginInfo,MODE_PRIVATE);
 
@@ -476,4 +497,36 @@ public class LoginActivity extends AppCompatActivity
         return null;
     }
 
+	private  void getSignName(){
+
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				try {
+					OkHttpClient client = new OkHttpClient();
+					RequestBody requestBody = new FormBody.Builder()
+							.add("userId",App.loginUserInfo.getUserId()+"").build();
+					Request request = new Request.Builder().url(Constants.httpip + "/getSignName").post(requestBody).build();
+					Response response = client.newCall(request).execute();
+					String responseData = response.body().string();
+					Log.d(TAG, "run: getSignName= "+responseData);
+
+					Message message=Message.obtain(handler,2,2,3,responseData);
+					message.sendToTarget();
+
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+			}
+		});
+		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

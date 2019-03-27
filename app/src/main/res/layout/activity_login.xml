@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login.LoginActivity">
+    tools:context=".Login.LoginActivity"
+    android:background="@drawable/cat">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal"
+        android:background="@drawable/cat">
 
         <LinearLayout
             android:layout_width="200dp"
@@ -23,6 +25,8 @@
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="50dp" >
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:visibility="gone"
+                    android:id="@+id/login_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher_foreground"
@@ -45,7 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/input_account"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"/>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -61,7 +66,8 @@
                         android:hint="@string/input_account_hint"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:textColor="#ffffff"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
@@ -72,7 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/input_pwd"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"/>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -88,13 +95,16 @@
                         android:textIsSelectable="false"
                         android:hint="@string/input_pwd_hint"
                         android:maxLines="1"
-                        android:singleLine="true"/>
+                        android:singleLine="true"
+                        android:textColor="#ffffff"
+                        />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <CheckBox
+                    android:textColor="#ffffff"
                     android:text="@string/save_pwd"
                     android:id="@+id/save_pwd"
                     android:layout_width="wrap_content"

@@ -15,7 +15,8 @@ import io.rong.imlib.model.Message;
 public class App extends Application {
 
         private final String TAG=App.class.getSimpleName();
-        public static UserInfo loginUserInfo;
+        public static UserInfo loginUserInfo=new UserInfo();
+        public static String signText="";
         private static Context mContext;
 
 
@@ -23,6 +24,8 @@ public class App extends Application {
         @Override
         public void onCreate() {
                 super.onCreate();
+                loginUserInfo.setLogo("logo/default.bmp");
+
                 RongIM.init(this,Constants.APP_KEY);
 
                 /**

@@ -54,8 +54,8 @@
 
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        app:itemIconTint="@color/liji_c_blue"
-        app:itemTextColor="@color/liji_material_red_500"
+        app:itemIconTint="#453f3f"
+        app:itemTextColor="#628756"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

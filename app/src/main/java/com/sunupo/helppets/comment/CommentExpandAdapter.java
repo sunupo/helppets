@@ -88,11 +88,15 @@ public class CommentExpandAdapter extends BaseExpandableListAdapter {
         }else {
             groupHolder = (GroupHolder) convertView.getTag();
         }
+//        Glide.with(context).load(R.drawable.user_other)
+//                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+//                .error(R.mipmap.ic_launcher)
+//                .centerCrop()
+//                .into(groupHolder.logo);
+
         Glide.with(context).load(R.drawable.user_other)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .error(R.mipmap.ic_launcher)
-                .centerCrop()
                 .into(groupHolder.logo);
+
         groupHolder.tv_name.setText(commentBeanList.get(groupPosition).getNickName());
         groupHolder.tv_time.setText(commentBeanList.get(groupPosition).getCreateDate());
         groupHolder.tv_content.setText(commentBeanList.get(groupPosition).getContent());

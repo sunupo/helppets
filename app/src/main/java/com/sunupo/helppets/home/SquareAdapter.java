@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
@@ -332,8 +333,10 @@ public class SquareAdapter extends RecyclerView.Adapter<SquareAdapter.ViewHolder
         viewHolder.displayCity.setText(dynamicBean.getCity());
         viewHolder.usernameName.setText(dynamicBean.getLoginName());
         viewHolder.contentText.setText(dynamicBean.getContent());
-        new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
-        new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+//        new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+//        new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+        Glide.with(viewHolder.itemView).load(Constants.httpip+"/"+dynamicBean.getLogo()).into(viewHolder.logo);
+        Glide.with(viewHolder.itemView).load(Constants.httpip+"/"+dynamicBean.getPicture()).into(viewHolder.contentImage);
         viewHolder.briefInfo.setVisibility(View.GONE);
         viewHolder.userId=dynamicBean.getUserId();
         viewHolder.dynamicId=dynamicBean.getDynamicId();

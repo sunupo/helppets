@@ -11,7 +11,7 @@
  Target Server Version : 50559
  File Encoding         : 65001
 
- Date: 26/03/2019 22:51:41
+ Date: 27/03/2019 21:33:13
 */
 
 SET NAMES utf8mb4;
@@ -59,15 +59,22 @@ CREATE TABLE `collectfavorite`  (
 -- Records of collectfavorite
 -- ----------------------------
 INSERT INTO `collectfavorite` VALUES (0, 1, 1, '已收藏', '已点赞');
-INSERT INTO `collectfavorite` VALUES (0, 1, 2, '已收藏', '已点赞');
-INSERT INTO `collectfavorite` VALUES (0, 1, 3, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (0, 1, 2, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (0, 1, 3, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (0, 1, 4, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (0, 1, 5, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (0, 2, 1, '未收藏', '已点赞');
-INSERT INTO `collectfavorite` VALUES (0, 2, 2, '已收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (0, 2, 2, '未收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (0, 2, 9, '已收藏', '未点赞');
 INSERT INTO `collectfavorite` VALUES (0, 2, 28, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (0, 3, 1, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (1, 1, 1, '已收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (1, 1, 2, '已收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (1, 1, 4, '未收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (1, 2, 3, '未收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (1, 2, 4, '已收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (1, 2, 6, '已收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (1, 2, 8, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (2, 1, 1, '未收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (2, 1, 2, '未收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (2, 1, 3, '未收藏', '未点赞');
@@ -237,19 +244,19 @@ CREATE TABLE `dynamic`  (
 -- Records of dynamic
 -- ----------------------------
 INSERT INTO `dynamic` VALUES (1, 1, '送养', '上班没有时间，像找个重庆的朋友代养一下', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 2, 3, 86, '2018-03-11-18-30-15', 'dynamicpicture/image_1_1.bmp');
-INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 2, 3, 36, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
-INSERT INTO `dynamic` VALUES (1, 3, '送养', '非常可爱的小仓鼠，希望有人可以代养一周。由于加班太忙了，怕照顾不好它', '哺乳类', '鼠', '仓鼠', 5, '褐色', 1, 2, 2, 40, '2018-03-11-18-30-15', 'dynamicpicture/image_1_3.bmp');
+INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 36, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
+INSERT INTO `dynamic` VALUES (1, 3, '送养', '非常可爱的小仓鼠，希望有人可以代养一周。由于加班太忙了，怕照顾不好它', '哺乳类', '鼠', '仓鼠', 5, '褐色', 1, 2, 3, 40, '2018-03-11-18-30-15', 'dynamicpicture/image_1_3.bmp');
 INSERT INTO `dynamic` VALUES (1, 4, '送养', '上班去了，没时间照顾它。', '哺乳类', '猫', '加菲猫', 10, '黄色', 3, 2, 1, 18, '2019-3-18-19-57-15', 'dynamicpicture/image_1_4.bmp');
 INSERT INTO `dynamic` VALUES (1, 5, '送养', '出去旅游，偶遇的蜈蚣没有咩有朋友喜欢的', '节肢类', '昆虫', '蜈蚣', 1, '白色', 11, 2, 3, 22, '2019-3-18-19-59-24', 'dynamicpicture/image_1_5.bmp');
 INSERT INTO `dynamic` VALUES (2, 1, '收养', '想找一个两个月大的小猫咪，女朋友喜欢养猫', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 4, 4, 113, '2018-03-11-18-30-15', 'dynamicpicture/image_2_1.bmp');
-INSERT INTO `dynamic` VALUES (2, 2, '收养', '想领养一条“纯正”（手动滑稽）的哈士奇，不怕他拆家，就怕他嫌我笨', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 42, '2018-03-11-18-30-15', 'dynamicpicture/image_2_2.bmp');
+INSERT INTO `dynamic` VALUES (2, 2, '收养', '想领养一条“纯正”（手动滑稽）的哈士奇，不怕他拆家，就怕他嫌我笨', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 2, 3, 42, '2018-03-11-18-30-15', 'dynamicpicture/image_2_2.bmp');
 INSERT INTO `dynamic` VALUES (2, 3, '收养', '闲着没事，个人癖好', '节肢类', '昆虫', '蜈蚣', 1, '白色', 1, 0, 0, 3, '2019-3-22-19-10-18', 'dynamicpicture/image_2_3.bmp');
-INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 1, 0, 4, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
+INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 2, 1, 4, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
 INSERT INTO `dynamic` VALUES (2, 5, '送养', '即将出国，陪伴了两年的哈士奇想送人代养一下', '哺乳类', '狗', '哈士奇', 10, '白色', 2, 0, 1, 3, '2019-3-23-19-4-1', 'dynamicpicture/image_2_5.bmp');
-INSERT INTO `dynamic` VALUES (2, 6, '送养', '九号', '哺乳类', '狗', '来福', 15, '白色', 3, 0, 0, 2, '2019-3-24-17-54-2', 'dynamicpicture/image_2_6.bmp');
+INSERT INTO `dynamic` VALUES (2, 6, '送养', '九号', '哺乳类', '狗', '来福', 15, '白色', 3, 1, 1, 2, '2019-3-24-17-54-2', 'dynamicpicture/image_2_6.bmp');
 INSERT INTO `dynamic` VALUES (2, 7, '送养', '找一只狗狗，在白云路走丢了', '哺乳类', '狗', '哈士奇', 1, '白色', 1, 1, 0, 1, '2019-3-24-18-10-18', 'dynamicpicture/image_2_7.bmp');
-INSERT INTO `dynamic` VALUES (2, 8, '送养', '找一只猪，昨晚没回家，在天麒家园', '哺乳类', '猫', '加菲猫', 1, '黑色', 1, 1, 0, 0, '2019-3-24-18-14-44', 'dynamicpicture/image_2_8.bmp');
-INSERT INTO `dynamic` VALUES (2, 9, '送养', '有仓鼠嘛', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 0, 0, 0, '2019-3-24-18-17-48', 'dynamicpicture/image_2_9.bmp');
+INSERT INTO `dynamic` VALUES (2, 8, '送养', '找一只猪，昨晚没回家，在天麒家园', '哺乳类', '猫', '加菲猫', 1, '黑色', 1, 2, 1, 0, '2019-3-24-18-14-44', 'dynamicpicture/image_2_8.bmp');
+INSERT INTO `dynamic` VALUES (2, 9, '送养', '有仓鼠嘛', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 1, 0, 0, '2019-3-24-18-17-48', 'dynamicpicture/image_2_9.bmp');
 INSERT INTO `dynamic` VALUES (3, 1, '收养', '喜欢斗鹦鹉', '哺乳类', '狗', '鹦鹉', 5, '褐色', 1, 3, 2, 33, '2018-03-11-18-30-15', 'dynamicpicture/image_3_1.bmp');
 INSERT INTO `dynamic` VALUES (4, 1, '送养', '旅游的时候遇见一只流浪狗，希望有人能领养它', '哺乳类', '狗', '狗', 10, '黑色', 2, 2, 2, 7, '2019-03-15-18-22-15', 'dynamicpicture/image_4_1.bmp');
 INSERT INTO `dynamic` VALUES (5, 2, '送养', '哦哦', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 0, 0, 2, '2019-3-25-12-55-9', 'dynamicpicture/image_5_2.bmp');
@@ -345,6 +352,24 @@ INSERT INTO `reply` VALUES (2, 1, 6, 3, 'njjndndndndnd嘻嘻心', 2, 1, 'YY一�
 INSERT INTO `reply` VALUES (2, 2, 1, 1, '天气这么好，出去遛狗吧', 2, 1, 'hhhbb', '2019-3-21 0:26:11');
 
 -- ----------------------------
+-- Table structure for signname
+-- ----------------------------
+DROP TABLE IF EXISTS `signname`;
+CREATE TABLE `signname`  (
+  `userId` int(255) NOT NULL,
+  `signtext` varchar(48) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '该同志最近没有什么动态，风平浪静' COMMENT '用户签名',
+  PRIMARY KEY (`userId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of signname
+-- ----------------------------
+INSERT INTO `signname` VALUES (0, '宠物互助，爱心传递');
+INSERT INTO `signname` VALUES (1, '好吧');
+INSERT INTO `signname` VALUES (2, '上班，忙得很，找个保姆看宠物');
+INSERT INTO `signname` VALUES (3, '该同志最近没有什么动态，风平浪静');
+
+-- ----------------------------
 -- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
@@ -399,11 +424,11 @@ CREATE TABLE `userinfo`  (
 -- ----------------------------
 -- Records of userinfo
 -- ----------------------------
-INSERT INTO `userinfo` VALUES (0, '系统管理员', 'Admin', '123', '加菲猫,哈士奇', '加菲猫,哈士奇', '男', '1992-11-30', 27, '待就业', 8000, '大学', '已婚', '1970-1-1-0-0-0', '否', '是', '有', '中国', '北京', '北京', 0, 'logo/default.bmp', '0', '0', '0');
-INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '1985-12-3', 34, '待就业', 8000, '大学', '已婚', '2019-01-01-1-1-1', '是', '否', '有', '中国', '四川', '广安', 34, 'logo/1.bmp', '13222223333', '99887766', 'wechat123');
-INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '是', '有', '中国', '重庆', '重庆', 30, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
-INSERT INTO `userinfo` VALUES (3, '李四', 'lisi', '123', '加菲猫,哈士奇', '仓鼠', '男', '1998-3-4', 21, '待就业', 8000, '硕士', '未婚', '2019-01-02-11-0-0', '否', '是', '有', '中国', '重庆', '重庆', 30, 'logo/3.bmp', '15974653746', 'qq1232134', 'wechat32323');
-INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京', 30, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
+INSERT INTO `userinfo` VALUES (0, '系统管理员', 'Admin', '123', '加菲猫,哈士奇', '加菲猫,哈士奇', '男', '2019-2-15', -2018, '待就业', 8000, '大学', '已婚', '1970-1-1-0-0-0', '否', '是', '有', '中国', '安徽省', '亳州市-谯城区', 19, 'logo/default.bmp', '无', '无', '无');
+INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '否', '是', '无', '中国', '福建省', '南平市-建阳市', 78, 'logo/1.bmp', '', '', '无');
+INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '是', '有', '中国', '重庆', '重庆-沙坪坝区', 31, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
+INSERT INTO `userinfo` VALUES (3, '李四', 'lisi', '123', '加菲猫,哈士奇', '仓鼠', '男', '1998-3-4', 21, '待就业', 8000, '硕士', '未婚', '2019-01-02-11-0-0', '否', '是', '有', '中国', '重庆', '重庆-渝北区', 30, 'logo/3.bmp', '15974653746', 'qq1232134', 'wechat32323');
+INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 30, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
 
 -- ----------------------------
 -- View structure for v_apply_dunamic

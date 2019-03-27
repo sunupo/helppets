@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/linearlayout_corner">
+    android:background="@drawable/border_white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="6dp"
         android:textColor="#484848"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:layout_marginLeft="52dp"
         android:layout_marginRight="24dp"
         android:maxLines="2"
@@ -124,6 +124,7 @@
             android:paddingLeft="5dp"/>
 
         <ImageView
+            android:clickable="false"
             android:id="@+id/collect_image"
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -138,6 +139,7 @@
             android:text="0"/>
 
         <ImageView
+            android:clickable="false"
             android:id="@+id/favorite_image"
             android:layout_width="22dp"
             android:layout_height="22dp"

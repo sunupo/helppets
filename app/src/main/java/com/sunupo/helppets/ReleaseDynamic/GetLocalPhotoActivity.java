@@ -44,12 +44,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sunupo.helppets.Login.LoginActivity;
+import com.sunupo.helppets.Mine.setting.ChangeUserInfoActivity;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.comment.CommentMainActivity;
 import com.sunupo.helppets.test.ImageDownloadActivity;
 import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.CityBaseActivity;
 import com.sunupo.helppets.util.Constants;
+import com.sunupo.helppets.util.InputTextTypeUtil;
 import com.sunupo.helppets.util.UploadImage;
 import com.youth.picker.PickerView;
 import com.youth.picker.entity.PickerData;
@@ -58,9 +60,7 @@ import com.youth.picker.listener.OnPickerClickListener;
 import static com.alipay.sdk.app.statistic.c.v;
 
 /**
- * @address BeiJing
- * @author LiXufei
- * @function  拍照取图相册取图
+ * @function  拍照取图相册取图 上传动态，有一个宠物类型选择器，资源文件在assets
  */
 public class GetLocalPhotoActivity extends CityBaseActivity{
 
@@ -275,6 +275,13 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 if(type_text.getText().toString()!=""&&!type_text.getText().toString().equals("")){
                     typeArray=type_text.getText().toString().split("-");
                 }
+                try{
+//            有可能在选择类型的时候，只选择了两个层级，array大小为2
+                    Log.d(TAG, "typeArray[2]=: "+typeArray[2]);
+                }catch(Exception e){
+                    Toast.makeText(GetLocalPhotoActivity.this,"请选择完整的宠物类型^_^",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final String[] types={typeArray[0],typeArray[1],typeArray[2]};
 //                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
 //                // 获取当前时间
@@ -299,6 +306,10 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                     Toast.makeText(GetLocalPhotoActivity.this, "请输入完整信息", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(InputTextTypeUtil.isNumric(WEIGHT)&&InputTextTypeUtil.isNumric(AGE)){
+                    Toast.makeText(GetLocalPhotoActivity.this, "请输入整数的体重（kg）或宠物年龄（月）", Toast.LENGTH_LONG).show();
+                }
+
 
                 new Thread(new Runnable() {
                     @Override

@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/rc_edit_text_background">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/follow_list_item_logo"
         android:layout_width="60dp"
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#d1a127"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:text="诸葛亮" />
             <android.support.v7.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
@@ -35,11 +36,12 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_gravity="center"
                     android:id="@+id/follow_list_item_province_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="黑龙江-哈尔滨市"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:layout_marginTop="3dp"
                     android:textColor="#9ca19c"/>
             </android.support.v7.widget.LinearLayoutCompat>

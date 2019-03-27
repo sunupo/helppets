@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
+import com.sunupo.helppets.Mine.setting.SettingMainActivity;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.user.MineItemDynamicFragment;
 import com.sunupo.helppets.user.MineItemFavoriteFragment;
@@ -53,7 +55,7 @@ public class MineFragment extends Fragment {
     private TextView userLoginName,userUserId,userState,joinDays
             ,hisFan,hisFollow,hisFavorite,hisCollect;
 
-    LinearLayoutCompat fromApplyLayout,toApplyLayout;
+    LinearLayoutCompat fromApplyLayout,toApplyLayout,settingLayout;
 
     private Bundle bundle;//
 
@@ -68,6 +70,7 @@ public class MineFragment extends Fragment {
                     hisFavorite.setText(str[2]+"");
                     hisCollect.setText(str[3]+"");
                     break;
+
             }
         }
     };
@@ -85,6 +88,7 @@ public class MineFragment extends Fragment {
 
         fromApplyLayout=view.findViewById(R.id.from_apply_layout);
         toApplyLayout=view.findViewById(R.id.to_apply_layout);
+        settingLayout=view.findViewById(R.id.setting_layout);
 
         fromApplyLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +104,16 @@ public class MineFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        settingLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(v.getContext(),SettingMainActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        new DownloadImageTask(userLogo).execute(Constants.httpip+"/"+ App.loginUserInfo.getLogo());
+        Glide.with(view.getContext()).load(Constants.httpip+"/"+ App.loginUserInfo.getLogo()).into(userLogo);
+//        new DownloadImageTask(userLogo).execute(Constants.httpip+"/"+ App.loginUserInfo.getLogo());
         userLoginName.setText(App.loginUserInfo.getLoginName());
         userUserId.setText("ID:"+App.loginUserInfo.getUserId()+"");
         userState.setText(App.loginUserInfo.getIsBanned().equals("是")?"禁言":"正常");
@@ -154,8 +166,13 @@ public class MineFragment extends Fragment {
        View view=inflater.inflate(R.layout.fragment_mine,container,false);
 
         // TODO: 3/25/2019 把这个消息替换为签名
-        final List<String> datas = Arrays.asList("最近即将出国了", "家里面有两只金毛，一条哈士奇，没人照顾。", "想找个重庆江北区的朋友","来帮我代养一周", "谢谢！", "........");
-    //SimpleMarqueeView<T>，SimpleMF<T>：泛型T指定其填充的数据类型，比如String，Spanned等
+//        grtSignName(){
+//
+//        }
+//        final List<String> datas = Arrays.asList("最近即将出国了", "家里面有两只金毛，一条哈士奇，没人照顾。", "想找个重庆江北区的朋友","来帮我代养一周", "谢谢！", "........");
+        final List<String> datas = Arrays.asList(App.signText.split(","));
+
+        //SimpleMarqueeView<T>，SimpleMF<T>：泛型T指定其填充的数据类型，比如String，Spanned等
         SimpleMarqueeView<String> marqueeView = (SimpleMarqueeView)view.findViewById(R.id.simpleMarqueeView);
         SimpleMF<String> marqueeFactory = new SimpleMF(view.getContext());
         marqueeFactory.setData(datas);
@@ -193,4 +210,5 @@ public class MineFragment extends Fragment {
 
         return fragmentList;
     }
+
 }

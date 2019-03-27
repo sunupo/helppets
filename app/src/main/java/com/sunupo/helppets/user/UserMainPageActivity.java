@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.google.gson.Gson;
@@ -208,7 +209,9 @@ public class UserMainPageActivity extends BaseActivity {
         hisFavorite=findViewById(R.id.his_favorite);
         hisCollect=findViewById(R.id.his_collect);
 
-        new DownloadImageTask(userLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+//        new DownloadImageTask(userLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+        Glide.with(this).load(Constants.httpip+"/"+ dynamicBean.getLogo()).into(userLogo);
+
         userLoginName.setText(dynamicBean.getLoginName());
         userUserId.setText("ID:"+dynamicBean.getUserId()+"");
         //todo 判断当前是否关注
@@ -460,4 +463,5 @@ public class UserMainPageActivity extends BaseActivity {
         }
         return null;
     }
+
 }

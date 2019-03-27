@@ -10,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.home.CollectionAdapter;
 import com.sunupo.helppets.main.MainActivity;
 import com.sunupo.helppets.user.UserMainPageActivity;
 import com.sunupo.helppets.util.App;
+import com.sunupo.helppets.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +88,7 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
         UserInfo userInfo=userInfoArrayList.get(i);
-        viewHolder.logo.setImageResource(R.drawable.keji);
+        Glide.with(viewHolder.view).load(Constants.httpip+"/"+userInfo.getLogo()).into(viewHolder.logo);
         viewHolder.userId.setText(userInfo.getUserId()+"");
         if(userInfo.getLoginName().equals("Admin")){
             viewHolder.loginName.setText("系统管理员(Admin)");

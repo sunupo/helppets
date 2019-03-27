@@ -19,8 +19,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:background="#fffdfd">
                 <android.support.design.circularreveal.CircularRevealGridLayout
                     android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                             android:layout_rowWeight="1"
                             android:textColor="#9bab97"
                             android:textSize="16sp"
-                            android:text="登陆天数"
+                            android:text="上线次数"
                             android:background="@drawable/linearlayout_corner"/>
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/join_days"
@@ -282,53 +282,74 @@
                 android:layout_height="5dp"
                 android:alpha="0"/>
 
-            <!--我的申请,切换会否可以显示-->
+          <LinearLayout
+              android:layout_gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+              <!--我的申请,切换会否可以显示-->
+              <android.support.v7.widget.LinearLayoutCompat
+                  android:id="@+id/from_apply_layout"
+                  android:layout_width="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_height="35dp"
+                  android:background="@drawable/border_white"
+                  android:layout_marginLeft="4dp"
+                  android:layout_weight="1">
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:layout_gravity="center"
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:background="@drawable/rc_count_down_message_bubble" />
+                  <android.support.v7.widget.AppCompatTextView
+                      android:layout_gravity="center"
+                      android:textStyle="bold"
+                      android:text="收到的申请"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+              </android.support.v7.widget.LinearLayoutCompat>
+
+
+              <!--收到的申请-->
+              <android.support.v7.widget.LinearLayoutCompat
+                  android:id="@+id/to_apply_layout"
+                  android:layout_width="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_height="35dp"
+                  android:background="@drawable/border_white"
+                  android:layout_marginRight="4dp"
+                  android:layout_weight="1">
+                  <de.hdodenhof.circleimageview.CircleImageView
+                      android:layout_gravity="center"
+                      android:layout_width="30dp"
+                      android:layout_height="30dp"
+                      android:background="@drawable/rc_count_down_message_bubble" />
+                  <android.support.v7.widget.AppCompatTextView
+                      android:layout_gravity="center"
+                      android:textStyle="bold"
+                      android:text="发出的申请"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" />
+              </android.support.v7.widget.LinearLayoutCompat>
+          </LinearLayout>
+            
             <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/from_apply_layout"
+                android:id="@+id/setting_layout"
                 android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_height="35dp"
-                android:background="#ffffff"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:background="@drawable/border_white">
+                <ImageView
+                    android:background="@drawable/rc_ext_tab_setting"
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/message" />
+                    android:layout_height="30dp" />
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:textStyle="bold"
-                    android:text="收到的申请"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </android.support.v7.widget.LinearLayoutCompat>
-
-
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:alpha="0"/>
-            <!--收到的申请-->
-            <android.support.v7.widget.LinearLayoutCompat
-                android:id="@+id/to_apply_layout"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_height="35dp"
-                android:background="#ffffff"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_gravity="center"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/message" />
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_gravity="center"
-                    android:textStyle="bold"
-                    android:text="发出的申请"
-                    android:layout_width="match_parent"
+                    android:text="设置"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.LinearLayoutCompat>
 
@@ -339,7 +360,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/linearlayout_corner"
+                android:background="@drawable/border_white"
                 android:orientation="vertical">
 
                 <android.support.design.widget.TabLayout

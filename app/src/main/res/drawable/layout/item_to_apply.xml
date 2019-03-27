@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_margin="2dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/linearlayout_corner">
+    android:background="@drawable/rc_edit_text_background">
     <!--申请对应动态的所有内容-->
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/border_grey">
+        android:background="@drawable/border_white">
         <!--头像，动态事件，地址-->
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,12 +84,12 @@
 
         <!--申请的对应的动态图片-->
         <android.support.v7.widget.AppCompatImageView
+            android:layout_gravity="right"
             android:id="@+id/dynamic_image"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:textColor="#484848"
-            android:textSize="14sp"
-            android:background="@drawable/border_white"/>
+            android:textSize="14sp"/>
     </android.support.v7.widget.LinearLayoutCompat>
 
     <!--申请时间，申请内容，回应时间，回应内容。取消申请按钮-->
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="52dp"
         android:orientation="vertical"
-        android:background="@drawable/border_grey">
+        android:background="@drawable/border_white">
 
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -251,10 +251,10 @@
 
     </android.support.v7.widget.LinearLayoutCompat>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@color/rc_divider_line"/>
+    <!--<android.support.v7.widget.AppCompatTextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="5dp"-->
+        <!--android:background="@color/rc_divider_line"/>-->
 
 
 

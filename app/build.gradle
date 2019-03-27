@@ -102,7 +102,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.7'
     //    // https://mvnrepository.com/artifact/org.immutables/gson
     //    compile group: 'org.immutables', name: 'gson', version: '2.7.5'
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+//    implementation 'com.github.bumptech.glide:glide:3.7.0'
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     implementation 'org.apache.httpcomponents:httpclient:4.5.7'
     //层级选择组件
@@ -117,6 +117,10 @@ dependencies {
     implementation 'com.gongwen:marqueelibrary:1.1.3'
 //    按钮库
     implementation 'com.sackcentury:shinebutton:0.2.0'
+    // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
+    implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.8.0'
+
+//
 
 }
 repositories {

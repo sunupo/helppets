@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
@@ -112,6 +113,12 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
                         case 2:
                             Toast.makeText(CommentMainActivity.this,"你上次已经申请成功了!",Toast.LENGTH_SHORT).show();
                             break;
+                        case 11:
+                            Toast.makeText(CommentMainActivity.this,"其他人正在申请中",Toast.LENGTH_LONG).show();
+                            break;
+                        case 12:
+                            Toast.makeText(CommentMainActivity.this,"其他人已经申请成功了!",Toast.LENGTH_SHORT).show();
+                            break;
                         case 3:
                             Toast.makeText(CommentMainActivity.this,"你上次上次申请过了，没有通过!",Toast.LENGTH_SHORT).show();
                             break;
@@ -130,8 +137,13 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
 
     // TODO: 3/23/2019  
     private void initDynamicContent(){
-        new DownloadImageTask(dynamicUserLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
-        new DownloadImageTask(dynamicImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+//        new DownloadImageTask(dynamicUserLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+//        new DownloadImageTask(dynamicImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+
+//        用glide加载，有缓存策略，更流畅
+        Glide.with(this).load(Constants.httpip+"/"+dynamicBean.getLogo()).into(dynamicUserLogo);
+        Glide.with(this).load(Constants.httpip+"/"+dynamicBean.getPicture()).into(dynamicImage);
+
         dynamicUserName.setText(dynamicBean.getLoginName()+"");
         String[] array=dynamicBean.getCreateTime().split("-");
         dynamictTime.setText(array[0]+"-"+array[1]+"-"+array[2]+" "+array[3]+":"+array[4]+":"+array[5]);

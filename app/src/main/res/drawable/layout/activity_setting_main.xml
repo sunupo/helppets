@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_change_userinfo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <!--更改资料-->
+    <LinearLayout
+        android:id="@+id/change_user_info_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_marginLeft="15dp"
+            android:text="更改资料"
+            android:textSize="30sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--更改密码-->
+    <LinearLayout
+        android:id="@+id/change_password_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_marginLeft="15dp"
+            android:text="更改密码"
+            android:textSize="30sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--更改签名-->
+    <LinearLayout
+        android:id="@+id/change_sign_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background">
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_marginLeft="15dp"
+            android:id="@+id/we_chat"
+            android:text="更改签名"
+            android:textSize="30sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--退出-->
+    <LinearLayout
+        android:id="@+id/quit"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background">
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/rc_real_time_location_exit"/>
+        <TextView
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:gravity="center"
+            android:textColor="#ed0d05"
+            android:text="退出"
+            android:textSize="28sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

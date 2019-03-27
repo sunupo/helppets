@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.R;
+import com.sunupo.helppets.util.InputTextTypeUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -37,6 +38,10 @@ public class RegisterActivity extends AppCompatActivity
 			public void onClick(View v)
 			{
 
+				if(InputTextTypeUtil.isHaveChina(editTextUid.getText().toString())){
+					Toast.makeText(RegisterActivity.this,"账号不应该包含汉字",Toast.LENGTH_LONG).show();
+					return;
+				}
 				final String uid = editTextUid.getText().toString();
 				final String psw = editTextPsw.getText().toString();
 				final String pswc = editTextPswc.getText().toString();

@@ -234,8 +234,11 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mine.FromApplyActivity"></activity>
-        <activity android:name=".Mine.ToApplyActivity"/>
+        <activity android:name=".Mine.FromApplyActivity" />
+        <activity android:name=".Mine.ToApplyActivity" />
+        <activity android:name=".Mine.setting.ChangeUserInfoActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" ></activity>
+        <activity android:name=".Mine.setting.SettingMainActivity"/>
     </application>
 
 </manifest>

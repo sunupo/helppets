@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.comment.CommentMainActivity;
@@ -302,8 +303,13 @@ public class MineFollowAdapter extends RecyclerView.Adapter<MineFollowAdapter.Vi
         viewHolder.displayCity.setText(dynamicBean.getCity());
         viewHolder.usernameName.setText(dynamicBean.getLoginName());
         viewHolder.contentText.setText(dynamicBean.getContent());
-        new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
-        new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+//        new DownloadImageTask(viewHolder.logo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
+//        new DownloadImageTask(viewHolder.contentImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
+
+        Glide.with(viewHolder.itemView).load(Constants.httpip+"/"+dynamicBean.getLogo()).into(viewHolder.logo);
+        Glide.with(viewHolder.itemView).load(Constants.httpip+"/"+dynamicBean.getPicture()).into(viewHolder.contentImage);
+
+
         viewHolder.briefInfo.setText("("+dynamicBean.getIsSend()+")"+dynamicBean.getType3()+"-"+dynamicBean.getType5()+"-"+dynamicBean.getType6()+"岁");
         viewHolder.userId=dynamicBean.getUserId();
         viewHolder.dynamicId=dynamicBean.getDynamicId();
