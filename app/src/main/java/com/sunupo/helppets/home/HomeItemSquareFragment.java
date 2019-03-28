@@ -1,5 +1,6 @@
 package com.sunupo.helppets.home;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.DynamicBeanData;
+import com.sunupo.helppets.search.SearchActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.App;
 
@@ -59,9 +61,10 @@ public class HomeItemSquareFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
-            sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,editText.getText().toString(),createTime,limitNumFrom,limitNumTo
-                    ,App.loginUserInfo.getLoginName());
-            squareAdapter.notifyDataSetChanged();
+            startActivity(new Intent(v.getContext(),SearchActivity.class));
+
+//            sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,editText.getText().toString(),createTime,limitNumFrom,limitNumTo
+//                    ,App.loginUserInfo.getLoginName());
         }
     };
 
@@ -100,9 +103,11 @@ public class HomeItemSquareFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_square,container,false);
+        View view=inflater.inflate(R.layout.fragment_square2,container,false);
         researchImageView=view.findViewById(R.id.research_image_view);
         editText=view.findViewById(R.id.research_Content);
+
+        editText.setOnClickListener(researchListener);
         researchImageView.setOnClickListener(researchListener);
 
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
@@ -114,7 +119,8 @@ public class HomeItemSquareFragment extends Fragment {
             @Override
             public void sendRequest() {
                 sendRequestWithHttpURLConnectionHaveParam(province,city,type1,type2,type3,createTime,limitNumFrom,limitNumTo
-                        ,App.loginUserInfo.getLoginName());            }
+                        ,App.loginUserInfo.getLoginName());
+            }
         });
         recyclerView.setAdapter(squareAdapter);
 

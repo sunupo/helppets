@@ -29,6 +29,8 @@ public class Constants
 	public static final String APP_SECRET="a6ro0cyYDJeZo";
 	public static final String ADMIN_TOKEN="Sj2hNeLvrRUvFhqGmzBimuoSw0INgwM5mk/dXz49nWrz8AUbSzBeTEu50jptoDf7iW5IvnCbgI2hgqEXOGkSeQ==";
 
+	public static final String access_token="24.474defbb33833fe6195e7286f5b70111.2592000.1556348840.282335-15876386";//baidu api
+
 	public static String TEST_JSON = "{\n" +
 			"\t\"code\": 1000,\n" +
 			"\t\"message\": \"查看评论成功\",\n" +
@@ -82,4 +84,13 @@ public class Constants
 			"\t\t]\n" +
 			"\t}\n" +
 			"}";
+
+//{
+//	"refresh_token": "25.cce66d81f1a3aa7f15269acbb8de506a.315360000.1869116840.282335-15876386",
+//	"expires_in": 2592000,
+//	"session_key": "9mzdDxM603hPeBi5eDUvhMzRAbn+HtFIgJUWkN+fV+vIywq\/hO8rpmliyveUzDtZv8X\/pfj3rURfDDtN7Y56h2fUDjWj4w==",
+//	"access_token": "24.474defbb33833fe6195e7286f5b70111.2592000.1556348840.282335-15876386",
+//	"scope": "public vis-antiporn_antiporn_v2 vis-classify_watermark brain_gif_antiporn vis-classify_terror brain_all_scope vis-starface_public_person solution_face brain_antiporn brain_antiterror vis-classify_\u6076\u5fc3\u56fe\u8bc6\u522b\u670d\u52a1 brain_politician brain_imgquality_general brain_watermark brain_public brain_disgust brain_antispam_spam wise_adapt lebo_resource_base lightservice_public hetu_basic lightcms_map_poi kaidian_kaidian ApsMisTest_Test\u6743\u9650 vis-classify_flower lpq_\u5f00\u653e cop_helloScope ApsMis_fangdi_permission smartapp_snsapi_base iop_autocar oauth_tp_app smartapp_smart_game_openapi oauth_sessionkey smartapp_swanid_verify smartapp_opensource_openapi",
+//	"session_secret": "124d51f8562db964e4bdf26621c6c1ff"
+//}
 }

@@ -15,10 +15,11 @@
             android:layout_height="wrap_content"
             android:background="@drawable/border_shallow">
             <EditText
+                android:clickable="false"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/research_Content"
-                android:hint="查询"
+                android:hint="点击查询"
                 android:maxLines="1"
                 android:layout_width="900px"
                 android:layout_height="wrap_content"
@@ -33,13 +34,13 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="2dp"/>
         <!--<ImageView-->
-            <!--android:layout_marginRight="4dp"-->
-            <!--android:layout_marginLeft="2dp"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:id="@+id/delete_search_image_view"-->
-            <!--android:background="@drawable/rc_ext_search_cancel"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content" />-->
+        <!--android:layout_marginRight="4dp"-->
+        <!--android:layout_marginLeft="2dp"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:id="@+id/delete_search_image_view"-->
+        <!--android:background="@drawable/rc_ext_search_cancel"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

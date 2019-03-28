@@ -260,15 +260,20 @@ public class UserMainPageActivity extends BaseActivity {
                     return;
                 }
                 if(App.loginUserInfo.getIsBanned().equals("是")){
-                    Toast.makeText(UserMainPageActivity.this,"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
-                    return;
+                    //  如果对方是Admin，就可以聊天
+                    if(dynamicUserInfo.getIsAdmin().equals("是")){
+                        RongIM.getInstance().startPrivateChat(UserMainPageActivity.this,dynamicBean.getLoginName()+"",App.loginUserInfo.getLoginName()+"正在与"+dynamicBean.getLoginName()+"聊天");
+                        return;
+                    }else{
+                        Toast.makeText(UserMainPageActivity.this,"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                }else{
+                    RongIM.getInstance().startPrivateChat(UserMainPageActivity.this,dynamicBean.getLoginName()+"",App.loginUserInfo.getLoginName()+"正在与"+dynamicBean.getLoginName()+"聊天");
                 }
-                RongIM.getInstance().startPrivateChat(UserMainPageActivity.this,dynamicBean.getLoginName()+"",App.loginUserInfo.getLoginName()+"正在与"+dynamicBean.getLoginName()+"聊天");
             }
         });
-
-
-
     }
 
     /**
@@ -463,5 +468,7 @@ public class UserMainPageActivity extends BaseActivity {
         }
         return null;
     }
+
+
 
 }

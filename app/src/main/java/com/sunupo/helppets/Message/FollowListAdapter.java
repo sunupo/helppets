@@ -69,8 +69,15 @@ class FollowListAdapter extends RecyclerView.Adapter<FollowListAdapter.ViewHolde
                     return;
                 }
                 if(App.loginUserInfo.getIsBanned().equals("是")){
-                    Toast.makeText(v.getContext(),"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
-                    return;
+//                    如果对方是Admin，就可以聊天
+                    if(userInfo.getIsAdmin().equals("是")){
+                        RongIM.getInstance().startPrivateChat(v.getContext(), userInfo.getLoginName()+"", "您（"+App.loginUserInfo.getLoginName()+"）正在与"+userInfo.getLoginName()+"聊天");
+                        return;
+                    }else{
+                        Toast.makeText(v.getContext(),"您暂时不能说话了，请联系管理员，o(╥﹏╥)o",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                 }
                 RongIM.getInstance().startPrivateChat(v.getContext(), userInfo.getLoginName()+"", "您（"+App.loginUserInfo.getLoginName()+"）正在与"+userInfo.getLoginName()+"聊天");
 //                RongIM.getInstance().startConversation(view.getContext(),Conversation.ConversationType.PRIVATE,userInfo.getUserId()+"","CONVERSATION_TITLE");
