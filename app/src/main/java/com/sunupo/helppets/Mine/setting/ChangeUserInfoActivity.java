@@ -1,11 +1,13 @@
 package com.sunupo.helppets.Mine.setting;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -14,6 +16,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -57,6 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.rong.imkit.utils.StringUtils;
+import kr.co.namee.permissiongen.PermissionGen;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -120,6 +125,21 @@ public class ChangeUserInfoActivity extends AddressBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_user_info);
+
+        //        requestPermission();
+//        if (ContextCompat.checkSelfPermission(ChangeUserInfoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(ChangeUserInfoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//        }
+
+        if (ContextCompat.checkSelfPermission(ChangeUserInfoActivity.this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 没有权限，申请权限。
+            PermissionGen.needPermission(this, 200, Manifest.permission.CAMERA);
+        } else {
+            // 有权限了，直接使用相机。
+
+        }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("修改资料");

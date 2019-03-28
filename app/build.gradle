@@ -19,7 +19,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 28
         versionCode 2
-        versionName "2.0"
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         compileOptions {
@@ -126,6 +126,7 @@ dependencies {
 //// https://mvnrepository.com/artifact/com.google.common/google-collect
 //    compile group: 'com.google.common', name: 'google-collect', version: '1.0-rc1'
 
+    implementation 'com.lovedise:permissiongen:0.0.6'
 
 }
 repositories {

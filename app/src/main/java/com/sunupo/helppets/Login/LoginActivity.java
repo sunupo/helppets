@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity
 
 
 //                Looper.prepare();
-						Log.d(TAG, "handleMessage: 登陆成功");
+						Log.d(TAG, "handleMessage: 登陆成功,即将进入");
 						Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_LONG).show();
 						Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 						intent.putExtra("uid",uuid);

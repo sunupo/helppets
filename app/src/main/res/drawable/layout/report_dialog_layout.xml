@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <!--政治敏感-->
     <android.support.v7.widget.AppCompatTextView
         android:text="政治敏感"
+        android:textSize="25sp"
         android:id="@+id/zzmg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background"/>
     <!--色情暴力-->
     <android.support.v7.widget.AppCompatTextView
         android:text="色情暴力"
+        android:textSize="23sp"
 
         android:id="@+id/sqbl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background"/>
     <!--违法交易-->
     <android.support.v7.widget.AppCompatTextView
         android:text="违法交易"
+        android:textSize="21sp"
 
         android:id="@+id/wfjy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background"/>
     <!--言语辱骂-->
     <android.support.v7.widget.AppCompatTextView
         android:text="言语辱骂"
+        android:textSize="19sp"
 
         android:id="@+id/yyrm"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background"/>
     <android.support.v7.widget.AppCompatTextView
         android:text="其他"
+        android:textSize="17sp"
 
         android:id="@+id/other"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/rc_edit_text_background"/>
 
-</android.support.v7.widget.LinearLayoutCompat>
+</LinearLayout>

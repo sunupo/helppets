@@ -66,6 +66,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import kr.co.namee.permissiongen.PermissionGen;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -116,10 +117,20 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        requestPermission();
-        if (ContextCompat.checkSelfPermission(GetLocalPhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//        if (ContextCompat.checkSelfPermission(GetLocalPhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(GetLocalPhotoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+//        }
+
+        if (ContextCompat.checkSelfPermission(GetLocalPhotoActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(GetLocalPhotoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            // 没有权限，申请权限。
+            PermissionGen.needPermission(this, 200, Manifest.permission.CAMERA);
+        } else {
+            // 有权限了，直接使用相机。
+
         }
+
 
         handler=new Handler(){
             @Override
