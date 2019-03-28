@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -22,6 +23,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -29,8 +31,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -56,6 +61,16 @@ import com.sunupo.helppets.util.UploadImage;
 import com.youth.picker.PickerView;
 import com.youth.picker.entity.PickerData;
 import com.youth.picker.listener.OnPickerClickListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 import static com.alipay.sdk.app.statistic.c.v;
 
@@ -89,12 +104,66 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
     private Uri photoUri1;
     TextView attentionImage;
 
+    Handler handler;
+
+    boolean illegal=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("发布动态");
         setContentView(R.layout.activity_get_local_photo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+//        requestPermission();
+        if (ContextCompat.checkSelfPermission(GetLocalPhotoActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(GetLocalPhotoActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what){
+                    case 1:
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                UploadImage.updata(photoBitmap,loginName);
+                            }
+                        }).start();
+                        break;
+                    case 33:
+                        try {
+                            JSONObject jsonObject=new JSONObject(((String)(msg.obj)));
+                            String log_id=jsonObject.getString("log_id");
+                            String result=jsonObject.getString("result");
+                            JSONObject jsonObject1=new JSONObject(result);
+                            String spam=jsonObject1.getString("spam");
+
+                            String reject=jsonObject1.getString("reject");
+                            JSONArray jsonArray=new JSONArray(reject);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject2=jsonArray.getJSONObject(i);
+                                Log.e("detectText", Constants.dtArr[i]+"label="+jsonObject2.getString("label")+"score="+jsonObject2.getString("score")+"hint="+jsonObject2.getString("hit") );
+                                Toast.makeText(GetLocalPhotoActivity.this,"内容包含该"+Constants.dtArr[i]+"敏感词的概率为"+Integer.parseInt(jsonObject2.getString("score"))*100.0+"%\n"+jsonObject2.getString("hit"),Toast.LENGTH_LONG).show();
+                                illegal=true;
+
+                                return;
+                            }
+                            Toast.makeText(GetLocalPhotoActivity.this,"文本内容正常",Toast.LENGTH_SHORT).show();
+                            illegal=false;
+                            releaseDynamicButton.callOnClick();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        break;
+                }
+            }
+        };
+
         dynamicContentText=findViewById(R.id.release_dynamic_content_text);
         sendAdoptSelector=findViewById(R.id.send_adopt_animal_selector);
         animalWeight=findViewById(R.id.animal_weight);
@@ -239,6 +308,12 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         View.OnClickListener releaseListener=new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(illegal){
+                    detectText(dynamicContentText.getText().toString());//输入内容敏感词检测
+                    return;
+                }
+
                 if(App.loginUserInfo.getIsBanned().equals("是")){
                     Toast.makeText(GetLocalPhotoActivity.this,"您暂时不能发言，请联系挂管理员",Toast.LENGTH_SHORT).show();
                     return;
@@ -268,6 +343,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                 }
                 final String sendAdoptType=sendAdopt;
                 final String contentText=dynamicContentText.getText().toString();
+
                 final String WEIGHT=animalWeight.getText().toString();
                 final String COLOR=animalColor.getText().toString();
                 final String AGE=animalAge.getText().toString();
@@ -307,16 +383,12 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                     return;
                 }
                 if(InputTextTypeUtil.isNumric(WEIGHT)&&InputTextTypeUtil.isNumric(AGE)){
-                    Toast.makeText(GetLocalPhotoActivity.this, "请输入整数的体重（kg）或宠物年龄（月）", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(GetLocalPhotoActivity.this, "请输入整数的体重（kg）或宠物年龄（月）", Toast.LENGTH_LONG).show();
                 }
 
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        UploadImage.updata(photoBitmap,loginName);
-                    }
-                }).start();
+
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -324,6 +396,8 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                                 ,types[0],types[1],types[2],WEIGHT,COLOR,AGE,currentTime));
                     }
                 }).start();
+
+
             }
         };
         releaseDynamicButton.setOnClickListener(releaseListener);
@@ -428,9 +502,11 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                         @Override
                         public void run() {
                             Toast.makeText(GetLocalPhotoActivity.this,"发布成功！",Toast.LENGTH_SHORT).show();
-                            GetLocalPhotoActivity.this.finish();
+//                            GetLocalPhotoActivity.this.finish();
                         }
                     });
+                    Message message=Message.obtain(handler,1,2,3,1);
+                    message.sendToTarget();
                     return 1;
                 }
                 else if(resCode.equals("-2"))//禁言
@@ -474,6 +550,13 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
 //        return super.onCreateOptionsMenu(menu);
 //    }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.release_dynamic,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -489,4 +572,95 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         }
         return super.onOptionsItemSelected(item);
     }
+
+//    敏感词检测
+    public void detectText(String str){
+        final String URL="https://aip.baidubce.com/rest/2.0/antispam/v2/spam";
+        final String access_token="24.32dfbb589c567874163b3fa464b938e1.2592000.1556384670.282335-15876386";
+        Thread t = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("access_token", access_token)
+                            .add("content", str)
+                            .build();
+                    Request request = new Request.Builder().addHeader("Content-Type", "application/x-www-form-urlencoded").url(URL).post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    System.out.println(""+responseData);
+                    Log.e("detectText", "run: "+ responseData);
+
+                    Message message=Message.obtain(handler,33,33,33,responseData);
+                    message.sendToTarget();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+
+    int CAMERA_REQUEST_CODE=22;
+//    申请权限
+private void requestPermission() {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+        // 第一次请求权限时，用户如果拒绝，下一次请求shouldShowRequestPermissionRationale()返回true
+        // 向用户解释为什么需要这个权限
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+            new AlertDialog.Builder(this)
+                    .setMessage("申请相机权限")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //申请相机权限
+                            ActivityCompat.requestPermissions(GetLocalPhotoActivity.this,
+                                    new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+                        }
+                    })
+                    .show();
+        } else {
+            //申请相机权限
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        }
+    } else {
+
+    }
+}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                tvPermissionStatus.setTextColor(Color.GREEN);
+//                tvPermissionStatus.setText("相机权限已申请");
+            } else {
+                //用户勾选了不再询问
+                //提示用户手动打开权限
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                    Toast.makeText(this, "相机权限已被禁止", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        }
+    }
+
+
 }

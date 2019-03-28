@@ -21,13 +21,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.sunupo.helppets.bean.UserInfo;
 import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.main.MainActivity;
 import com.sunupo.helppets.util.GetToken;
+import com.sunupo.helppets.util.TextAnalysis;
 import com.sunupo.helppets.util.TokenReturnBean;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -94,7 +100,7 @@ public class LoginActivity extends AppCompatActivity
         			else if(firstLogin.equals("false")){
 
 						sp.edit().putString("NEW_LOGIN_USER_NAME",loginUserInfo.getLoginName()).commit();
-
+//                        sp.edit().putString("TOKEN",((TokenReturnBean)msg.obj).getToken());
         				if(sp.getString("NEW_LOGIN_USER_NAME","").equals(sp.getString("LAST_LOGIN_USER_NAME",""))){
 
         					Log.d(TAG, "不是首次登陆，与上次登录用户相同="+sp.getString("TOKEN",""));
@@ -106,6 +112,8 @@ public class LoginActivity extends AppCompatActivity
 
         					Log.d(TAG, "handleMessage: 本次用户和上次用户不一样，本次用户这也是第一次登陆，需要重新获取token.");
 							Log.d(TAG, "handleMessage: 然后通过message.what=1,会输出日志中（不是首次登陆，与上次登录用户相同=）");
+                            sp.edit().putString("FIRST_LOGIN", "true");
+                            firstLogin="true";
 							GetToken.getUserToken(loginUserInfo.getLoginName()+"",loginUserInfo.getLoginName(),loginUserInfo.getLogo(),handler);
 						}
 					}
@@ -152,12 +160,33 @@ public class LoginActivity extends AppCompatActivity
 						startActivity(intent);
 									finish();
 //                Looper.loop();
-						break;
+					}
+					break;
+				case 33:
+					try {
+						JSONObject jsonObject=new JSONObject(((String)(msg.obj)));
+						String log_id=jsonObject.getString("log_id");
+						String result=jsonObject.getString("result");
+						JSONObject jsonObject1=new JSONObject(result);
+						String spam=jsonObject1.getString("spam");
+
+						String reject=jsonObject1.getString("reject");
+						JSONArray jsonArray=new JSONArray(reject);
+						for (int i = 0; i < jsonArray.length(); i++) {
+							JSONObject jsonObject2=jsonArray.getJSONObject(i);
+							Log.e("detectText", Constants.dtArr[i]+"label="+jsonObject2.getString("label")+"score="+jsonObject2.getString("score")+"hint="+jsonObject2.getString("hit") );
+							Toast.makeText(LoginActivity.this,Constants.dtArr[i]+"的概率为"+Integer.parseInt(jsonObject2.getString("score"))*100.0+"%\n关键字为"+jsonObject2.getString("hit"),Toast.LENGTH_LONG).show();
+						}
+
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					break;
+
+
 
 			}
-
-
-            }
         }
     };
 	private void connect(final String token) {
@@ -241,6 +270,9 @@ public class LoginActivity extends AppCompatActivity
 		requestWindowFeature(getWindow().FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_login);
 		setTitle("登陆");
+
+//		detectText("打倒共产党,打倒毛主席，打死你个龟孙");
+
 
 		ImageView loginLogo=findViewById(R.id.login_logo);
 		try{
@@ -393,6 +425,8 @@ public class LoginActivity extends AppCompatActivity
 		Log.d(TAG, "loginByGet: ");
 		try
 		{
+
+//192.168.0.105";/loginAction?uid="+uid+"&psw="+psw+"&newpsw=")
 			URL url = new URL(Constants.httpip+"/loginAction?uid="+uid+"&psw="+psw+"&newpsw=");
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setConnectTimeout(5000);
@@ -528,5 +562,47 @@ public class LoginActivity extends AppCompatActivity
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// TODO: 3/29/2019 在登录界面测试 关键字屏蔽，自动调用函数，比较方便
+
+	public void detectText(String str){
+		final String URL="https://aip.baidubce.com/rest/2.0/antispam/v2/spam";
+		final String access_token="24.32dfbb589c567874163b3fa464b938e1.2592000.1556384670.282335-15876386";
+		Thread t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					OkHttpClient client = new OkHttpClient();
+					RequestBody requestBody = new FormBody.Builder()
+							.add("access_token", access_token)
+							.add("content", str)
+							.build();
+					Request request = new Request.Builder().addHeader("Content-Type", "application/x-www-form-urlencoded").url(URL).post(requestBody).build();
+					Response response = client.newCall(request).execute();
+					String responseData = response.body().string();
+					System.out.println(""+responseData);
+					Log.e("detectText", "run: "+ responseData);
+
+					Message message=Message.obtain(handler,33,33,33,responseData);
+					message.sendToTarget();
+
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+	}
+	{
+
 	}
 }

@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menu_apply"
         android:title="@string/menu_apply"
-        android:icon="@drawable/apply"
         android:orderInCategory="1"
         app:showAsAction="always|withText" />
 
 </menu>
+    <!--android:icon="@drawable/apply"-->

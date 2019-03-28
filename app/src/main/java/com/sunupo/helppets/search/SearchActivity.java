@@ -25,6 +25,7 @@ import com.sunupo.helppets.util.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -39,7 +40,7 @@ public class SearchActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
 //    这些数据理论上应该根据用户输入的内容来填写，
-// 我们直接根据用户输入的内容分词，在每一个字段来一次查询，组合查询结果
+// 我们暂时直接根据用户输入的内容分词，在每一个字段来一次查询，组合查询结果
     String province="" ;
     String city="";
     String type1="";
@@ -49,11 +50,10 @@ public class SearchActivity extends AppCompatActivity {
     String limitNumFrom="0";
     String limitNumTo="100";
 
-    TextView label1,label2,label3,label4,label5,label6;
+    TextView label1,label2,label3,label4,label5,label6,changeLabel;
 //    ArrayList<TextView> textViews=new ArrayList<>(6);
 
     private ArrayList<DynamicBean> dynamicBeanArrayList=new ArrayList<>();
-
 
     Button finishSearch,beginSearch;
     EditText searchText;
@@ -61,8 +61,8 @@ public class SearchActivity extends AppCompatActivity {
 
     Handler handler;
 
-
-
+    Random ra =new Random();
+    String[] arr={"哈士奇","泰迪","北京","重庆","哺乳类","飞禽","金毛","吉娃娃","比熊","拉布拉多","中华犬","巴哥","柴犬","柯基","雪瑞纳","约克夏","博美","橘猫","波斯猫","短尾猫","狸花猫","乌龟","仓鼠","兔子","鹦鹉","画眉","八哥"};
 
     private  void allBind(){
         recyclerView=findViewById(R.id.search_recycler_view);
@@ -76,6 +76,20 @@ public class SearchActivity extends AppCompatActivity {
         label4=findViewById(R.id.label_4);
         label5=findViewById(R.id.label_5);
         label6=findViewById(R.id.label_6);
+        changeLabel=findViewById(R.id.change_label);
+        changeLabel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLabel();
+            }
+        });
+
+        label1.setText(arr[ra.nextInt(arr.length)]);
+        label2.setText(arr[ra.nextInt(arr.length)]);
+        label3.setText(arr[ra.nextInt(arr.length)]);
+        label4.setText(arr[ra.nextInt(arr.length)]);
+        label5.setText(arr[ra.nextInt(arr.length)]);
+        label6.setText(arr[ra.nextInt(arr.length)]);
 
         adapter=new CollectionAdapter(dynamicBeanArrayList);
         LinearLayoutManager manager=new LinearLayoutManager(this);
@@ -83,12 +97,25 @@ public class SearchActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+   private void changeLabel(){
+        label1.setText(arr[ra.nextInt(arr.length)]);
+        label2.setText(arr[ra.nextInt(arr.length)]);
+        label3.setText(arr[ra.nextInt(arr.length)]);
+        label4.setText(arr[ra.nextInt(arr.length)]);
+        label5.setText(arr[ra.nextInt(arr.length)]);
+        label6.setText(arr[ra.nextInt(arr.length)]);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+
+
         allBind();//绑定所有组件
+
+//       todo 取得热门标签取得数据
 
         handler=new Handler(){
             @Override
@@ -105,6 +132,9 @@ public class SearchActivity extends AppCompatActivity {
                             Toast.makeText(SearchActivity.this,"没有搜索到相关内容",Toast.LENGTH_SHORT).show();
                         }
                         break;
+                    case 2:
+                        String result=((String)msg.obj);
+                        break;
 
                 }            }
         };
@@ -117,7 +147,7 @@ public class SearchActivity extends AppCompatActivity {
                 if(searchText.getText().toString().trim()==""||searchText.getText().toString().trim().equals("")){
                     Toast.makeText(SearchActivity.this,"请输入查询内容",Toast.LENGTH_SHORT).show();
                 }else {
-                    getLabelContent(province, city, type1, type2, searchText.getText().toString(), createTime, limitNumFrom, limitNumTo
+                    getLabelContent(province, city, type1, type2, searchText.getText().toString().trim(), createTime, limitNumFrom, limitNumTo
                             , App.loginUserInfo.getLoginName());
                     Toast.makeText(SearchActivity.this,"正在搜索",Toast.LENGTH_SHORT).show();
 
@@ -237,6 +267,36 @@ public class SearchActivity extends AppCompatActivity {
             Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);
             message.sendToTarget();
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getHotLabel(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .build();
+                    Request request = new Request.Builder().url(Constants.httpip + "/getHotLabel").post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+
+                    Message message=Message.obtain(handler,2,2,3,responseData);
+                    message.sendToTarget();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -204,8 +204,8 @@
                   android:background="@drawable/dog"
                   android:id="@+id/takePhoto_imageView"
                   android:layout_margin="3dp"
-                  android:layout_width="100dp"
-                  android:layout_height="200dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
                   android:layout_gravity="center"
                   android:layout_weight="12"/>
               <!--隐藏的相册相机按钮-->

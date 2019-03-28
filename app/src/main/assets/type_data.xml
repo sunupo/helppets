@@ -2,24 +2,65 @@
   <province name="哺乳类">
     <city name="猫">
       <district name="加菲猫"/>
-      <district name="山猫猫"/>
-      <district name="野猫猫"/>
-      <district name="起步猫"/>
+      <district name="波斯猫"/>
+      <district name="日本短尾猫"/>
+      <district name="中国狸花猫"/>
+      <district name="其他"/>
     </city>
     <city name="狗">
-      <district name="哮天犬"/>
+      <district name="泰迪"/>
       <district name="哈士奇"/>
-      <district name="来福"/>
+      <district name="中华田园犬"/>
+      <district name="萨摩耶"/>
+      <district name="法国斗牛犬"/>
+      <district name="金毛"/>
+      <district name="拉布拉多犬"/>
+      <district name="吉娃娃"/>
+      <district name="柴犬"/>
+      <district name="柯基"/>
+      <district name="腊肠"/>
+    </city>
+  </province>
+  <province name="飞禽类">
+    <city name="鸟">
+      <district name="虎皮鹦鹉"/>
+      <district name="葵花鹦鹉"/>
+      <district name="金刚鹦鹉"/>
+      <district name="金丝雀"/>
+      <district name="百灵"/>
+      <district name="画眉"/>
+      <district name="信鸽"/>
+      <district name="灰葵花鸟"/>
+      <district name="鸡"/>
+      <district name="鸭"/>
+    </city>
+  </province>
+
+  <province name="爬行类">
+    <city name="爬行类">
+      <district name="蜥蜴"/>
+      <district name="鬣蜥"/>
+      <district name="龟"/>
+      <district name="蜥蜴"/>
+      <district name="其他"/>
     </city>
   </province>
   <province name="节肢类">
-    <city name="蜘蛛">
-      <district name="黑寡妇"/>
-      <district name="杀人蛛"/>
-    </city>
     <city name="昆虫">
       <district name="甲壳虫"/>
       <district name="蜈蚣"/>
+      <district name="蚂蚁"/>
+      <district name="蟋蟀"/>
+      <district name="蜘蛛"/>
+      <district name="蝴蝶"/>
+      <district name="蜻蜓"/>
+      <district name="其他"/>
+    </city>
+  </province>
+  <province name="鱼类">
+    <city name="宠物鱼">
+      <district name="金鱼"/>
+      <district name="其他"/>
     </city>
   </province>
 </root>

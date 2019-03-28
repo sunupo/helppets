@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.sunupo.helppets.R;
@@ -53,7 +54,7 @@ public class HomeItemSquareFragment extends Fragment {
     private  ArrayList<DynamicBean> dynamicBeanArrayList=new ArrayList<>();
 
     ImageView researchImageView;
-    EditText editText;
+    TextView editText;
     SquareAdapter squareAdapter;
     Handler handler;
     SharedPreferences sp=null;
@@ -108,7 +109,7 @@ public class HomeItemSquareFragment extends Fragment {
         editText=view.findViewById(R.id.research_Content);
 
         editText.setOnClickListener(researchListener);
-        researchImageView.setOnClickListener(researchListener);
+//        researchImageView.setOnClickListener(researchListener);
 
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(view.getContext());
         recyclerView=view.findViewById(R.id.square_recycler_view);

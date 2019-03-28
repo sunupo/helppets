@@ -37,8 +37,11 @@ import com.sunupo.helppets.bean.FollowCollectFavorite;
 import com.sunupo.helppets.user.UserMainPageActivity;
 import com.sunupo.helppets.util.Constants;
 import com.sunupo.helppets.util.App;
-import com.sunupo.helppets.util.DownloadImageTask;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,6 +85,8 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
     DynamicBean dynamicBean;
 
     final String COMMENT_DATA_URL=Constants.httpip + "/getCommentJson";
+
+    boolean illegal=true;
 
     private Handler handler=new Handler(){
         @Override
@@ -137,7 +142,6 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         }
     };
 
-    // TODO: 3/23/2019  
     private void initDynamicContent(){
 //        new DownloadImageTask(dynamicUserLogo).execute(Constants.httpip+"/"+dynamicBean.getLogo());
 //        new DownloadImageTask(dynamicImage).execute(Constants.httpip+"/"+dynamicBean.getPicture());
@@ -184,6 +188,7 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
         writeLoginUserVisitRecord(App.loginUserInfo.getUserId(),dynamicBean.getUserId(),dynamicBean.getDynamicId(),fromTime,toTime);
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1185,5 +1190,73 @@ public class CommentMainActivity extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
     }
+
+    public void detectText(String str){
+        final String URL="https://aip.baidubce.com/rest/2.0/antispam/v2/spam";
+        final String access_token="24.32dfbb589c567874163b3fa464b938e1.2592000.1556384670.282335-15876386";
+        Thread t = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    OkHttpClient client = new OkHttpClient();
+                    RequestBody requestBody = new FormBody.Builder()
+                            .add("access_token", access_token)
+                            .add("content", str)
+                            .build();
+                    Request request = new Request.Builder().addHeader("Content-Type", "application/x-www-form-urlencoded").url(URL).post(requestBody).build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    System.out.println(""+responseData);
+                    Log.e("detectText", "run: "+ responseData);
+
+                    Message message=Message.obtain(handler,33,33,33,responseData);
+                    message.sendToTarget();
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+//    private void showReportDialog(){
+//        dialog = new BottomSheetDialog(this);
+//        View reportView = LayoutInflater.from(this).inflate(R.layout.report_dialog_layout,null);
+//        final TextView zzmg=findViewById(R.id.zzmg);
+//        final TextView sqbl=findViewById(R.id.sqbl);
+//        final TextView wfjy=findViewById(R.id.wfjy);
+//        final TextView yyrm=findViewById(R.id.yyrm);
+//        final TextView other=findViewById(R.id.other);
+//        dialog.setContentView(reportView);
+//
+//
+//
+//        /**
+//         * 解决bsd显示不全的情况
+//         */
+//        View parent = (View) reportView.getParent();
+//        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+//        reportView.measure(0,0);
+//        behavior.setPeekHeight(reportView.getMeasuredHeight());
+//
+//        zzmg.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(CommentMainActivity.this,"提交成功，等待管理员审核",Toast.LENGTH_SHORT).show();
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+//    }
 
 }

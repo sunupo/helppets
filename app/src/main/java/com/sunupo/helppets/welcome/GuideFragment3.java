@@ -13,7 +13,7 @@ import com.sunupo.helppets.R;
 
 public class GuideFragment3 extends Fragment{
 
-    private int bgRes=R.drawable.dog;
+    private int bgRes=R.drawable.habit3;
     private ImageView imageView;
 
     @Override

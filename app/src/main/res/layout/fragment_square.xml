@@ -20,11 +20,12 @@
                 android:id="@+id/research_Content"
                 android:hint="查询"
                 android:maxLines="1"
-                android:layout_width="900px"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"/>
         </android.support.v7.widget.LinearLayoutCompat>
         <ImageView
+            android:visibility="gone"
             android:layout_gravity="right"
             android:id="@+id/research_image_view"
             android:background="@drawable/rc_search_icon"

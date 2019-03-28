@@ -5,7 +5,7 @@ public class Constants
 //	public static final String HOST="sun95.320.io";
 //	public static final String PORT="47793";
 //	http://192.168.43.109:34098/
-	public static final String HOST="192.168.43.109";
+//	public static final String HOST="192.168.43.109";
 	public static final String PORT="34098";
 //public static final String HOST="192.168.0.105";
 //	public static final String HOST="172.22.106.192";
@@ -13,8 +13,10 @@ public class Constants
 //	public static final String PORT="34098";
 //    public static final String PORT="8899";
 //    public static final String HOST="114.116.167.1";
+public static final String HOST="192.168.0.139";
 
-    public static final String httpip="http://"+HOST+":"+PORT+"/laf";
+
+	public static final String httpip="http://"+HOST+":"+PORT+"/laf";
 	public static final String IMAGE_ROOT_PATH=httpip+"/dynamicpicture";
 	public static final String LOGIN_NAME="Login_Name";
 	public static final String[] NAVIGATION_TITLE={"首页","关注","我的"};
@@ -30,6 +32,16 @@ public class Constants
 	public static final String ADMIN_TOKEN="Sj2hNeLvrRUvFhqGmzBimuoSw0INgwM5mk/dXz49nWrz8AUbSzBeTEu50jptoDf7iW5IvnCbgI2hgqEXOGkSeQ==";
 
 	public static final String access_token="24.474defbb33833fe6195e7286f5b70111.2592000.1556348840.282335-15876386";//baidu api
+
+	public static final String dt1="暴恐违禁";
+	public static final String dt2="文本色情";
+	public static final String dt3="政治敏感";
+	public static final String dt4="恶意推广";
+	public static final String dt5="低俗辱骂";
+	public static final String dt6="低质灌水";
+
+	public static final String[] dtArr={dt1,dt2,dt3,dt4,dt5,dt6};
+
 
 	public static String TEST_JSON = "{\n" +
 			"\t\"code\": 1000,\n" +

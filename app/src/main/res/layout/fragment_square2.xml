@@ -11,28 +11,27 @@
         <android.support.v7.widget.LinearLayoutCompat
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_shallow">
-            <EditText
-                android:clickable="false"
+            <TextView
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/research_Content"
                 android:hint="点击查询"
                 android:maxLines="1"
-                android:layout_width="900px"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#ffffff"/>
         </android.support.v7.widget.LinearLayoutCompat>
-        <ImageView
-            android:layout_gravity="right"
-            android:id="@+id/research_image_view"
-            android:background="@drawable/rc_search_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="2dp"/>
+        <!--<ImageView-->
+            <!--android:layout_gravity="right"-->
+            <!--android:id="@+id/research_image_view"-->
+            <!--android:background="@drawable/rc_search_icon"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--android:layout_marginRight="2dp"/>-->
         <!--<ImageView-->
         <!--android:layout_marginRight="4dp"-->
         <!--android:layout_marginLeft="2dp"-->

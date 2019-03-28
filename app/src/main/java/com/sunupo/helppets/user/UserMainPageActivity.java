@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridLayout;
@@ -24,6 +28,7 @@ import com.google.gson.Gson;
 import com.sunupo.helppets.R;
 import com.sunupo.helppets.bean.DynamicBean;
 import com.sunupo.helppets.bean.UserInfo;
+import com.sunupo.helppets.comment.CommentMainActivity;
 import com.sunupo.helppets.util.App;
 import com.sunupo.helppets.util.BaseActivity;
 import com.sunupo.helppets.util.Constants;
@@ -118,7 +123,7 @@ public class UserMainPageActivity extends BaseActivity {
         bundle=intent.getBundleExtra("BUNDLE");
         dynamicBean=(DynamicBean)(bundle.getSerializable("DYNAMIC_BEAN"));
 
-
+        this.setTitle("主页");
 
 //        http://localhost:34098/laf/getFanFollowFavoriteCollect?dynamicUserId=1
         getFanFollowFavoriteCollect(dynamicBean.getUserId(),Constants.httpip+"/getFanFollowFavoriteCollect");
@@ -319,12 +324,24 @@ public class UserMainPageActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.user_main_page_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     public boolean onOptionsItemSelected(MenuItem item)
     {
         // TODO Auto-generated method stub
         if(item.getItemId() == android.R.id.home)
         {
             finish();
+            return true;
+        }
+        if(item.getItemId() == R.id.menu_report)
+        {
+            showReportDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -469,6 +486,40 @@ public class UserMainPageActivity extends BaseActivity {
         return null;
     }
 
+    private void showReportDialog(){
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        View reportView = LayoutInflater.from(this).inflate(R.layout.report_dialog_layout,null);
+        final TextView zzmg=reportView.findViewById(R.id.zzmg);
+        final TextView sqbl=reportView.findViewById(R.id.sqbl);
+        final TextView wfjy=reportView.findViewById(R.id.wfjy);
+        final TextView yyrm=reportView.findViewById(R.id.yyrm);
+        final TextView other=reportView.findViewById(R.id.other);
+        dialog.setContentView(reportView);
 
+
+
+        /**
+         * 解决bsd显示不全的情况
+         */
+        View parent = (View) reportView.getParent();
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+        reportView.measure(0,0);
+        behavior.setPeekHeight(reportView.getMeasuredHeight());
+
+        View.OnClickListener listener=new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(UserMainPageActivity.this,"提交成功，等待后台审核",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        };
+        zzmg.setOnClickListener(listener);
+        sqbl.setOnClickListener(listener);
+        wfjy.setOnClickListener(listener);
+        yyrm.setOnClickListener(listener);
+        other.setOnClickListener(listener);
+        dialog.show();
+    }
 
 }
