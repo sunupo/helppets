@@ -11,7 +11,7 @@
  Target Server Version : 50559
  File Encoding         : 65001
 
- Date: 27/03/2019 21:33:13
+ Date: 28/03/2019 11:07:10
 */
 
 SET NAMES utf8mb4;
@@ -243,15 +243,15 @@ CREATE TABLE `dynamic`  (
 -- ----------------------------
 -- Records of dynamic
 -- ----------------------------
-INSERT INTO `dynamic` VALUES (1, 1, '送养', '上班没有时间，像找个重庆的朋友代养一下', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 2, 3, 86, '2018-03-11-18-30-15', 'dynamicpicture/image_1_1.bmp');
-INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 36, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
+INSERT INTO `dynamic` VALUES (1, 1, '送养', '上班没有时间，像找个重庆的朋友代养一下', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 2, 3, 114, '2018-03-11-18-30-15', 'dynamicpicture/image_1_1.bmp');
+INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 37, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
 INSERT INTO `dynamic` VALUES (1, 3, '送养', '非常可爱的小仓鼠，希望有人可以代养一周。由于加班太忙了，怕照顾不好它', '哺乳类', '鼠', '仓鼠', 5, '褐色', 1, 2, 3, 40, '2018-03-11-18-30-15', 'dynamicpicture/image_1_3.bmp');
-INSERT INTO `dynamic` VALUES (1, 4, '送养', '上班去了，没时间照顾它。', '哺乳类', '猫', '加菲猫', 10, '黄色', 3, 2, 1, 18, '2019-3-18-19-57-15', 'dynamicpicture/image_1_4.bmp');
+INSERT INTO `dynamic` VALUES (1, 4, '送养', '上班去了，没时间照顾它。', '哺乳类', '猫', '加菲猫', 10, '黄色', 3, 2, 1, 19, '2019-3-18-19-57-15', 'dynamicpicture/image_1_4.bmp');
 INSERT INTO `dynamic` VALUES (1, 5, '送养', '出去旅游，偶遇的蜈蚣没有咩有朋友喜欢的', '节肢类', '昆虫', '蜈蚣', 1, '白色', 11, 2, 3, 22, '2019-3-18-19-59-24', 'dynamicpicture/image_1_5.bmp');
 INSERT INTO `dynamic` VALUES (2, 1, '收养', '想找一个两个月大的小猫咪，女朋友喜欢养猫', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 4, 4, 113, '2018-03-11-18-30-15', 'dynamicpicture/image_2_1.bmp');
 INSERT INTO `dynamic` VALUES (2, 2, '收养', '想领养一条“纯正”（手动滑稽）的哈士奇，不怕他拆家，就怕他嫌我笨', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 2, 3, 42, '2018-03-11-18-30-15', 'dynamicpicture/image_2_2.bmp');
 INSERT INTO `dynamic` VALUES (2, 3, '收养', '闲着没事，个人癖好', '节肢类', '昆虫', '蜈蚣', 1, '白色', 1, 0, 0, 3, '2019-3-22-19-10-18', 'dynamicpicture/image_2_3.bmp');
-INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 2, 1, 4, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
+INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 2, 1, 5, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
 INSERT INTO `dynamic` VALUES (2, 5, '送养', '即将出国，陪伴了两年的哈士奇想送人代养一下', '哺乳类', '狗', '哈士奇', 10, '白色', 2, 0, 1, 3, '2019-3-23-19-4-1', 'dynamicpicture/image_2_5.bmp');
 INSERT INTO `dynamic` VALUES (2, 6, '送养', '九号', '哺乳类', '狗', '来福', 15, '白色', 3, 1, 1, 2, '2019-3-24-17-54-2', 'dynamicpicture/image_2_6.bmp');
 INSERT INTO `dynamic` VALUES (2, 7, '送养', '找一只狗狗，在白云路走丢了', '哺乳类', '狗', '哈士奇', 1, '白色', 1, 1, 0, 1, '2019-3-24-18-10-18', 'dynamicpicture/image_2_7.bmp');
@@ -425,21 +425,55 @@ CREATE TABLE `userinfo`  (
 -- Records of userinfo
 -- ----------------------------
 INSERT INTO `userinfo` VALUES (0, '系统管理员', 'Admin', '123', '加菲猫,哈士奇', '加菲猫,哈士奇', '男', '2019-2-15', -2018, '待就业', 8000, '大学', '已婚', '1970-1-1-0-0-0', '否', '是', '有', '中国', '安徽省', '亳州市-谯城区', 19, 'logo/default.bmp', '无', '无', '无');
-INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '否', '是', '无', '中国', '福建省', '南平市-建阳市', 78, 'logo/1.bmp', '', '', '无');
+INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '否', '是', '无', '中国', '福建省', '南平市-建阳市', 107, 'logo/1.bmp', '', '', '无');
 INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '是', '有', '中国', '重庆', '重庆-沙坪坝区', 31, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
 INSERT INTO `userinfo` VALUES (3, '李四', 'lisi', '123', '加菲猫,哈士奇', '仓鼠', '男', '1998-3-4', 21, '待就业', 8000, '硕士', '未婚', '2019-01-02-11-0-0', '否', '是', '有', '中国', '重庆', '重庆-渝北区', 30, 'logo/3.bmp', '15974653746', 'qq1232134', 'wechat32323');
 INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 30, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
 
 -- ----------------------------
--- View structure for v_apply_dunamic
+-- Table structure for visitrecord
 -- ----------------------------
-DROP VIEW IF EXISTS `v_apply_dunamic`;
-CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_apply_dunamic` AS select `a`.`applyuid` AS `applyuid`,`a`.`applyTime` AS `applyTime`,`a`.`applyStatus` AS `applyStatus`,`a`.`applyContent` AS `applyContent`,`a`.`responseTime` AS `responseTime`,`a`.`responseContent` AS `responseContent`,`d`.`userid` AS `userid`,`d`.`dynamicid` AS `dynamicid`,`d`.`issend` AS `issend`,`d`.`content` AS `content`,`d`.`type1` AS `type1`,`d`.`type2` AS `type2`,`d`.`type3` AS `type3`,`d`.`type4` AS `type4`,`d`.`type5` AS `type5`,`d`.`type6` AS `type6`,`d`.`collected` AS `collected`,`d`.`favorite` AS `favorite`,`d`.`views` AS `views`,`d`.`createtime` AS `createtime`,`d`.`picture` AS `picture` from (`apply` `a` left join `dynamic` `d` on(((`a`.`touid` = `d`.`userid`) and (`a`.`dynamicid` = `d`.`dynamicid`))));
+DROP TABLE IF EXISTS `visitrecord`;
+CREATE TABLE `visitrecord`  (
+  `loginUserId` int(255) NOT NULL,
+  `dynamicUserId` int(255) NOT NULL,
+  `dynamicId` int(255) NOT NULL,
+  `fromTime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1970-1-1-0-0-0' COMMENT '开始时间',
+  `toTime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1970-1-1-0-0-0' COMMENT '结束时间',
+  `totalTime` int(255) DEFAULT 0 COMMENT '总时长',
+  PRIMARY KEY (`loginUserId`, `dynamicUserId`, `dynamicId`, `fromTime`, `toTime`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of visitrecord
+-- ----------------------------
+INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-10-52-11', '2019-3-28-10-52-24', 13);
+INSERT INTO `visitrecord` VALUES (1, 2, 1, '1970-1-1-0-0-0', '1970-1-1-0-0-0', 0);
+INSERT INTO `visitrecord` VALUES (1, 2, 2, '1970-1-1-0-0-0', '1970-1-1-0-0-0', 0);
+INSERT INTO `visitrecord` VALUES (1, 2, 4, '2019-3-28-10-52-40', '2019-3-28-10-52-43', 3);
 
 -- ----------------------------
 -- View structure for v_apply_dynamic
 -- ----------------------------
 DROP VIEW IF EXISTS `v_apply_dynamic`;
 CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_apply_dynamic` AS select `a`.`applyuid` AS `applyuid`,`a`.`applyTime` AS `applyTime`,`a`.`applyStatus` AS `applyStatus`,`a`.`applyContent` AS `applyContent`,`a`.`responseTime` AS `responseTime`,`a`.`responseContent` AS `responseContent`,`d`.`userid` AS `userid`,`d`.`dynamicid` AS `dynamicid`,`d`.`issend` AS `issend`,`d`.`content` AS `content`,`d`.`type1` AS `type1`,`d`.`type2` AS `type2`,`d`.`type3` AS `type3`,`d`.`type4` AS `type4`,`d`.`type5` AS `type5`,`d`.`type6` AS `type6`,`d`.`collected` AS `collected`,`d`.`favorite` AS `favorite`,`d`.`views` AS `views`,`d`.`createtime` AS `createtime`,`d`.`picture` AS `picture` from (`apply` `a` left join `dynamic` `d` on(((`a`.`touid` = `d`.`userid`) and (`a`.`dynamicid` = `d`.`dynamicid`))));
+
+-- ----------------------------
+-- View structure for v_collect_favorite_dynamic
+-- ----------------------------
+DROP VIEW IF EXISTS `v_collect_favorite_dynamic`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_collect_favorite_dynamic` AS select `c`.`fromuid` AS `fromuid`,`c`.`iscollected` AS `iscollected`,`c`.`isfavorite` AS `isfavorite`,`d`.`userid` AS `userid`,`d`.`dynamicid` AS `dynamicid`,`d`.`issend` AS `issend`,`d`.`content` AS `content`,`d`.`type1` AS `type1`,`d`.`type2` AS `type2`,`d`.`type3` AS `type3`,`d`.`type4` AS `type4`,`d`.`type5` AS `type5`,`d`.`type6` AS `type6`,`d`.`collected` AS `collected`,`d`.`favorite` AS `favorite`,`d`.`views` AS `views`,`d`.`createtime` AS `createtime`,`d`.`picture` AS `picture` from (`collectfavorite` `c` left join `dynamic` `d` on(((`c`.`touid` = `d`.`userid`) and (`c`.`dynamicid` = `d`.`dynamicid`))));
+
+-- ----------------------------
+-- View structure for v_follow_userinfo
+-- ----------------------------
+DROP VIEW IF EXISTS `v_follow_userinfo`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_follow_userinfo` AS select `f`.`fromuid` AS `fromuid`,`f`.`isfollow` AS `isfollow`,`u`.`userid` AS `userid`,`u`.`username` AS `username`,`u`.`loginname` AS `loginname`,`u`.`password` AS `password`,`u`.`sendAnimal` AS `sendAnimal`,`u`.`adoptionAnimal` AS `adoptionAnimal`,`u`.`sex` AS `sex`,`u`.`birthday` AS `birthday`,`u`.`age` AS `age`,`u`.`working` AS `working`,`u`.`salary` AS `salary`,`u`.`education` AS `education`,`u`.`married` AS `married`,`u`.`jointime` AS `jointime`,`u`.`isBanned` AS `isBanned`,`u`.`isAdmin` AS `isAdmin`,`u`.`haschildren` AS `haschildren`,`u`.`country` AS `country`,`u`.`province` AS `province`,`u`.`city` AS `city`,`u`.`logincount` AS `logincount`,`u`.`logo` AS `logo`,`u`.`phone` AS `phone`,`u`.`qq` AS `qq`,`u`.`wechat` AS `wechat` from (`follow` `f` left join `userinfo` `u` on((`f`.`touid` = `u`.`userid`)));
+
+-- ----------------------------
+-- View structure for v_visit_dynamic
+-- ----------------------------
+DROP VIEW IF EXISTS `v_visit_dynamic`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_visit_dynamic` AS select `v`.`loginUserId` AS `loginUserId`,`v`.`fromTime` AS `fromtime`,`v`.`toTime` AS `totime`,`v`.`totalTime` AS `totaltime`,`d`.`userid` AS `userid`,`d`.`dynamicid` AS `dynamicid`,`d`.`issend` AS `issend`,`d`.`content` AS `content`,`d`.`type1` AS `type1`,`d`.`type2` AS `type2`,`d`.`type3` AS `type3`,`d`.`type4` AS `type4`,`d`.`type5` AS `type5`,`d`.`type6` AS `type6`,`d`.`collected` AS `collected`,`d`.`favorite` AS `favorite`,`d`.`views` AS `views`,`d`.`createtime` AS `createtime`,`d`.`picture` AS `picture` from (`visitrecord` `v` left join `dynamic` `d` on(((`v`.`dynamicUserId` = `d`.`userid`) and (`v`.`dynamicId` = `d`.`dynamicid`))));
 
 SET FOREIGN_KEY_CHECKS = 1;

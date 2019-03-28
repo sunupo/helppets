@@ -120,7 +120,12 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide
     implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.8.0'
 
+//滑动viewpager上面有个数字指示器
+    implementation 'com.github.chenupt.android:springindicator:1.0.2@aar'
 //
+//// https://mvnrepository.com/artifact/com.google.common/google-collect
+//    compile group: 'com.google.common', name: 'google-collect', version: '1.0-rc1'
+
 
 }
 repositories {

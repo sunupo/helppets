@@ -151,11 +151,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".main.MainActivity"
@@ -168,14 +168,15 @@
             android:name=".Login.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:launchMode="singleInstance"
             android:name=".comment.CommentMainActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity android:name=".ReleaseDynamic.GetLocalPhotoActivity" />
         <activity android:name=".test.ImageDownloadActivity" />
-        <activity android:name=".user.UserMainPageActivity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".user.UserMainPageActivity"
+            android:launchMode="singleInstance" />
         <!-- android:authorities="您的 ApplicationId.FileProvider" -->
         <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
@@ -238,9 +239,17 @@
         </activity>
         <activity android:name=".Mine.FromApplyActivity" />
         <activity android:name=".Mine.ToApplyActivity" />
-        <activity android:name=".Mine.setting.ChangeUserInfoActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" ></activity>
-        <activity android:name=".Mine.setting.SettingMainActivity"/>
+        <activity
+            android:name=".Mine.setting.ChangeUserInfoActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".Mine.setting.SettingMainActivity" />
+        <activity android:name=".welcome.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity
 						intent.putExtra("ug",uug);
 						intent.putExtra("psw",upsw);
 						startActivity(intent);
-//									finish();
+									finish();
 //                Looper.loop();
 						break;
 
