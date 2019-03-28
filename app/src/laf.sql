@@ -11,7 +11,7 @@
  Target Server Version : 50559
  File Encoding         : 65001
 
- Date: 28/03/2019 11:07:10
+ Date: 29/03/2019 05:10:17
 */
 
 SET NAMES utf8mb4;
@@ -38,9 +38,11 @@ CREATE TABLE `apply`  (
 -- ----------------------------
 INSERT INTO `apply` VALUES (1, 2, 1, '2019-03-12-12-20-20', 2, '我孙敬钦，家住沙坪坝沙正街，想要申请领养你的小猫咪，帮你照看一周', '2019-3-25-23-9-21', '可以，我也是重庆江北区的，抽个时间我送过来吧，咱们后面私聊一会儿');
 INSERT INTO `apply` VALUES (1, 2, 2, '2019-03-14-12-13-32', 1, '我想申请您家的宠物领养，请不要联系其他人了', '2019-3-25-23-13-52', '好的好的，我需要出过一周，谢谢你帮我照看我的宠物');
+INSERT INTO `apply` VALUES (1, 2, 6, '2019-3-28-18-41-19', 1, '看看', '1970-1-1-0-0-0', '等待回应');
 INSERT INTO `apply` VALUES (2, 1, 6, '2019-3-25-23-18-57', 1, '我是张翰，我想帮你找看一个月宠物，我也是龙脊小区的', '2019-3-26-14-45-59', '等待回应');
 INSERT INTO `apply` VALUES (2, 3, 1, '2019-03-22-9-44-34', 1, '我想申请', '2019-03-23-10-22-33', '等待回应');
 INSERT INTO `apply` VALUES (5, 4, 1, '2019-3-25-3-21-31', 1, '我想要', '1970-1-1-0-0-0', '等待回应');
+INSERT INTO `apply` VALUES (6, 0, 2, '2019-3-28-22-49-21', 1, '我有一只没法养了', '1970-1-1-0-0-0', '等待回应');
 
 -- ----------------------------
 -- Table structure for collectfavorite
@@ -94,6 +96,12 @@ INSERT INTO `collectfavorite` VALUES (4, 2, 5, '未收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (4, 2, 7, '已收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (4, 2, 8, '已收藏', '未点赞');
 INSERT INTO `collectfavorite` VALUES (4, 4, 1, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (5, 0, 2, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (5, 5, 2, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (5, 5, 3, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (5, 5, 4, '已收藏', '未点赞');
+INSERT INTO `collectfavorite` VALUES (6, 0, 1, '未收藏', '已点赞');
+INSERT INTO `collectfavorite` VALUES (6, 0, 2, '未收藏', '已点赞');
 INSERT INTO `collectfavorite` VALUES (6, 1, 1, '已收藏', '未点赞');
 INSERT INTO `collectfavorite` VALUES (6, 1, 3, '已收藏', '未点赞');
 INSERT INTO `collectfavorite` VALUES (6, 2, 1, '已收藏', '未点赞');
@@ -142,6 +150,7 @@ CREATE TABLE `comments`  (
 INSERT INTO `comments` VALUES (1, 2, 1, 1, '用户1对用户2的第1条动态的第1条评论', '已收藏', '已点赞', 10, '2019-03-12-12-20-10');
 INSERT INTO `comments` VALUES (1, 2, 1, 2, '用户1对用户2的第1条动态的第2条评论', '已收藏', '已点赞', 10, '2019-03-12-12-20-20');
 INSERT INTO `comments` VALUES (1, 2, 2, 1, '用户1对用户2的第2条动态的第1条评论', '已收藏', '已点赞', 20, '2019-03-12-12-30-1');
+INSERT INTO `comments` VALUES (1, 2, 6, 1, '好的', '未收藏', '未点赞', 0, '2019-3-28_18-32-5');
 INSERT INTO `comments` VALUES (2, 1, 1, 1, '你好', '未收藏', '未点赞', 0, '2019-3-22 10:0:40');
 INSERT INTO `comments` VALUES (2, 1, 1, 2, '天气不错', '未收藏', '未点赞', 0, '2019-3-22 10:0:57');
 INSERT INTO `comments` VALUES (2, 1, 2, 1, '酷兔兔天', '未收藏', '未点赞', 0, '2019-3-22 3:37:29');
@@ -243,24 +252,32 @@ CREATE TABLE `dynamic`  (
 -- ----------------------------
 -- Records of dynamic
 -- ----------------------------
-INSERT INTO `dynamic` VALUES (1, 1, '送养', '上班没有时间，像找个重庆的朋友代养一下', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 2, 3, 114, '2018-03-11-18-30-15', 'dynamicpicture/image_1_1.bmp');
-INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 37, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
-INSERT INTO `dynamic` VALUES (1, 3, '送养', '非常可爱的小仓鼠，希望有人可以代养一周。由于加班太忙了，怕照顾不好它', '哺乳类', '鼠', '仓鼠', 5, '褐色', 1, 2, 3, 40, '2018-03-11-18-30-15', 'dynamicpicture/image_1_3.bmp');
+INSERT INTO `dynamic` VALUES (1, 1, '送养', '上班没有时间，像找个重庆的朋友代养一下', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 2, 3, 133, '2018-03-11-18-30-15', 'dynamicpicture/image_1_1.bmp');
+INSERT INTO `dynamic` VALUES (1, 2, '送养', '怕它拆家，家人有队狗斗过敏的。没办法样了，希望找个爱狗人士照顾它', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 3, 3, 41, '2018-03-11-18-30-15', 'dynamicpicture/image_1_2.bmp');
+INSERT INTO `dynamic` VALUES (1, 3, '送养', '非常可爱的小仓鼠，希望有人可以代养一周。由于加班太忙了，怕照顾不好它', '哺乳类', '鼠', '仓鼠', 5, '褐色', 1, 2, 3, 41, '2018-03-11-18-30-15', 'dynamicpicture/image_1_3.bmp');
 INSERT INTO `dynamic` VALUES (1, 4, '送养', '上班去了，没时间照顾它。', '哺乳类', '猫', '加菲猫', 10, '黄色', 3, 2, 1, 19, '2019-3-18-19-57-15', 'dynamicpicture/image_1_4.bmp');
-INSERT INTO `dynamic` VALUES (1, 5, '送养', '出去旅游，偶遇的蜈蚣没有咩有朋友喜欢的', '节肢类', '昆虫', '蜈蚣', 1, '白色', 11, 2, 3, 22, '2019-3-18-19-59-24', 'dynamicpicture/image_1_5.bmp');
-INSERT INTO `dynamic` VALUES (2, 1, '收养', '想找一个两个月大的小猫咪，女朋友喜欢养猫', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 4, 4, 113, '2018-03-11-18-30-15', 'dynamicpicture/image_2_1.bmp');
-INSERT INTO `dynamic` VALUES (2, 2, '收养', '想领养一条“纯正”（手动滑稽）的哈士奇，不怕他拆家，就怕他嫌我笨', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 2, 3, 42, '2018-03-11-18-30-15', 'dynamicpicture/image_2_2.bmp');
-INSERT INTO `dynamic` VALUES (2, 3, '收养', '闲着没事，个人癖好', '节肢类', '昆虫', '蜈蚣', 1, '白色', 1, 0, 0, 3, '2019-3-22-19-10-18', 'dynamicpicture/image_2_3.bmp');
-INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 2, 1, 5, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
+INSERT INTO `dynamic` VALUES (1, 5, '送养', '出去旅游，偶遇的蜈蚣没有咩有朋友喜欢的', '哺乳类', '猫', '其他', 1, '白色', 11, 2, 3, 22, '2019-3-18-19-59-24', 'dynamicpicture/image_1_5.bmp');
+INSERT INTO `dynamic` VALUES (1, 6, '送养', '打倒共产党', '哺乳类', '狗', '萨摩耶', 0, '海色', 0, 0, 0, 0, '2019-3-29-3-47-34', 'dynamicpicture/image_1_6.bmp');
+INSERT INTO `dynamic` VALUES (1, 7, '送养', '你好', '节肢类', '昆虫', '甲壳虫', 0, '黑色', 0, 0, 0, 0, '2019-3-29-4-38-32', 'dynamicpicture/image_1_7.bmp');
+INSERT INTO `dynamic` VALUES (2, 1, '收养', '想找一个两个月大的小猫咪，女朋友喜欢养猫', '哺乳类', '猫', '加菲猫', 5, '褐色', 1, 4, 4, 114, '2018-03-11-18-30-15', 'dynamicpicture/image_2_1.bmp');
+INSERT INTO `dynamic` VALUES (2, 2, '收养', '想领养一条“纯正”（手动滑稽）的哈士奇，不怕他拆家，就怕他嫌我笨', '哺乳类', '狗', '哈士奇', 5, '褐色', 1, 2, 3, 46, '2018-03-11-18-30-15', 'dynamicpicture/image_2_2.bmp');
+INSERT INTO `dynamic` VALUES (2, 3, '收养', '最近太忙了，没有时间照顾他，而且其他人都出去旅游了', '哺乳类', '猫', '狸猫', 1, '白色', 1, 0, 0, 3, '2019-3-22-19-10-18', 'dynamicpicture/image_2_3.bmp');
+INSERT INTO `dynamic` VALUES (2, 4, '送养', '上班没有时间了', '哺乳类', '狗', '柯基', 1, '白色', 1, 2, 1, 6, '2019-3-22-19-10-45', 'dynamicpicture/image_2_4.bmp');
 INSERT INTO `dynamic` VALUES (2, 5, '送养', '即将出国，陪伴了两年的哈士奇想送人代养一下', '哺乳类', '狗', '哈士奇', 10, '白色', 2, 0, 1, 3, '2019-3-23-19-4-1', 'dynamicpicture/image_2_5.bmp');
-INSERT INTO `dynamic` VALUES (2, 6, '送养', '九号', '哺乳类', '狗', '来福', 15, '白色', 3, 1, 1, 2, '2019-3-24-17-54-2', 'dynamicpicture/image_2_6.bmp');
+INSERT INTO `dynamic` VALUES (2, 6, '送养', '出差，帮忙照看一周', '哺乳类', '狗', '来福', 15, '白色', 3, 1, 1, 5, '2019-3-24-17-54-2', 'dynamicpicture/image_2_6.bmp');
 INSERT INTO `dynamic` VALUES (2, 7, '送养', '找一只狗狗，在白云路走丢了', '哺乳类', '狗', '哈士奇', 1, '白色', 1, 1, 0, 1, '2019-3-24-18-10-18', 'dynamicpicture/image_2_7.bmp');
-INSERT INTO `dynamic` VALUES (2, 8, '送养', '找一只猪，昨晚没回家，在天麒家园', '哺乳类', '猫', '加菲猫', 1, '黑色', 1, 2, 1, 0, '2019-3-24-18-14-44', 'dynamicpicture/image_2_8.bmp');
+INSERT INTO `dynamic` VALUES (2, 8, '送养', '找一只猪，昨晚没回家，在天麒家园', '哺乳类', '猫', '加菲猫', 1, '黑色', 1, 2, 1, 2, '2019-3-24-18-14-44', 'dynamicpicture/image_2_8.bmp');
 INSERT INTO `dynamic` VALUES (2, 9, '送养', '有仓鼠嘛', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 1, 0, 0, '2019-3-24-18-17-48', 'dynamicpicture/image_2_9.bmp');
+INSERT INTO `dynamic` VALUES (2, 10, '送养', '哈士奇', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 0, 0, 0, '2019-3-28-22-29-39', 'dynamicpicture/image_2_10.bmp');
+INSERT INTO `dynamic` VALUES (2, 11, '送养', '试一试', '飞禽类', '鸟', '虎皮鹦鹉', 1, '白色', 12, 0, 0, 0, '2019-3-28-22-38-7', 'dynamicpicture/image_2_11.bmp');
 INSERT INTO `dynamic` VALUES (3, 1, '收养', '喜欢斗鹦鹉', '哺乳类', '狗', '鹦鹉', 5, '褐色', 1, 3, 2, 33, '2018-03-11-18-30-15', 'dynamicpicture/image_3_1.bmp');
 INSERT INTO `dynamic` VALUES (4, 1, '送养', '旅游的时候遇见一只流浪狗，希望有人能领养它', '哺乳类', '狗', '狗', 10, '黑色', 2, 2, 2, 7, '2019-03-15-18-22-15', 'dynamicpicture/image_4_1.bmp');
-INSERT INTO `dynamic` VALUES (5, 2, '送养', '哦哦', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 0, 0, 2, '2019-3-25-12-55-9', 'dynamicpicture/image_5_2.bmp');
-INSERT INTO `dynamic` VALUES (5, 3, '送养', '好', '哺乳类', '猫', '加菲猫', 1, '白色', 2, 0, 0, 0, '2019-3-25-13-13-51', 'dynamicpicture/image_5_3.bmp');
+INSERT INTO `dynamic` VALUES (5, 2, '送养', '哦哦', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 1, 0, 2, '2019-3-25-12-55-9', 'dynamicpicture/image_5_2.bmp');
+INSERT INTO `dynamic` VALUES (5, 3, '送养', '好', '哺乳类', '猫', '加菲猫', 1, '白色', 2, 1, 0, 1, '2019-3-25-13-13-51', 'dynamicpicture/image_5_3.bmp');
+INSERT INTO `dynamic` VALUES (5, 4, '送养', '萌迪登场', '哺乳类', '狗', '泰迪', 2, '棕', 2, 1, 0, 1, '2019-3-28-22-30-51', 'dynamicpicture/image_5_4.bmp');
+INSERT INTO `dynamic` VALUES (5, 5, '送养', '仔仔求包养', '哺乳类', '猫', '其他', 2, '棕白', 2, 0, 0, 3, '2019-3-28-22-35-38', 'dynamicpicture/image_5_5.bmp');
+INSERT INTO `dynamic` VALUES (5, 6, '送养', '极品阿呆，在线卖萌', '爬行类', '爬行类', '龟', 2, '绿', 2, 0, 0, 0, '2019-3-28-22-47-28', 'dynamicpicture/image_5_6.bmp');
+INSERT INTO `dynamic` VALUES (6, 1, '收养', '.........', '爬行类', '爬行类', '蜥蜴', 10, '绿色', 1, 0, 0, 1, '2019-3-28-22-47-56', 'dynamicpicture/image_6_1.bmp');
 
 -- ----------------------------
 -- Table structure for follow
@@ -281,13 +298,17 @@ INSERT INTO `follow` VALUES (0, 1, '已关注');
 INSERT INTO `follow` VALUES (1, 0, '已关注');
 INSERT INTO `follow` VALUES (1, 2, '已关注');
 INSERT INTO `follow` VALUES (1, 3, '已关注');
+INSERT INTO `follow` VALUES (1, 4, '已关注');
+INSERT INTO `follow` VALUES (2, 0, '已关注');
 INSERT INTO `follow` VALUES (2, 1, '已关注');
 INSERT INTO `follow` VALUES (2, 3, '已关注');
 INSERT INTO `follow` VALUES (2, 4, '已关注');
+INSERT INTO `follow` VALUES (3, 0, '已关注');
+INSERT INTO `follow` VALUES (4, 0, '已关注');
 INSERT INTO `follow` VALUES (4, 2, '已关注');
+INSERT INTO `follow` VALUES (5, 0, '已关注');
+INSERT INTO `follow` VALUES (6, 0, '已关注');
 INSERT INTO `follow` VALUES (6, 1, '已关注');
-INSERT INTO `follow` VALUES (9, 0, '已关注');
-INSERT INTO `follow` VALUES (10, 0, '已关注');
 
 -- ----------------------------
 -- Table structure for mailbox
@@ -365,7 +386,7 @@ CREATE TABLE `signname`  (
 -- Records of signname
 -- ----------------------------
 INSERT INTO `signname` VALUES (0, '宠物互助，爱心传递');
-INSERT INTO `signname` VALUES (1, '好吧');
+INSERT INTO `signname` VALUES (1, '理解理解急急急');
 INSERT INTO `signname` VALUES (2, '上班，忙得很，找个保姆看宠物');
 INSERT INTO `signname` VALUES (3, '该同志最近没有什么动态，风平浪静');
 
@@ -425,10 +446,30 @@ CREATE TABLE `userinfo`  (
 -- Records of userinfo
 -- ----------------------------
 INSERT INTO `userinfo` VALUES (0, '系统管理员', 'Admin', '123', '加菲猫,哈士奇', '加菲猫,哈士奇', '男', '2019-2-15', -2018, '待就业', 8000, '大学', '已婚', '1970-1-1-0-0-0', '否', '是', '有', '中国', '安徽省', '亳州市-谯城区', 19, 'logo/default.bmp', '无', '无', '无');
-INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '否', '是', '无', '中国', '福建省', '南平市-建阳市', 107, 'logo/1.bmp', '', '', '无');
-INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '是', '有', '中国', '重庆', '重庆-沙坪坝区', 31, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
+INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '  ', '是', '无', '中国', '福建省', '南平市-建阳市', 228, 'logo/1.bmp', '', '', '无');
+INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '否', '有', '中国', '重庆', '重庆-沙坪坝区', 46, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
 INSERT INTO `userinfo` VALUES (3, '李四', 'lisi', '123', '加菲猫,哈士奇', '仓鼠', '男', '1998-3-4', 21, '待就业', 8000, '硕士', '未婚', '2019-01-02-11-0-0', '否', '是', '有', '中国', '重庆', '重庆-渝北区', 30, 'logo/3.bmp', '15974653746', 'qq1232134', 'wechat32323');
-INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 30, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
+INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 36, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
+INSERT INTO `userinfo` VALUES (5, NULL, 'YCY', 'ycy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-3-28-22-18-33', '否', '否', NULL, '中国', '北京', '北京', 10, 'logo/default.bmp', '0', '0', '0');
+INSERT INTO `userinfo` VALUES (6, NULL, 'Heaven', '18875127181', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-3-28-22-21-59', '否', '否', NULL, '中国', '北京', '北京', 3, 'logo/default.bmp', '0', '0', '0');
+
+-- ----------------------------
+-- Table structure for usersearch
+-- ----------------------------
+DROP TABLE IF EXISTS `usersearch`;
+CREATE TABLE `usersearch`  (
+  `userId` int(255) NOT NULL,
+  `searchTime` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1970-1-1-0-0-0' COMMENT '查询时间',
+  `searchContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '哈士奇' COMMENT '查询内容',
+  PRIMARY KEY (`userId`, `searchTime`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of usersearch
+-- ----------------------------
+INSERT INTO `usersearch` VALUES (1, '1970-1-1-0-0-0', '哈士奇');
+INSERT INTO `usersearch` VALUES (1, '1970-1-1-0-0-1', '哈士奇');
+INSERT INTO `usersearch` VALUES (2, '1970-1-1-0-0-0', '哈士奇');
 
 -- ----------------------------
 -- Table structure for visitrecord
@@ -447,10 +488,49 @@ CREATE TABLE `visitrecord`  (
 -- ----------------------------
 -- Records of visitrecord
 -- ----------------------------
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-11-50-51', '2019-3-28-11-50-55', 4);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-22-59', '2019-3-28-17-23-9', 10);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-29-3', '2019-3-28-17-29-9', 6);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-31-28', '2019-3-28-17-31-47', 19);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-38-20', '2019-3-28-17-39-37', 77);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-44-13', '2019-3-28-17-45-7', 54);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-17-57-6', '2019-3-28-17-57-14', 8);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-18-16-56', '2019-3-28-18-19-35', 159);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-18-31-42', '2019-3-28-18-31-52', 10);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-18-53-15', '2019-3-28-18-54-56', 101);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-21-50-58', '2019-3-28-21-51-0', 2);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-28-21-52-23', '2019-3-28-21-52-36', 13);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-29-0-43-32', '2019-3-29-0-43-38', 6);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-29-2-45-17', '2019-3-29-2-45-49', 32);
+INSERT INTO `visitrecord` VALUES (1, 1, 1, '2019-3-29-4-10-18', '2019-3-29-4-10-21', 3);
 INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-10-52-11', '2019-3-28-10-52-24', 13);
+INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-17-41-23', '2019-3-28-17-41-25', 2);
+INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-17-47-6', '2019-3-28-17-53-11', 365);
+INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-17-53-12', '2019-3-28-17-53-44', 32);
+INSERT INTO `visitrecord` VALUES (1, 1, 2, '2019-3-28-21-53-32', '2019-3-28-21-55-23', 111);
+INSERT INTO `visitrecord` VALUES (1, 1, 10, '2019-3-28-23-1-51', '2019-3-28-23-2-10', 19);
 INSERT INTO `visitrecord` VALUES (1, 2, 1, '1970-1-1-0-0-0', '1970-1-1-0-0-0', 0);
 INSERT INTO `visitrecord` VALUES (1, 2, 2, '1970-1-1-0-0-0', '1970-1-1-0-0-0', 0);
 INSERT INTO `visitrecord` VALUES (1, 2, 4, '2019-3-28-10-52-40', '2019-3-28-10-52-43', 3);
+INSERT INTO `visitrecord` VALUES (1, 2, 6, '2019-3-28-18-39-1', '2019-3-28-18-41-30', 149);
+INSERT INTO `visitrecord` VALUES (1, 6, 1, '2019-3-29-3-10-1', '2019-3-29-3-10-8', 7);
+INSERT INTO `visitrecord` VALUES (2, 0, 1, '2019-3-28-22-34-44', '2019-3-28-22-34-59', 15);
+INSERT INTO `visitrecord` VALUES (2, 2, 2, '2019-3-28-18-53-47', '2019-3-28-18-54-16', 29);
+INSERT INTO `visitrecord` VALUES (2, 2, 2, '2019-3-28-18-54-17', '2019-3-28-18-54-20', 3);
+INSERT INTO `visitrecord` VALUES (2, 5, 4, '2019-3-28-22-33-57', '2019-3-28-22-34-1', 4);
+INSERT INTO `visitrecord` VALUES (5, 0, 1, '2019-3-28-22-26-35', '2019-3-28-22-26-48', 13);
+INSERT INTO `visitrecord` VALUES (5, 0, 2, '2019-3-28-22-44-30', '2019-3-28-22-44-32', 2);
+INSERT INTO `visitrecord` VALUES (5, 0, 2, '2019-3-28-22-44-34', '2019-3-28-22-44-36', 2);
+INSERT INTO `visitrecord` VALUES (5, 1, 3, '2019-3-28-22-35-59', '2019-3-28-22-36-3', 4);
+INSERT INTO `visitrecord` VALUES (5, 2, 6, '2019-3-28-22-18-59', '2019-3-28-22-19-2', 3);
+INSERT INTO `visitrecord` VALUES (5, 2, 8, '2019-3-28-22-19-3', '2019-3-28-22-19-7', 4);
+INSERT INTO `visitrecord` VALUES (5, 5, 3, '2019-3-28-22-36-32', '2019-3-28-22-36-36', 4);
+INSERT INTO `visitrecord` VALUES (5, 5, 5, '2019-3-28-22-36-17', '2019-3-28-22-36-22', 5);
+INSERT INTO `visitrecord` VALUES (5, 5, 5, '2019-3-28-22-52-40', '2019-3-28-22-52-43', 3);
+INSERT INTO `visitrecord` VALUES (5, 5, 5, '2019-3-28-23-1-0', '2019-3-28-23-1-4', 4);
+INSERT INTO `visitrecord` VALUES (6, 0, 2, '2019-3-28-22-27-38', '2019-3-28-22-27-44', 6);
+INSERT INTO `visitrecord` VALUES (6, 0, 2, '2019-3-28-22-49-8', '2019-3-28-22-49-25', 17);
+INSERT INTO `visitrecord` VALUES (6, 2, 6, '2019-3-28-22-30-22', '2019-3-28-22-30-24', 2);
 
 -- ----------------------------
 -- View structure for v_apply_dynamic
