@@ -11,7 +11,7 @@
  Target Server Version : 50559
  File Encoding         : 65001
 
- Date: 29/03/2019 05:10:17
+ Date: 30/03/2019 20:06:50
 */
 
 SET NAMES utf8mb4;
@@ -270,6 +270,9 @@ INSERT INTO `dynamic` VALUES (2, 8, '送养', '找一只猪，昨晚没回家，
 INSERT INTO `dynamic` VALUES (2, 9, '送养', '有仓鼠嘛', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 1, 0, 0, '2019-3-24-18-17-48', 'dynamicpicture/image_2_9.bmp');
 INSERT INTO `dynamic` VALUES (2, 10, '送养', '哈士奇', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 0, 0, 0, '2019-3-28-22-29-39', 'dynamicpicture/image_2_10.bmp');
 INSERT INTO `dynamic` VALUES (2, 11, '送养', '试一试', '飞禽类', '鸟', '虎皮鹦鹉', 1, '白色', 12, 0, 0, 0, '2019-3-28-22-38-7', 'dynamicpicture/image_2_11.bmp');
+INSERT INTO `dynamic` VALUES (2, 12, '送养', '你好', '哺乳类', '猫', '加菲猫', 10, '白色', 12, 0, 0, 0, '2019-3-29-9-3-23', 'dynamicpicture/image_2_12.bmp');
+INSERT INTO `dynamic` VALUES (2, 13, 'éå»', 'ç¸æºåä¸º', 'åºä¹³ç±»', 'ç«', 'å è²ç«', 0, 'ç¸æº', 0, 0, 0, 0, '2019-3-29-11-11-4', 'dynamicpicture/image_2_13.bmp');
+INSERT INTO `dynamic` VALUES (2, 14, 'éå»', 'ç¸æºåä¸º', 'åºä¹³ç±»', 'ç«', 'å è²ç«', 0, 'ç¸æº', 0, 0, 0, 0, '2019-3-29-11-11-34', 'dynamicpicture/image_2_14.bmp');
 INSERT INTO `dynamic` VALUES (3, 1, '收养', '喜欢斗鹦鹉', '哺乳类', '狗', '鹦鹉', 5, '褐色', 1, 3, 2, 33, '2018-03-11-18-30-15', 'dynamicpicture/image_3_1.bmp');
 INSERT INTO `dynamic` VALUES (4, 1, '送养', '旅游的时候遇见一只流浪狗，希望有人能领养它', '哺乳类', '狗', '狗', 10, '黑色', 2, 2, 2, 7, '2019-03-15-18-22-15', 'dynamicpicture/image_4_1.bmp');
 INSERT INTO `dynamic` VALUES (5, 2, '送养', '哦哦', '哺乳类', '猫', '加菲猫', 1, '白色', 1, 1, 0, 2, '2019-3-25-12-55-9', 'dynamicpicture/image_5_2.bmp');
@@ -447,9 +450,9 @@ CREATE TABLE `userinfo`  (
 -- ----------------------------
 INSERT INTO `userinfo` VALUES (0, '系统管理员', 'Admin', '123', '加菲猫,哈士奇', '加菲猫,哈士奇', '男', '2019-2-15', -2018, '待就业', 8000, '大学', '已婚', '1970-1-1-0-0-0', '否', '是', '有', '中国', '安徽省', '亳州市-谯城区', 19, 'logo/default.bmp', '无', '无', '无');
 INSERT INTO `userinfo` VALUES (1, '孙敬钦', 'sunupo', '123', '加菲猫,哈士奇', '仓鼠', '男', '2019-2-16', 0, '上班', 3000, '小学', '已婚', '2019-01-01-1-1-1', '  ', '是', '无', '中国', '福建省', '南平市-建阳市', 228, 'logo/1.bmp', '', '', '无');
-INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '否', '有', '中国', '重庆', '重庆-沙坪坝区', 46, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
+INSERT INTO `userinfo` VALUES (2, '张三', 'zhangsan', '123', '加菲猫,哈士奇', '仓鼠', '男', '2001-1-15', 18, '待就业', 8000, '硕士', '未婚', '2019-01-01-12-32-33', '否', '否', '有', '中国', '重庆', '重庆-沙坪坝区', 67, 'logo/2.bmp', '13222223333', '99887766', 'wechat123');
 INSERT INTO `userinfo` VALUES (3, '李四', 'lisi', '123', '加菲猫,哈士奇', '仓鼠', '男', '1998-3-4', 21, '待就业', 8000, '硕士', '未婚', '2019-01-02-11-0-0', '否', '是', '有', '中国', '重庆', '重庆-渝北区', 30, 'logo/3.bmp', '15974653746', 'qq1232134', 'wechat32323');
-INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 36, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
+INSERT INTO `userinfo` VALUES (4, '王五', 'wangwu', '123', '加菲猫,哈士奇', '仓鼠', '男', '1980-7-22', 39, '待就业', 8000, '硕士', '未婚', '2019-01-02-12-0-0', '否', '是', '有', '中国', '北京', '北京-昌平区', 38, 'logo/4.bmp', '15536485674', 'qq131231', 'wechat244');
 INSERT INTO `userinfo` VALUES (5, NULL, 'YCY', 'ycy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-3-28-22-18-33', '否', '否', NULL, '中国', '北京', '北京', 10, 'logo/default.bmp', '0', '0', '0');
 INSERT INTO `userinfo` VALUES (6, NULL, 'Heaven', '18875127181', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-3-28-22-21-59', '否', '否', NULL, '中国', '北京', '北京', 3, 'logo/default.bmp', '0', '0', '0');
 
@@ -549,6 +552,12 @@ CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER V
 -- ----------------------------
 DROP VIEW IF EXISTS `v_follow_userinfo`;
 CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_follow_userinfo` AS select `f`.`fromuid` AS `fromuid`,`f`.`isfollow` AS `isfollow`,`u`.`userid` AS `userid`,`u`.`username` AS `username`,`u`.`loginname` AS `loginname`,`u`.`password` AS `password`,`u`.`sendAnimal` AS `sendAnimal`,`u`.`adoptionAnimal` AS `adoptionAnimal`,`u`.`sex` AS `sex`,`u`.`birthday` AS `birthday`,`u`.`age` AS `age`,`u`.`working` AS `working`,`u`.`salary` AS `salary`,`u`.`education` AS `education`,`u`.`married` AS `married`,`u`.`jointime` AS `jointime`,`u`.`isBanned` AS `isBanned`,`u`.`isAdmin` AS `isAdmin`,`u`.`haschildren` AS `haschildren`,`u`.`country` AS `country`,`u`.`province` AS `province`,`u`.`city` AS `city`,`u`.`logincount` AS `logincount`,`u`.`logo` AS `logo`,`u`.`phone` AS `phone`,`u`.`qq` AS `qq`,`u`.`wechat` AS `wechat` from (`follow` `f` left join `userinfo` `u` on((`f`.`touid` = `u`.`userid`)));
+
+-- ----------------------------
+-- View structure for v_userinfo_dynamic
+-- ----------------------------
+DROP VIEW IF EXISTS `v_userinfo_dynamic`;
+CREATE ALGORITHM = UNDEFINED DEFINER = `root`@`localhost` SQL SECURITY DEFINER VIEW `v_userinfo_dynamic` AS select `u`.`loginname` AS `loginname`,`u`.`logo` AS `logo`,`u`.`province` AS `province`,`u`.`city` AS `city`,`d`.`userid` AS `userid`,`d`.`dynamicid` AS `dynamicid`,`d`.`issend` AS `issend`,`d`.`content` AS `content`,`d`.`type1` AS `type1`,`d`.`type2` AS `type2`,`d`.`type3` AS `type3`,`d`.`type4` AS `type4`,`d`.`type5` AS `type5`,`d`.`type6` AS `type6`,`d`.`collected` AS `collected`,`d`.`favorite` AS `favorite`,`d`.`views` AS `views`,`d`.`createtime` AS `createtime`,`d`.`picture` AS `picture` from (`userinfo` `u` join `dynamic` `d` on((`u`.`userid` = `d`.`userid`)));
 
 -- ----------------------------
 -- View structure for v_visit_dynamic

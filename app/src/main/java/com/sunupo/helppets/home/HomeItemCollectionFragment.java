@@ -238,7 +238,6 @@ public class HomeItemCollectionFragment extends Fragment {
             dynamicBeanData = gson.fromJson(responseData, DynamicBeanData.class);
             ArrayList<DynamicBean> dynamicBeanArrayList = dynamicBeanData.getData();
 
-
             if(dynamicBeanArrayList.size()==0){
                 //啥也不做，因为，列表为0，说明没有数据successCode=0;，最好这儿创建一个message，就return；
                 Message message=Message.obtain(handler,1,successCode,3,dynamicBeanArrayList);

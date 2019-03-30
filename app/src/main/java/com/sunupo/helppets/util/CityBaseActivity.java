@@ -14,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.sunupo.helppets.domian.*;
 
 //这个是用来显示宠物类型的
-public class CityBaseActivity extends AppCompatActivity {
+public class CityBaseActivity extends BaseActivity {
 
 	/**
 	 * 所有省

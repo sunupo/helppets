@@ -1,6 +1,7 @@
 package com.sunupo.helppets.ReleaseDynamic;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -31,11 +33,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
@@ -105,6 +109,9 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
     private Uri photoUri1;
     TextView attentionImage;
 
+    Uri  imageUri;
+    String mTempPhotoPath;
+
     Handler handler;
 
     boolean illegal=true;
@@ -157,7 +164,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject jsonObject2=jsonArray.getJSONObject(i);
                                 Log.e("detectText", Constants.dtArr[i]+"label="+jsonObject2.getString("label")+"score="+jsonObject2.getString("score")+"hint="+jsonObject2.getString("hit") );
-                                Toast.makeText(GetLocalPhotoActivity.this,"内容包含该"+Constants.dtArr[i]+"敏感词的概率为"+Integer.parseInt(jsonObject2.getString("score"))*100.0+"%\n"+jsonObject2.getString("hit"),Toast.LENGTH_LONG).show();
+                                Toast.makeText(GetLocalPhotoActivity.this,"内容包含该"+Constants.dtArr[i]+"敏感词的概率为"+Float.parseFloat(jsonObject2.getString("score"))*100.0+"%\n"+jsonObject2.getString("hit"),Toast.LENGTH_LONG).show();
                                 illegal=true;
 
                                 return;
@@ -205,17 +212,38 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                                                  @Override
                                                  public void onClick(DialogInterface dialog, int which) {
                                                      dialog.dismiss();
-                                                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");// 判断存储卡是否可以用，可用进行存储
-//                        if (hasSdcard()){
-                                                     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-//                        }
-                                                     String filename = timeStampFormat.format(new Date());
-                                                     ContentValues values = new ContentValues();
-                                                     values.put(MediaStore.Audio.Media.TITLE, filename);
-                                                     photoUri1 = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-                                                     ;
-                                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri1);
-                                                     startActivityForResult(intent, TAKE_PHOTO);
+////                                                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");// 判断存储卡是否可以用，可用进行存储
+//                                                     Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);// 判断存储卡是否可以用，可用进行存储
+//
+////                        if (hasSdcard()){
+//                                                     SimpleDateFormat timeStampFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+////                        }
+//                                                     String filename = timeStampFormat.format(new Date());
+//                                                     ContentValues values = new ContentValues();
+//                                                     values.put(MediaStore.Audio.Media.TITLE, filename);
+//                                                     photoUri1 = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+//                                                     ;
+//                                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri1);
+//                                                     startActivityForResult(intent, TAKE_PHOTO);
+
+
+                                                     Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                                     startActivityForResult(it,Activity.DEFAULT_KEYS_DIALER);
+
+//                                                     Intent intentToTakePhoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                                     // 指定照片存储位置为sd卡本目录下
+//                                                     // 这里设置为固定名字 这样就只会只有一张temp图 如果要所有中间图片都保存可以通过时间或者加其他东西设置图片的名称
+//                                                     // File.separator为系统自带的分隔符 是一个固定的常量
+//                                                     mTempPhotoPath = Environment.getExternalStorageDirectory() + File.separator + "photo.jpeg";
+//                                                     // 获取图片所在位置的Uri路径    *****这里为什么这么做参考问题2*****
+//                                                     /*imageUri = Uri.fromFile(new File(mTempPhotoPath));*/
+//                                                    imageUri = FileProvider.getUriForFile(GetLocalPhotoActivity.this,
+//                                                             GetLocalPhotoActivity.this.getApplicationContext().getPackageName() +".my.provider",
+//                                                             new File(mTempPhotoPath));
+//                                                     //下面这句指定调用相机拍照后的照片存储的路径
+//                                                     intentToTakePhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                                                     startActivityForResult(intentToTakePhoto, TAKE_PHOTO);
+//
 
                                                  }
                                              });
@@ -324,6 +352,7 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
                     detectText(dynamicContentText.getText().toString());//输入内容敏感词检测
                     return;
                 }
+                illegal=true;
 
                 if(App.loginUserInfo.getIsBanned().equals("是")){
                     Toast.makeText(GetLocalPhotoActivity.this,"您暂时不能发言，请联系挂管理员",Toast.LENGTH_SHORT).show();
@@ -423,9 +452,64 @@ public class GetLocalPhotoActivity extends CityBaseActivity{
         if (resultCode == RESULT_OK) {  //回传值接受成功
 
             if (requestCode == TAKE_PHOTO) {    //拍照取图
+                Bitmap bitmap;
+
+
+//                if(data==null){
+//                    Log.d(TAG, "onActivityResult: data==null");
+//                    return;
+//                }else{
+//                    Log.d(TAG, "onActivityResult:data!=null ");
+//                }
+//                Bundle extras=null ;
+//                try{extras= data.getExtras();}catch(Exception e){
+//                    e.printStackTrace();
+//                }
+//                if(null!=extras){
+//                    Log.i("bb","isNull:"+(null==extras));
+//                    bitmap = (Bitmap) extras.get("data");
+//                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                    Matrix matrix = new Matrix();
+//                    matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
+//                    Log.d(TAG,"裁剪后拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                    imageView.setImageBitmap(bitmap);
+//                    photoBitmap=bitmap;
+//
+//                }else{
+//                    Uri uri = data.getData();
+//                    if (uri != null) {
+//                        bitmap = BitmapFactory.decodeFile(uri.getPath());
+//                        Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                        Matrix matrix = new Matrix();
+//                        matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
+//                        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
+//                        Log.d(TAG,"裁剪后拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                        imageView.setImageBitmap(bitmap);
+//                        photoBitmap=bitmap;
+//
+//                    }
+//                }
+
 
                 Bundle bundle = data.getExtras();   //获取data数据集合
-                Bitmap bitmap = (Bitmap) bundle.get("data");        //获得data数据
+                bitmap = (Bitmap) bundle.get("data");        //获得data数据
+
+//                try {
+//                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+//                    Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                    Matrix matrix = new Matrix();
+//                    matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
+//                    bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),bitmap.getHeight(), matrix, true);
+//                    Log.d(TAG,"裁剪后拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
+//                    imageView.setImageBitmap(bitmap);
+//                    photoBitmap=bitmap;
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                    Log.e(TAG, "onActivityResult: 拍照错误" );
+//                }
+
+
                 Log.d(TAG,"拍照,宽="+bitmap.getWidth()+"高="+bitmap.getHeight());
                 Matrix matrix = new Matrix();
                 matrix.postScale((float) 288 / bitmap.getWidth(), (float) 288/ bitmap.getWidth()); // 长和宽放大缩小的比例
